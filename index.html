@@ -60,25 +60,31 @@ input:focus{border-color:var(--c)}
 @keyframes blink{to{opacity:.3}}
 /* 말 꾸미기 */
 .ptok .lab{position:relative;z-index:2;line-height:1}
-.ptok.glossy{background-image:radial-gradient(circle at 32% 26%,rgba(255,255,255,.95) 0 9%,rgba(255,255,255,.45) 18%,transparent 42%),radial-gradient(circle at 70% 80%,rgba(0,0,0,.35),transparent 60%)!important;border-color:#e8f6ff}
-.ptok.glossy .gl{position:absolute;inset:0;border-radius:50%;overflow:hidden;pointer-events:none}
-.ptok.glossy .gl::before{content:'';position:absolute;top:-20%;left:-60%;width:40%;height:140%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.75),transparent);transform:rotate(25deg);animation:shine 2.6s infinite}
-@keyframes shine{0%{left:-60%}60%,100%{left:130%}}
+.ptok.typed{font-size:15px}
 .ptok .sh{position:absolute;inset:-8px;border-radius:50%;pointer-events:none;animation:shp 1.1s infinite alternate}
-.ptok .sh.y{border:3px solid #ffe066;box-shadow:0 0 14px 4px #ffd23fbb,inset 0 0 10px #ffd23f88}
 .ptok .sh.b{border:3px solid #6ad4ff;box-shadow:0 0 14px 4px #3ea8ffbb,inset 0 0 10px #3ea8ff88}
-.ptok .sh.y.b2{inset:-13px}
 @keyframes shp{to{transform:scale(1.08);opacity:.75}}
-.ptok .crown{position:absolute;top:-62%;left:50%;transform:translateX(-50%);font-size:150%;filter:drop-shadow(0 2px 1px #0008);z-index:3;animation:crb 1.4s infinite alternate}
-@keyframes crb{to{transform:translateX(-50%) translateY(-2px) rotate(6deg)}}
-.ptok.sq{font-size:150%}
-.ptok .wind{position:absolute;right:88%;top:50%;width:120%;height:70%;transform:translateY(-50%);pointer-events:none;z-index:-1}
-.ptok .wind i{position:absolute;right:0;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#fff);opacity:0;animation:wnd .7s infinite linear}
-.ptok .wind i:nth-child(1){top:15%;width:70%;animation-delay:0s}.ptok .wind i:nth-child(2){top:50%;width:100%;animation-delay:.23s}.ptok .wind i:nth-child(3){top:85%;width:60%;animation-delay:.46s}
-@keyframes wnd{0%{transform:translateX(30%);opacity:0}30%{opacity:.9}100%{transform:translateX(-60%);opacity:0}}
-.board.quake{animation:quake 2.4s infinite}
-@keyframes quake{0%,86%,100%{transform:translate(0,0)}88%{transform:translate(-3px,1px)}90%{transform:translate(3px,-2px)}92%{transform:translate(-2px,2px)}94%{transform:translate(2px,-1px)}96%{transform:translate(-1px,1px)}}
-.bt.lock{background:repeating-linear-gradient(45deg,#5a1f2c 0 6px,#3a1420 6px 12px);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#ff9aa8;height:14px!important}
+.ptok .soul{position:absolute;top:-10px;right:-10px;font-size:14px;z-index:3;filter:drop-shadow(0 1px 1px #000)}
+.mark{position:absolute;transform:translate(-50%,-50%);font-size:clamp(16px,3.4vw,28px);z-index:3;pointer-events:none;filter:drop-shadow(0 2px 2px #000a);margin-top:-2.2%}
+.mark.reaper{animation:reap 1.6s infinite alternate}
+@keyframes reap{to{transform:translate(-50%,-62%) scale(1.1)}}
+.pick{position:absolute;width:8%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);z-index:9;cursor:pointer;border:3px solid var(--y);box-shadow:0 0 14px 4px #ffd23f99;animation:blink .6s infinite alternate;background:#ffd23f33}
+.aug.use{color:var(--ink);font-family:inherit;cursor:pointer;opacity:.55}
+.aug.use b{color:var(--y);margin-left:2px}
+.aug.use.ok{opacity:1;background:#ffd23f22;border-color:var(--y);box-shadow:0 0 8px #ffd23f55}
+.aug.catted{opacity:.7;border-color:#ff9aa8}
+.opp.dead{opacity:.45}
+.sticks.six .stick{width:13px;height:54px}
+.yname small{font-size:20px;margin-left:4px;color:var(--c)}
+.olist{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;width:100%;max-width:640px}
+.olist.many{max-height:62vh;overflow:auto;padding:4px}
+.obtn{padding:16px 12px;border-radius:14px;background:linear-gradient(180deg,#3a2470,#24164a);border:2px solid var(--y);color:var(--ink);font-weight:900;font-size:15px;word-break:keep-all}
+.obtn:active{transform:scale(.97)}
+.acwrap{display:flex;flex-direction:column;gap:6px}
+.acard.tn{border-color:var(--y);box-shadow:0 0 18px #ffd23f44}
+.acard.tn .tier{color:var(--y)}
+.acard.off{opacity:.3;filter:grayscale(1)}
+.detb{padding:8px;border-radius:10px;background:#1d1240;border:2px solid var(--c);color:var(--c);font-weight:900;font-size:12px}
 /* 이펙트 레이어 */
 #fxl{position:fixed;inset:0;pointer-events:none;z-index:45;overflow:hidden}
 .fx{position:fixed;transform:translate(-50%,-50%);pointer-events:none}
@@ -87,14 +93,6 @@ input:focus{border-color:var(--c)}
 @keyframes boom{0%{transform:translate(-50%,-50%) scale(.2);opacity:0}25%{transform:translate(-50%,-50%) scale(1.3);opacity:1}100%{transform:translate(-50%,-50%) scale(1.6);opacity:0}}
 .fx.pop{animation:fpop 1.1s ease-out forwards}
 @keyframes fpop{0%{transform:translate(-50%,-50%) scale(.2);opacity:0}20%{transform:translate(-50%,-60%) scale(1.25);opacity:1}75%{opacity:1}100%{transform:translate(-50%,-110%) scale(1);opacity:0}}
-.fx.hole{width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,#000 0 22%,#1a0533 34%,transparent 66%),conic-gradient(from 0deg,#7b2cff,#000,#c13cff,#000,#3b1fff,#000,#7b2cff);mix-blend-mode:normal;animation:hole 1.6s ease-in-out forwards;filter:blur(1px)}
-@keyframes hole{0%{transform:translate(-50%,-50%) scale(0) rotate(0);opacity:0}25%{opacity:.95}60%{transform:translate(-50%,-50%) scale(1) rotate(540deg);opacity:.95}100%{transform:translate(-50%,-50%) scale(0) rotate(1080deg);opacity:0}}
-.fx.prism{width:520px;height:520px;border-radius:50%;background:conic-gradient(#ff4f6d,#ffb43f,#ffe066,#3fe07a,#3ea8ff,#c06bff,#ff4f6d);filter:blur(40px);animation:glow 1.4s ease-out forwards}
-.fx.gold{width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,#fff6c9 0,#ffd23f 30%,#e09b1a 55%,transparent 72%);filter:blur(22px);animation:glow 1.3s ease-out forwards}
-@keyframes glow{0%{transform:translate(-50%,-50%) scale(.1);opacity:0}30%{opacity:.85}100%{transform:translate(-50%,-50%) scale(1.3);opacity:0}}
-.fx.beam{height:7px;border-radius:6px;transform-origin:0 50%;background:linear-gradient(90deg,#fff9b0,#d8ff4f,#7dff6b);box-shadow:0 0 12px 4px #c8ff5a99;animation:beam .7s ease-out forwards}
-@keyframes beam{0%{opacity:0;clip-path:inset(0 100% 0 0)}30%{opacity:1;clip-path:inset(0 0 0 0)}100%{opacity:0}}
-.fx.ghost{width:34px;height:34px;border-radius:50%;border:3px solid #fff;box-shadow:0 3px 0 #0008}
 /* 채팅 */
 .chat{background:var(--card2);border-radius:18px;padding:10px 12px;display:flex;flex-direction:column;gap:8px;box-shadow:0 4px 0 #0004}
 .chat .msgs{height:190px;overflow:auto;font-size:13px;line-height:1.6;display:flex;flex-direction:column}
@@ -182,57 +180,84 @@ input:focus{border-color:var(--c)}
 <div id="fxl"></div>
 <div id="toasts"></div>
 <script>
-// ===== 혼돈 윷놀이 엔진 v2 (롤 칼바람 증강 + 능력치 모루) =====
+// ===== 혼돈 윷놀이 엔진 v4 (윷놀이 증강 48종 + 능력치 모루) =====
 const ROUTES = {
   A: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0],
   B: [5, 20, 21, 22, 23, 24, 15, 16, 17, 18, 19, 0],
   C: [10, 25, 26, 22, 27, 28, 0],
   D: [22, 27, 28, 0],
 };
-const YUT_NAME = { '-1': '빽도', 1: '도', 2: '개', 3: '걸', 4: '윷', 5: '모' };
+const LINES = [[0, 1, 2, 3, 4, 5], [5, 6, 7, 8, 9, 10], [10, 11, 12, 13, 14, 15], [15, 16, 17, 18, 19, 0], [5, 20, 21, 22, 23, 24, 15], [10, 25, 26, 22, 27, 28, 0]];
+const DIAG = [20, 21, 22, 23, 24, 25, 26, 27, 28];
+const CORNERS = [0, 5, 10, 15, 22];
+const ADJ = (() => {
+  const a = {};
+  for (const r in ROUTES) { const R = ROUTES[r]; for (let i = 0; i + 1 < R.length; i++) { const x = R[i], y = R[i + 1]; (a[x] = a[x] || new Set()).add(y); (a[y] = a[y] || new Set()).add(x); } }
+  const o = {}; for (const k in a) o[k] = [...a[k]]; return o;
+})();
+const YUT_NAME = { '-1': '빽도', 1: '도', 2: '개', 3: '걸', 4: '윷', 5: '모', '-99': '탈락' };
 const VALS = [-1, 1, 2, 3, 4, 5];
 const BASE_W = [1 / 16, 3 / 16, 6 / 16, 4 / 16, 1 / 16, 1 / 16];
 const DELTA = 0.04;
+const TYPE_NAME = { gob: '도깨비', van: '선봉장', zom: '좀비', po: '포', pawn: '폰' };
 
+// k: p 패시브 / o 즉시 1회 / u 사용형(u: 횟수, tc: 차례 소모)
 const AUG = {
-  // 프리즘
-  gl: { n: '거인', e: '🗿', t: 3, d: '멈춘 칸 앞뒤 1칸에 있는 상대 말까지 깔아뭉개서 잡음 (깔아뭉갠 건 한 번 더 없음)' },
-  gs: { n: '거인 학살자', e: '🗡️', t: 3, d: '나보다 앞선 상대가 있으면 이동 +1, 거인 가진 상대가 있으면 +2' },
-  gc: { n: '유리 대포', e: '💎', t: 3, d: '모든 이동 +2. 대신 내 말이 하나라도 잡히면 판 위 내 말 전부 집으로' },
-  tc: { n: '전환: 혼돈', e: '🎲', t: 3, d: '랜덤 증강 2개 획득 (대부분 골드)', o: 1 },
-  ct: { n: '난공불락', e: '🚫', t: 3, d: '모가 나오면 다음 내 턴까지 내 말 전부 안 잡힘' },
-  bb: { n: '기본으로 돌아가기', e: '📘', t: 3, d: '윷·모가 나오면 걸로 바뀜 (한 번 더는 유지). 대신 도·개·걸 이동 +1' },
-  ms: { n: '미친 과학자', e: '🧪', t: 3, d: '3턴마다 한 번, 턴 시작에 "이동 +1" 또는 "이번 턴 안 잡힘" 중 선택' },
-  km: { n: '나는 왕이다', e: '👑', t: 3, d: '말이 참먹이(출발점 칸)에 딱 멈추면 프리즘 증강 하나' },
-  td: { n: '탭댄서', e: '🩰', t: 3, d: '같은 결과가 연속으로 나올 때마다 보너스 +1씩 커짐 (도도도도 → 1, 2, 3, 4칸)' },
-  fm: { n: '요정 마법', e: '🧚', t: 3, d: '모가 나오면 랜덤 상대 한 명을 다람쥐로 변신 → 다음 턴 쉼' },
-  cc: { n: '광대 대학', e: '🤡', t: 3, d: '내 말이 잡히면 펑! 잡은 말도 같이 집으로' },
-  st3: { n: '능력치 더하기 능력치 더하기 능력치!', e: '🔨', t: 3, d: '모루 3개 획득', o: 1 },
-  // 골드
-  te: { n: '탱크 엔진', e: '🛞', t: 2, d: '잡을 때마다 윷·모 확률 +1.5%씩 쌓임. 내 말이 잡히면 쌓인 거 65% 날아감' },
-  ge: { n: '신난다!', e: '🤩', t: 2, d: '잡으면 다음 던지기 결과 +1칸' },
-  tp: { n: '전환: 프리즘', e: '🌈', t: 2, d: '랜덤 프리즘 증강 하나 획득', o: 1 },
-  of: { n: '범람', e: '🌊', t: 2, d: '모든 이동 2배. 대신 두 턴에 한 번만 던짐' },
-  sr: { n: '감쇠 광선', e: '🔦', t: 2, d: '내가 지나친 상대 말 주인은 다음 턴 윷·모 확률 절반' },
-  st2: { n: '능력치 더하기 능력치!', e: '🔨', t: 2, d: '모루 2개 획득', o: 1 },
-  // 실버
-  db: { n: '폭격기', e: '💣', t: 1, d: '내 말이 잡히면 잡은 말이 2칸 뒤로 날아감' },
-  ep: { n: '도주 계획', e: '🏃', t: 1, d: '상대 말이 내 말 뒤 1~3칸 안에 멈추면 내 말 +1, 그 말 -1 (말마다 1번)' },
-  sw: { n: '그림자 질주', e: '🥷', t: 1, d: '지름길에 들어가면 +1칸 더' },
-  ss: { n: '빠르고 안전하게', e: '🛟', t: 1, d: '지름길에 들어간 말은 다음 내 턴까지 안 잡힘' },
-  ty: { n: '태풍', e: '🌪️', t: 1, d: '잡을 때 다른 상대 말 하나도 1칸 뒤로 날림' },
-  ld: { n: '하체 운동의 날', e: '🦵', t: 1, d: '도가 나오면 개로 바뀜' },
-  tg: { n: '전환: 골드', e: '🪙', t: 1, d: '랜덤 골드 증강 하나 획득', o: 1 },
-  vw: { n: '감시의 장막', e: '🛡️', t: 1, d: '내 말이 잡힐 때 1번 막아줌' },
-  st1: { n: '능력치!', e: '🔨', t: 1, d: '모루 1개 획득', o: 1 },
+  tr: { n: '8톤 트럭', e: '🚚', k: 'u', u: 1, tc: 1, d: '1회, 차례 소모. 말 2개 이상 업힌 내 말뭉치를 골라, 막히기 전까지 한 칸씩 직선으로 쭉 이동' },
+  cb: { n: '3단 합체 필살기!!!', e: '💥', k: 'u', u: 1, tc: 1, d: '1회, 차례 소모. 말 3개 이상 업힌 내 말뭉치를 골라, 그 말뭉치 빼고 판 위 모든 말뭉치를 죽임' },
+  dg: { n: '개들을 풀어라', e: '🐕', k: 'u', u: 3, d: '3회용. 쓰면 개 결과 하나를 얻음' },
+  ct: { n: '고양이', e: '🐱', k: 'p', d: '아무 능력이 없음. 왜 있냐고? 귀엽잖아' },
+  gt: { n: '간택', e: '😼', k: 'p', d: '이제 모든 플레이어는 선택창에 고양이가 나오면 무조건 고양이를 골라야 함' },
+  cg: { n: '고양이 골라', e: '🙀', k: 'p', d: '선택창에 고양이가 나오면 무조건 고양이를 골라야 함' },
+  gy: { n: '과유불급', e: '🎋', k: 'p', d: '윷 6개로 던짐. 앞면 0개는 모, 5개는 윷, 6개 전부 앞면이면 탈락' },
+  gd: { n: '개돼지', e: '🐖', k: 'p', d: '매 턴 도와 개만 낼 수 있지만, 둘 중에 고를 수 있음' },
+  lc: { n: '거머리', e: '🩸', k: 'o', d: '즉시 다른 플레이어에게 내 말 1개를 줌. 그 플레이어가 완주로 이기면 같이 이김' },
+  nm: { n: '나만 아니면 돼~', e: '🎯', k: 'o', d: '즉시 랜덤 플레이어 한 명의 판 위 말을 전부 죽임' },
+  ln: { n: '대출', e: '💳', k: 'u', u: 2, d: '2회용. 던지기 기회를 1번 얻지만 다음 차례를 건너뜀' },
+  db: { n: '도베르만', e: '🐶', k: 'u', u: 1, d: '1회용. 지금까지 내가 낸 개 횟수만큼 모를 얻음' },
+  sn: { n: '명사수', e: '🔭', k: 'u', u: 99, d: '던지기 기회 1번을 쓰고 칸 하나를 찍음. 다음 라운드 내 차례가 시작되면 그 칸의 모든 말을 죽임' },
+  dt: { n: '명탐정', e: '🔍', k: 'p', d: '증강 고를 때마다 선택지 하나를 지울 수 있음. 지우면 내 대기 말 1개가 바로 완주' },
+  md: { n: '모 아니면 도', e: '🎰', k: 'p', d: '모 아니면 도만 나옴 (반반)' },
+  fr: { n: '무임승차', e: '🚌', k: 'p', d: '상대 말을 잡는 대신 업힐 수 있음 (켜고 끌 수 있음). 업힐 때마다 던지기 기회 +1' },
+  bd: { n: '바둑', e: '⚫', k: 'u', u: 1, d: '1회. 일직선 위에 있는 내 말뭉치 둘 사이의 상대 말을 전부 죽이고, 죽인 수만큼 던지기 기회를 얻음' },
+  dv: { n: '배달', e: '📦', k: 'o', d: '증강 하나를 찍어두면 다음 증강 선택 때 무조건 나옴' },
+  gb: { n: '변환: 도깨비', e: '👹', k: 'u', u: 1, d: '1회. 일반 말을 도깨비로 바꿈. 도깨비는 매 턴 1번 도나 빽도만큼 따로 움직일 수 있음' },
+  vg: { n: '변환: 선봉장', e: '⚔️', k: 'u', u: 1, d: '1회. 일반 말을 선봉장으로 바꿈. 선봉장이 판 위에 있는 동안 내 모든 이동 +1칸' },
+  zb: { n: '변환: 좀비', e: '🧟', k: 'u', u: 1, d: '1회용. 일반 말을 좀비로 바꿈. 좀비한테 잡힌 말은 내 좀비가 됨. 전체 말의 절반 이상이 좀비면 승리' },
+  po: { n: '변환: 포', e: '🏯', k: 'u', u: 1, d: '1회용. 일반 말을 포로 바꿈. 매 차례 한 번, 포는 말 있는 칸 하나를 넘어서 일직선으로 원하는 만큼 이동 가능' },
+  pw: { n: '변환: 폰', e: '♟️', k: 'u', u: 1, d: '1회. 일반 말을 폰으로 바꿈. 폰은 조작할 수 없지만 내가 던질 때마다 도만큼 전진' },
+  rp: { n: '사신', e: '💀', k: 'o', d: '즉시 중앙에 안 죽는 사신 소환. 라운드가 끝날 때마다 가까운 말 쪽으로 1칸 이동해서 죽임. 내 말은 안 쫓음' },
+  hp: { n: '상부상조', e: '🤝', k: 'p', d: '다른 플레이어들은 자기 차례에 1번 개를 받을 수 있음. 받으면 내 다음 차례에 내가 걸을 받음' },
+  sm: { n: '사목', e: '🎲', k: 'p', d: '내 말이 일직선으로 연속된 4칸을 차지하거나, 내 말 4개가 한 말뭉치가 되면 승리' },
+  cw: { n: '소 뒷걸음질', e: '🐄', k: 'p', d: '내가 빽도로 상대 말을 잡으면 승리' },
+  hd: { n: '손은 눈보다 빠르다', e: '🃏', k: 'u', u: 1, d: '1회. 다음에 윷을 던질 때 원하는 결과를 냄' },
+  sl: { n: '슬쩍!', e: '🤏', k: 'u', u: 2, d: '2회용. 방금 던진 아직 안 쓴 결과에서 윷가락 하나를 뒤집음' },
+  tt: { n: '시간 여행', e: '⏳', k: 'u', u: 1, d: '1회. 내 말 하나를 원하는 뒤쪽 칸으로 옮김' },
+  ak: { n: '악보가 완성되었다!', e: '🎼', k: 'p', d: '이번 게임 동안 내가 빽도·도·개·걸·윷·모를 전부 내면 승리' },
+  as: { n: '암살자의 영혼', e: '🗡️', k: 'u', u: 2, d: '2회용. 내 말뭉치 하나에 영혼을 넣음. 그 말을 지나가는 상대 말뭉치는 죽고 영혼은 사라짐' },
+  af: { n: '어부지리', e: '🎣', k: 'p', d: '내 차례가 아닐 때 다른 플레이어 말이 2개 죽을 때마다 개를 얻음 (내 다음 차례에 받음)' },
+  cf: { n: '언제부터 착각한 거지?', e: '🎭', k: 'o', d: '상대 증강 하나를 골라 3라운드 동안 고양이로 바꿈 (다 쓴 증강은 못 바꿈)' },
+  lo: { n: '외톨이', e: '🥀', k: 'u', u: 3, d: '3회용. 다음에 윷을 던지면 하나만 뒷면으로 나옴 (무조건 걸)' },
+  yt: { n: '윷을 잘 던져봐', e: '🥏', k: 'u', u: 1, d: '1회. 윷을 던져 플레이어 한 명을 맞힘. 맞은 사람은 차례를 두 번 건너뜀' },
+  dd: { n: '이도류', e: '⚔', k: 'p', d: '윷을 두 번씩 던져서 결과 2개를 받음. 대신 모는 도로 바뀜' },
+  ob: { n: '이의있음!', e: '☝️', k: 'o', d: '이번 증강 선택을 취소하고 다시 고름' },
+  jm: { n: '자진모리 장단', e: '🥁', k: 'p', d: '걸이 2번 나올 때마다 개를 얻음' },
+  rv: { n: '천마군림보 - 달걸음', e: '🌙', k: 'p', d: '내 모든 말이 반대 방향으로 이동함 (빽도는 앞으로)' },
+  hs: { n: '천상의 보호막', e: '🔰', k: 'u', u: 1, d: '1회. 내 말뭉치 하나에 보호막을 씌움. 죽음을 1번 견딤' },
+  hy: { n: '최면술', e: '🌀', k: 'p', d: '내 결과로 상대 말도 움직일 수 있음' },
+  cn: { n: '취~소', e: '🙅', k: 'p', d: '모든 특수 승리를 취소함. 이 증강이 있는 동안은 말을 다 내보내야만 이김' },
+  rb: { n: '크고 빨간 버튼', e: '🔴', k: 'o', d: '얻자마자 두 대각선 지름길 위에 있는 모든 말을 죽임 (내 말 포함)' },
+  fs: { n: '프랜드 실드', e: '🫂', k: 'p', d: '내 말뭉치가 죽을 때 말이 1개만 죽음' },
+  fi: { n: '화톳불', e: '🔥', k: 'u', u: 1, d: '1회용. 내 말뭉치 자리에 화톳불을 설치. 그 말이 죽으면 화톳불에서 부활하고 화톳불은 꺼짐' },
+  sc: { n: '희생', e: '🕯️', k: 'u', u: 1, d: '1회. 판 위 내 말 하나를 죽이고, 판 위 내 다른 말 전부에 보호막을 씌움' },
+  pp: { n: '히히 똥!', e: '💩', k: 'o', d: '랜덤 칸에 똥을 쌈. 다른 플레이어 말이 이동하다 똥을 밟으면 거기서 멈춤' },
 };
 const AUG_IDS = Object.keys(AUG);
 
-// 프리즘 모루 능력치
 const PSTAT = {
   rt: { n: '재던지기', e: '🔁', d: '던질 때 확률적으로 한 번 더', add: 8 },
   mv: { n: '한 칸 더', e: '👣', d: '이동할 때 확률적으로 +1칸', add: 15 },
-  dg: { n: '회피', e: '💨', d: '잡힐 때 확률적으로 피함', add: 15 },
+  dg: { n: '회피', e: '💨', d: '죽을 때 확률적으로 피함', add: 15 },
   cx: { n: '연쇄 사냥', e: '⛓️', d: '잡았을 때 확률적으로 한 번 더 추가', add: 25 },
   bm: { n: '빽도 역전', e: '🔄', d: '빽도가 나오면 확률적으로 모로 바뀜', add: 30 },
   dp: { n: '복제', e: '👯', d: '던진 결과가 확률적으로 하나 더 생김', add: 8 },
@@ -250,53 +275,74 @@ function fx(st, o) {
   st.fi = (st.fi || 0) + 1;
   st.fx = st.fx || [];
   st.fx.push(Object.assign({ id: st.fi }, o));
-  while (st.fx.length > 12) st.fx.shift();
+  while (st.fx.length > 14) st.fx.shift();
 }
 function log(st, txt) {
   st.li = (st.li || 0) + 1;
   st.lg.push([st.li, txt]);
   while (st.lg.length > 30) st.lg.shift();
 }
-const onBoard = pc => pc[0] !== 'H' && pc[0] !== 'F';
+function chat(st, pi, text) {
+  st.li = (st.li || 0) + 1;
+  st.ch = st.ch || [];
+  st.ch.push([st.li, pi, String(text).slice(0, 120)]);
+  while (st.ch.length > 40) st.ch.shift();
+}
+
+const alive = pc => pc[0] !== 'X';
+const onBoard = pc => pc[0] !== 'H' && pc[0] !== 'F' && pc[0] !== 'X';
 const nodeOf = pc => onBoard(pc) ? ROUTES[pc[0]][pc[1]] : -1;
 function remaining(pc) {
   if (pc[0] === 'H') return 30;
-  if (pc[0] === 'F') return 0;
+  if (pc[0] === 'F' || pc[0] === 'X') return 0;
   return ROUTES[pc[0]].length - pc[1];
 }
-const progress = P => P.pc.reduce((s, pc) => s + 30 - remaining(pc), 0);
 const others = (st, P) => st.pl.filter(q => q.id !== P.id);
-const has = (P, id) => P.a.includes(id);
+const live = st => st.pl.filter(q => !q.out);
+const catted = (P, id) => (P.cat || []).some(c => c[0] === id);
+const has = (P, id) => P.a.includes(id) && !catted(P, id);
+const anyHas = (st, id) => st.pl.some(q => !q.out && has(q, id));
+const pidx = (st, P) => st.pl.indexOf(P);
+const stackOf = (P, node) => P.pc.map((_, k) => k).filter(k => onBoard(P.pc[k]) && nodeOf(P.pc[k]) === node);
+function ownStackNodes(P, min = 1) {
+  const c = {};
+  P.pc.forEach(pc => { if (onBoard(pc)) { const n = nodeOf(pc); c[n] = (c[n] || 0) + 1; } });
+  return Object.keys(c).filter(n => c[n] >= min).map(Number);
+}
+const occupied = (st, node) => st.pl.some(q => q.pc.some(pc => nodeOf(pc) === node));
 
-function newState() {
-  return { v: 3, ph: 'lobby', pl: [], ch: [], op: { n: 4, g: 1 }, t: 0, r: 1, tw: 0, q: [], pk: [], pu: 0, mc: null, d: null, ds: 0, lg: [], li: 0, w: null };
+function newPlayerFields(q) {
+  q.a = []; q.u = {}; q.pc = [['H', 0], ['H', 0], ['H', 0], ['H', 0]];
+  q.pt = ['', '', '', '']; q.sh = [0, 0, 0, 0]; q.so = [0, 0, 0, 0]; q.rd = [0, 0, 0, 0]; q.lp = [0, 0, 0, 0];
+  q.w = BASE_W.slice(); q.x = {}; q.sk = 0; q.out = 0; q.th = 0; q.gc = 0; q.glc = 0; q.af = 0; q.bk = []; q.hb = 0; q.hu = 0;
+  q.lc = null; q.dl = null; q.cat = []; q.sn = null; q.cf = null; q.rideOn = 1; q.gbt = 0; q.pot = 0; q.hand = 0; q.lone = 0; q.cow = 0;
+}
+function addPiece(P, pos, type) {
+  P.pc.push(pos.slice()); P.pt.push(type || ''); P.sh.push(0); P.so.push(0); P.rd.push(0); P.lp.push(0);
+  return P.pc.length - 1;
 }
 
+function newState() {
+  return { v: 4, ph: 'lobby', pl: [], ch: [], op: { n: 4, g: 1 }, t: 0, r: 1, tw: 0, q: [], pk: [], pu: 0, pr: null, d: null, ds: 0, lg: [], li: 0, w: null, ws: [], rp: [], pp: [], thn: 0, fx: [], fi: 0 };
+}
 function startGame(st) {
-  st.ph = 'play'; st.t = 0; st.r = 1; st.pk = []; st.fx = []; st.d = null; st.w = null; st.lg = []; st.mc = null;
-  for (const q of st.pl) {
-    q.a = []; q.pc = Array.from({ length: 4 }, () => ['H', 0]);
-    q.w = BASE_W.slice(); q.x = {}; q.ivs = ''; q.kc = 0; q.tds = 0; q.epu = [0, 0, 0, 0]; q.mst = 0; q.te = 0; q.gx = 0; q.vu = 0; q.iv = 0; q.sk = 0; q.ov = 0; q.sd = 0; q.mb = 0; q.tl = null; q.tn = 0;
-  }
+  st.ph = 'play'; st.t = 0; st.r = 1; st.pk = []; st.pr = null; st.d = null; st.w = null; st.ws = []; st.lg = []; st.rp = []; st.pp = []; st.fx = [];
+  for (const q of st.pl) newPlayerFields(q);
   log(st, '🎮 게임 시작!');
-  if (st.op.g) { const t = rollTier(100 / 3, 100 / 3); for (const q of st.pl) givePick(st, q, 1, t); log(st, `🃏 첫 증강을 골라라 (${['', '실버', '골드', '프리즘'][t]})`); }
+  if (st.op.g) { for (const q of st.pl) givePick(st, q); log(st, '🃏 첫 증강을 골라라'); }
   beginTurn(st);
 }
 
-// ---- 증강/모루 선택지
+// ---- 증강 선택지
+function makeOpts(P) {
+  let pool = AUG_IDS.filter(id => id === 'ct' || AUG[id].k === 'o' || !P.a.includes(id));
+  const o = [];
+  if (P.dl && AUG[P.dl]) { o.push(P.dl); pool = pool.filter(x => x !== P.dl); P.dl = null; }
+  while (o.length < 3 && pool.length) { const x = pickOne(pool); o.push(x); pool = pool.filter(y => y !== x); }
+  return o;
+}
+function givePick(st, P, n = 1) { for (let i = 0; i < n; i++) { st.pu++; st.pk.push({ i: P.id, k: 'a', o: makeOpts(P), u: st.pu }); } }
 function rollTier(a, b) { const r = Math.random() * 100; return r < a ? 1 : r < a + b ? 2 : 3; }
-function augPool(P, tier, excl = []) {
-  return AUG_IDS.filter(id => AUG[id].t === tier && (AUG[id].o || !has(P, id)) && !excl.includes(id));
-}
-function givePick(st, P, n = 1, tier = 0) {
-  for (let i = 0; i < n; i++) {
-    const t = tier || rollTier(100 / 3, 100 / 3);
-    let pool = augPool(P, t);
-    const o = [];
-    while (o.length < 3 && pool.length) { const x = pickOne(pool); o.push(x); pool = pool.filter(y => y !== x); }
-    st.pu++; st.pk.push({ i: P.id, k: 'a', t, o, u: st.pu });
-  }
-}
 function giveAnvil(st, P, n = 1) {
   for (let i = 0; i < n; i++) {
     const t = rollTier(60, 30);
@@ -306,46 +352,18 @@ function giveAnvil(st, P, n = 1) {
     st.pu++; st.pk.push({ i: P.id, k: 'v', t, o, u: st.pu });
   }
 }
-
+function catForced(st, P, e) { return e.k === 'a' && e.o.includes('ct') && (anyHas(st, 'gt') || has(P, 'cg')); }
 function applyAnvil(st, P, e, opt) {
   const w = P.w;
-  if (e.t === 1) {
-    const x = opt, a = Math.min(DELTA, w[x]);
-    w[x] -= a;
-    for (let j = 1; j <= 5; j++) if (j !== x) w[j] += a / 4;
-    log(st, `🔨 ${P.n} 실버 모루: ${YUT_NAME[VALS[x]]} 확률 ↓`);
-  } else if (e.t === 2) {
-    const x = opt; let got = 0;
-    for (let j = 1; j <= 5; j++) if (j !== x) { const d = Math.min(DELTA / 4, w[j]); w[j] -= d; got += d; }
-    w[x] += got;
-    log(st, `🔨 ${P.n} 골드 모루: ${YUT_NAME[VALS[x]]} 확률 ↑`);
-  } else {
+  if (e.t === 1) { const x = opt, a = Math.min(DELTA, w[x]); w[x] -= a; for (let j = 1; j <= 5; j++) if (j !== x) w[j] += a / 4; log(st, `🔨 ${P.n} 실버 모루: ${YUT_NAME[VALS[x]]} 확률 ↓`); }
+  else if (e.t === 2) { const x = opt; let got = 0; for (let j = 1; j <= 5; j++) if (j !== x) { const d = Math.min(DELTA / 4, w[j]); w[j] -= d; got += d; } w[x] += got; log(st, `🔨 ${P.n} 골드 모루: ${YUT_NAME[VALS[x]]} 확률 ↑`); }
+  else {
     const S = PSTAT[opt];
-    if (opt === 'ym') {
-      let got = 0;
-      for (const j of [1, 2, 3]) { const d = Math.min(0.02, w[j]); w[j] -= d; got += d; }
-      w[4] += got / 2; w[5] += got / 2;
-    } else P.x[opt] = Math.min(80, (P.x[opt] || 0) + S.add);
+    if (opt === 'ym') { let got = 0; for (const j of [1, 2, 3]) { const d = Math.min(0.02, w[j]); w[j] -= d; got += d; } w[4] += got / 2; w[5] += got / 2; }
+    else P.x[opt] = Math.min(80, (P.x[opt] || 0) + S.add);
     log(st, `🔨 ${P.n} 프리즘 모루: ${S.e}${S.n}`);
   }
   for (let j = 0; j < 6; j++) w[j] = r4(Math.max(0, w[j]));
-}
-
-function applyAug(st, P, id) {
-  const A = AUG[id];
-  log(st, `${A.e} ${P.n} → ${A.n}`);
-  if (!A.o) P.a.push(id);
-  if (id === 'tc' || id === 'tp' || id === 'tg') fx(st, { t: id, p: st.pl.indexOf(P) });
-  const NOT = ['tc', 'tp', 'tg'];
-  const randomOf = tier => { const pool = augPool(P, tier, NOT); return pool.length ? pickOne(pool) : null; };
-  switch (id) {
-    case 'st1': giveAnvil(st, P, 1); break;
-    case 'st2': giveAnvil(st, P, 2); break;
-    case 'st3': giveAnvil(st, P, 3); break;
-    case 'tg': { const x = randomOf(2); if (x) applyAug(st, P, x); break; }
-    case 'tp': { const x = randomOf(3); if (x) applyAug(st, P, x); break; }
-    case 'tc': for (let k = 0; k < 2; k++) { const x = randomOf(rollTier(15, 70)); if (x) applyAug(st, P, x); } break;
-  }
 }
 
 // ---- 이동 기본기
@@ -356,14 +374,6 @@ function switchRoute(pc) {
   if (r === 'B' && node === 22) return ['D', 0];
   return [r, i];
 }
-function fwd(pc, n) {
-  let [r, i] = pc;
-  if (r === 'H') { r = 'A'; i = 0; }
-  i += n;
-  if (i > ROUTES[r].length - 1) return { pc: ['F', 0], sw: false };
-  const s = switchRoute([r, i]);
-  return { pc: s, sw: s[0] !== r };
-}
 function stepBack(pc) {
   const [r, i] = pc;
   if (r === 'A') return i === 1 ? ['A', 20] : ['A', i - 1];
@@ -372,358 +382,702 @@ function stepBack(pc) {
   if (r === 'C') return ['A', 9];
   return ['B', 2];
 }
-function back(pc, n) { let p = pc; for (let k = 0; k < n; k++) if (onBoard(p)) p = stepBack(p); return p; }
-function passedNodes(pc, n) {
-  let [r, i] = pc;
-  if (r === 'H') { r = 'A'; i = 0; }
-  const out = [];
-  for (let k = 1; k < n; k++) { const j = i + k; if (j < ROUTES[r].length - 1) out.push(ROUTES[r][j]); }
-  return out;
-}
-const stackOf = (P, node) => P.pc.map((_, k) => k).filter(k => nodeOf(P.pc[k]) === node);
-
-// 결과 하나로 몇 칸? (확률 효과 제외)
-function stepsFor(st, P, e) {
-  const [v, b] = e;
-  let s;
-  if (v < 0) s = -(1 + b);
-  else {
-    s = v + b;
-    if (has(P, 'bb') && v <= 3) s += 1;
-    if (has(P, 'gc')) s += 2;
-    if (has(P, 'gs')) {
-      if (others(st, P).some(q => has(q, 'gl'))) s += 2;
-      else if (others(st, P).some(q => progress(q) > progress(P))) s += 1;
+function poopAt(st, node, qi) { return st.pp.some(p => p[0] === node && p[1] !== qi); }
+// 말 한 무더기를 steps만큼 걷게 함 (Q = 말 주인). 똥에서 멈춤.
+function walk(st, Q, pc, steps, lp0) {
+  const qi = pidx(st, Q);
+  const rev = has(Q, 'rv');
+  let dir = steps > 0 ? 1 : -1;
+  if (rev) dir = -dir;
+  const n = Math.abs(steps);
+  let cur = pc.slice(0, 2), lp = lp0 || 0;
+  if (cur[0] === 'H') cur = dir > 0 ? ['A', 0] : ['A', 20];
+  const passed = [];
+  for (let s = 1; s <= n; s++) {
+    if (dir > 0) {
+      const [r, i] = cur;
+      if (i + 1 > ROUTES[r].length - 1) return { pc: ['F', 0], passed, lp };
+      cur = [r, i + 1];
+    } else {
+      if (rev && cur[0] === 'A' && cur[1] === 20 && lp) return { pc: ['F', 0], passed, lp };
+      const prev = cur; cur = stepBack(cur);
+      if (prev[0] === 'A' && prev[1] === 1 && cur[0] === 'A' && cur[1] === 20) lp = 1;
     }
-    if (P.mb) s += 1;
+    const node = ROUTES[cur[0]][cur[1]];
+    if (poopAt(st, node, qi) && s < n) { passed.push(node); return { pc: dir > 0 ? switchRoute(cur) : cur, passed: passed.slice(0, -1), lp, poop: node }; }
+    if (s < n) passed.push(node);
   }
-  if (has(P, 'of')) s *= 2;
-  return s;
+  return { pc: dir > 0 ? switchRoute(cur) : cur, passed, lp };
 }
 
-// ---- 잡기
-function tryCatch(st, victim, k, by) {
-  const node = nodeOf(victim.pc[k]);
-  if (victim.iv) { log(st, `🛡️ ${victim.n} 무적 상태라 안 잡힘`); return false; }
-  if (victim.pc[k][2]) { log(st, `🛟 ${victim.n}의 말은 안전 상태`); return false; }
-  if (has(victim, 'vw') && !victim.vu) { victim.vu = 1; log(st, `🛡️ ${victim.n} 감시의 장막으로 막음!`); return false; }
-  if (chance(victim.x.dg)) { log(st, `💨 ${victim.n} 회피!`); return false; }
-  if (has(victim, 'gc')) {
-    let n = 0;
-    victim.pc.forEach((pc, j) => { if (onBoard(pc)) { victim.pc[j] = ['H', 0]; n++; } });
-    log(st, `💎 ${by.n}이(가) ${victim.n} 잡음 → 유리 대포 와장창! 말 ${n}개 전부 집으로`);
-  } else {
-    const ks = stackOf(victim, node);
-    for (const j of ks) victim.pc[j] = ['H', 0];
-    log(st, `💥 ${by.n}이(가) ${victim.n}의 말 ${ks.length > 1 ? ks.length + '개를 ' : ''}잡았다!`);
+// ---- 죽음
+function killStack(st, V, k, killer, opts = {}) {
+  const node = nodeOf(V.pc[k]);
+  if (node < 0) return 0;
+  const ks = stackOf(V, node);
+  if (ks.some(j => V.sh[j])) { ks.forEach(j => V.sh[j] = 0); log(st, `🔰 ${V.n} 보호막이 막아냄!`); fx(st, { t: 'e', n: node, s: '🔰' }); return 0; }
+  if (chance(V.x.dg)) { log(st, `💨 ${V.n} 회피!`); return 0; }
+  let dying = ks;
+  if (has(V, 'fs') && ks.length > 1) { dying = [ks[0]]; log(st, `🫂 ${V.n} 프랜드 실드! 1개만 죽음`); }
+  let revived = 0, zombified = 0;
+  const vi = pidx(st, V);
+  for (const j of dying) {
+    V.so[j] = 0; V.rd[j] = 0; V.lp[j] = 0;
+    if (V.cf && V.cf.ks.includes(j)) { V.pc[j] = V.cf.pos.slice(); revived++; continue; }
+    if (opts.zombie && killer && killer !== V) {
+      const pos = V.pc[j].slice();
+      V.pc[j] = ['X', 0];
+      addPiece(killer, pos, 'zom'); zombified++;
+    } else V.pc[j] = ['H', 0];
   }
-  if (has(victim, 'te') && victim.te) { victim.te = Math.floor(victim.te * 0.35); log(st, `🛞 ${victim.n} 탱크 엔진 65% 손실`); }
+  if (revived) { log(st, `🔥 ${V.n} 화톳불에서 부활!`); fx(st, { t: 'e', n: nodeOf(V.cf.pos), s: '🔥' }); V.cf = null; }
+  // 죽은 말에 업혀 있던 다른 말들은 내려옴
+  for (const R of st.pl) R.rd.forEach((r, j) => { if (r && r[0] === vi && dying.includes(r[1])) R.rd[j] = 0; });
+  const dead = dying.length - revived;
+  if (dead > 0) {
+    const cur = st.pl[st.t];
+    for (const H of st.pl) {
+      if (H === V || H === cur || !has(H, 'af')) continue;
+      H.af += dead;
+      while (H.af >= 2) { H.af -= 2; H.bk.push(2); log(st, `🎣 ${H.n} 어부지리! 개 적립`); }
+    }
+    if (zombified) log(st, `🧟 ${V.n}의 말 ${zombified}개가 ${killer.n}의 좀비가 됨!`);
+    else log(st, `💀 ${killer ? killer.n + '이(가) ' : ''}${V.n}의 말 ${dead > 1 ? dead + '개를 ' : ''}잡았다!`);
+    fx(st, { t: 'e', n: node, s: zombified ? '🧟' : '💥' });
+  }
+  return dead;
+}
+
+// 업혀 있는 말들 따라오기
+function updateRiders(st, Q, ks) {
+  const qi = pidx(st, Q);
+  for (const R of st.pl) {
+    if (R === Q) continue;
+    R.rd.forEach((r, j) => {
+      if (!r || r[0] !== qi || !ks.includes(r[1])) return;
+      const cp = Q.pc[r[1]];
+      if (cp[0] === 'F') { R.pc[j] = ['F', 0]; R.rd[j] = 0; log(st, `🚌 ${R.n} 무임승차로 완주!`); }
+      else if (!onBoard(cp)) R.rd[j] = 0;
+      else R.pc[j] = cp.slice(0, 2);
+    });
+  }
+}
+
+function settle(st, P, Q, ks, backMove) {
+  const pc = Q.pc[ks[0]];
+  if (!onBoard(pc)) return 0;
+  const node = nodeOf(pc), qi = pidx(st, Q);
+  if (st.rp.some(x => x.n === node && x.o !== qi)) {
+    log(st, `💀 ${Q.n} 사신이 있는 칸에 들어감...`);
+    killStack(st, Q, ks[0], null); return 0;
+  }
+  let caught = 0;
+  const zombie = ks.some(j => Q.pt[j] === 'zom');
+  for (const R of others(st, Q)) {
+    const ri = pidx(st, R);
+    const vk = R.pc.map((_, j) => j).filter(j => nodeOf(R.pc[j]) === node && !(R.rd[j] && R.rd[j][0] === qi && ks.includes(R.rd[j][1])));
+    if (!vk.length) continue;
+    if (has(Q, 'fr') && Q.rideOn && !zombie) {
+      for (const j of ks) Q.rd[j] = [ri, vk[0]];
+      log(st, `🚌 ${Q.n} ${R.n}한테 무임승차!`); fx(st, { t: 'e', n: node, s: '🚌' });
+      if (Q === P) st.tw++;
+      break;
+    }
+    const n = killStack(st, R, vk[0], Q, { zombie });
+    if (n > 0) { caught += n; if (backMove && has(Q, 'cw')) Q.cow = 1; }
+  }
+  const mine = stackOf(Q, node).filter(j => !Q.rd[j] || ks.includes(j));
+  if (mine.length > ks.length) log(st, `🏋️ ${Q.n} 업었다! (${mine.length}개)`);
+  for (const j of mine) Q.pc[j] = pc.slice(0, 2);
+  if (caught && Q === P) {
+    let extra = 1;
+    if (chance(P.x.cx)) { extra++; log(st, '⛓️ 연쇄 사냥 발동!'); }
+    st.tw += extra;
+    log(st, `🔥 ${P.n} 잡아서 ${extra}번 더!`);
+  }
+  return caught;
+}
+
+// 말 무더기를 steps만큼 이동 (P = 지금 차례, Q = 말 주인)
+function moveStack(st, P, Q, k, steps, opt = {}) {
+  const pc = Q.pc[k];
+  if (!pc || !alive(pc) || pc[0] === 'F') return false;
+  const ks = pc[0] === 'H' ? [k] : stackOf(Q, nodeOf(pc));
+  if (pc[0] === 'H' && !opt.force && steps < 0 && !has(Q, 'rv')) return false;
+  const r = walk(st, Q, pc, steps, Q.lp[k]);
+  if (r.poop !== undefined) { log(st, `💩 ${Q.n} 똥 밟고 멈춤!`); fx(st, { t: 'e', n: r.poop, s: '💩' }); }
+  // 암살자의 영혼
+  const qi = pidx(st, Q);
+  for (const R of others(st, Q)) {
+    const sj = R.pc.findIndex((x, j) => R.so[j] && onBoard(x) && r.passed.includes(nodeOf(x)));
+    if (sj >= 0) {
+      const sn = nodeOf(R.pc[sj]);
+      stackOf(R, sn).forEach(j => R.so[j] = 0);
+      // 영혼 칸에서 멈추고 죽음
+      ks.forEach(j => { Q.pc[j] = R.pc[sj].slice(0, 2); Q.rd[j] = 0; });
+      log(st, `🗡️ ${R.n}의 암살자 영혼! ${Q.n}의 말뭉치 처치`);
+      fx(st, { t: 'e', n: sn, s: '🗡️' });
+      killStack(st, Q, ks[0], R);
+      return true;
+    }
+  }
+  for (const j of ks) { Q.pc[j] = r.pc[0] === 'F' ? ['F', 0] : r.pc.slice(0, 2); Q.lp[j] = r.lp; Q.rd[j] = 0; }
+  updateRiders(st, Q, ks);
+  if (r.pc[0] === 'F') { log(st, `🏁 ${Q.n} 말 ${ks.length}개 났다!`); return true; }
+  settle(st, P, Q, ks, steps < 0 !== has(Q, 'rv') ? true : false);
+  if (onBoard(Q.pc[ks[0]]) && nodeOf(Q.pc[ks[0]]) === 22) log(st, `🎯 ${Q.n} 방 도착!`);
   return true;
 }
 
-function settle(st, P, ks) {
-  const pc = P.pc[ks[0]];
-  if (!onBoard(pc)) return false;
-  const node = nodeOf(pc);
-  const R = ROUTES[pc[0]];
-  const targets = [node];
-  if (has(P, 'gl')) {
-    if (pc[1] - 1 >= 0) targets.push(R[pc[1] - 1]);
-    if (pc[1] + 1 < R.length) targets.push(R[pc[1] + 1]);
-  }
-  let caught = 0, direct = 0, boom = false, bomb = false;
-  for (const tn of [...new Set(targets)]) {
-    for (const q of others(st, P)) {
-      const k = q.pc.findIndex(x => nodeOf(x) === tn);
-      if (k < 0) continue;
-      if (tryCatch(st, q, k, P)) {
-        caught++;
-        if (tn === node) direct++; else log(st, '🗿 거인이 깔아뭉갬!');
-        if (has(q, 'cc')) boom = true; else if (has(q, 'db')) bomb = true;
-      }
-    }
-  }
-  // 업기
-  const mine = stackOf(P, node);
-  if (mine.length > ks.length) log(st, `🏋️ ${P.n} 업었다! (${mine.length}개)`);
-  for (const j of mine) P.pc[j] = pc.slice();
-  if (caught) {
-    if (has(P, 'te')) P.te++;
-    if (has(P, 'ge')) P.gx++;
-    if (has(P, 'ty')) {
-      const cands = [];
-      for (const q of others(st, P)) { const seen = {}; q.pc.forEach((x, j) => { if (onBoard(x) && !seen[nodeOf(x)]) { seen[nodeOf(x)] = 1; cands.push([q, j]); } }); }
-      if (cands.length) {
-        const [q, j] = pickOne(cands); const nd = nodeOf(q.pc[j]); const nb = stepBack(q.pc[j]);
-        fx(st, { t: 'ty', n: node, m: nd, k: nodeOf(nb) });
-        for (const m of stackOf(q, nd)) q.pc[m] = nb.slice();
-        log(st, `🌪️ 태풍! ${q.n}의 말 1칸 날아감`);
-      }
-    }
-    if (direct) {
-      let extra = 1;
-      if (chance(P.x.cx)) { extra++; log(st, '⛓️ 연쇄 사냥 발동!'); }
-      st.tw += extra;
-      log(st, `🔥 ${P.n} 잡아서 ${extra}번 더!`);
-    }
-  }
-  if (boom) {
-    fx(st, { t: 'cc', n: node, p: st.pl.indexOf(P), c: stackOf(P, node).length });
-    for (const j of stackOf(P, node)) P.pc[j] = ['H', 0];
-    log(st, `🤡 펑!!! 광대가 터져서 ${P.n}의 말도 집으로`);
-  } else if (bomb) {
-    const nb = back(pc, 2);
-    fx(st, { t: 'db', n: node, m: nodeOf(nb) });
-    for (const j of stackOf(P, node)) P.pc[j] = nb.slice();
-    log(st, `💣 폭격기 폭발! ${P.n}의 말 2칸 뒤로`);
-  }
-  return caught > 0;
+function vanguardOn(P) { return P.pc.some((pc, j) => P.pt[j] === 'van' && onBoard(pc)); }
+function stepsFor(st, P, e, Q) {
+  const [v, b] = e;
+  if (v < 0) return -1;
+  let s = v + (b || 0);
+  if (Q === P && vanguardOn(P)) s += 1;
+  return s;
 }
 
+// ---- 승리
+function sasmok(P) {
+  const nodes = new Set(P.pc.filter(onBoard).map(nodeOf));
+  const cnt = {}; P.pc.forEach(pc => { if (onBoard(pc)) { const n = nodeOf(pc); cnt[n] = (cnt[n] || 0) + 1; } });
+  if (Object.values(cnt).some(c => c >= 4)) return true;
+  for (const L of LINES) for (let i = 0; i + 3 < L.length; i++) if ([0, 1, 2, 3].every(d => nodes.has(L[i + d]))) return true;
+  return false;
+}
 function checkWin(st) {
   if (st.ph !== 'play') return true;
-  const w = st.pl.find(q => q.pc.every(pc => pc[0] === 'F'));
-  if (w) { st.ph = 'end'; st.w = w.id; log(st, `🏆 ${w.n} 우승!!!`); return true; }
-  return false;
+  const noSpecial = anyHas(st, 'cn');
+  const total = st.pl.reduce((s, q) => s + q.pc.filter(alive).length, 0);
+  const winners = []; const why = {};
+  const lv = live(st);
+  for (const P of lv) {
+    const al = P.pc.filter(alive);
+    if (al.length && al.every(pc => pc[0] === 'F')) { winners.push(P); why[P.id] = '완주'; }
+  }
+  if (!winners.length && !noSpecial) {
+    for (const P of lv) {
+      if (has(P, 'sm') && sasmok(P)) { winners.push(P); why[P.id] = '사목'; break; }
+      if (has(P, 'ak') && P.th === 63) { winners.push(P); why[P.id] = '악보 완성'; break; }
+      const z = P.pc.filter((pc, j) => alive(pc) && P.pt[j] === 'zom').length;
+      if (z > 0 && z * 2 >= total) { winners.push(P); why[P.id] = '좀비 대유행'; break; }
+      if (P.cow && has(P, 'cw')) { winners.push(P); why[P.id] = '소 뒷걸음질'; break; }
+    }
+  }
+  if (!winners.length && lv.length === 1 && st.pl.length > 1) { winners.push(lv[0]); why[lv[0].id] = '최후의 생존자'; }
+  if (!winners.length) { st.pl.forEach(q => q.cow = 0); return false; }
+  const main = winners[0];
+  const ws = [main.id];
+  if (!noSpecial && why[main.id] === '완주') for (const R of st.pl) if (R.lc === main.id && !ws.includes(R.id)) { ws.push(R.id); log(st, `🩸 ${R.n} 거머리로 같이 승리!`); }
+  st.ph = 'end'; st.w = main.id; st.ws = ws;
+  log(st, `🏆 ${main.n} 우승!!! (${why[main.id]})`);
+  return true;
 }
 
 // ---- 턴
 function beginTurn(st, depth = 0) {
-  st.tw = 1; st.q = []; st.mc = null;
+  st.tw = 1; st.q = []; st.thn = 0; st.pr = null;
+  if (depth > 12) return;
   const P = st.pl[st.t];
-  P.iv = 0; P.ivs = ''; P.mb = 0;
-  P.pc.forEach((pc, k) => { if (pc.length > 2) P.pc[k] = [pc[0], pc[1]]; });
-  if (depth > 8) return;
-  if (P.sk) { P.sk = 0; log(st, `🐿️ ${P.n} 다람쥐라서 이번 턴 쉼`); return nextTurn(st, depth + 1); }
-  if (has(P, 'of')) {
-    P.ov = P.ov ? 0 : 1;
-    if (!P.ov) { log(st, `🌊 ${P.n} 범람 휴식 턴`); return nextTurn(st, depth + 1); }
+  P.gbt = 0; P.pot = 0; P.hu = 0;
+  if (P.out) return nextTurn(st, depth + 1);
+  if (P.sk > 0) { P.sk--; log(st, `😵 ${P.n} 이번 차례 건너뜀`); return nextTurn(st, depth + 1); }
+  if (P.sn !== null && P.sn !== undefined) {
+    const n = P.sn; P.sn = null;
+    log(st, `🔭 ${P.n}의 명사수 발사! ${n}번 칸`); fx(st, { t: 'e', n, s: '🎯' });
+    for (const R of st.pl) { let k; while ((k = R.pc.findIndex(x => nodeOf(x) === n)) >= 0) { if (!killStack(st, R, k, P)) break; } }
+    if (checkWin(st)) return;
   }
-  if (has(P, 'ms')) { if ((P.mst || 0) % 3 === 0) st.mc = P.id; P.mst = (P.mst || 0) + 1; }
+  if (P.bk.length) { for (const v of P.bk) st.q.push([v, 0, 0]); log(st, `🎁 ${P.n} 적립된 결과 ${P.bk.map(v => YUT_NAME[v]).join(',')} 받음`); P.bk = []; }
+  if (P.hb) { for (let i = 0; i < P.hb; i++) st.q.push([3, 0, 0]); log(st, `🤝 ${P.n} 상부상조 걸 ${P.hb}개 받음`); P.hb = 0; }
+}
+function moveReapers(st) {
+  for (const R of st.rp) {
+    const seen = { [R.n]: null }; const qu = [R.n]; let found = null;
+    const hasPrey = n => st.pl.some((q, qi) => qi !== R.o && q.pc.some(pc => nodeOf(pc) === n));
+    while (qu.length) { const n = qu.shift(); if (n !== R.n && hasPrey(n)) { found = n; break; } for (const m of ADJ[n] || []) if (!(m in seen)) { seen[m] = n; qu.push(m); } }
+    if (found === null) continue;
+    let step = found; while (seen[step] !== R.n && seen[step] !== null) step = seen[step];
+    R.n = step;
+    log(st, `💀 사신이 ${step}번 칸으로 다가옴`);
+    if (hasPrey(step)) {
+      st.pl.forEach((q, qi) => { if (qi === R.o) return; let k; while ((k = q.pc.findIndex(pc => nodeOf(pc) === step)) >= 0) { if (!killStack(st, q, k, null)) break; } });
+    }
+  }
 }
 function nextTurn(st, depth = 0) {
-  const P = st.pl[st.t];
-  P.sd = 0; P.mb = 0;
+  st.pr = null;
   st.t = (st.t + 1) % st.pl.length;
   if (st.t === 0) {
     st.r++;
-    if (st.op.g && [3, 6, 9].includes(st.r)) {
-      const t = rollTier(100 / 3, 100 / 3);
-      log(st, `🎉 ${st.r}턴 증강 타임! 전원 ${['', '실버', '골드', '프리즘'][t]} 증강`);
-      for (const q of st.pl) givePick(st, q, 1, t);
-    }
-    if (st.op.g && st.r >= 10 && st.r % 2 === 0) {
-      log(st, `🔨 ${st.r}턴 모루 타임! 전원 모루 하나씩`);
-      for (const q of st.pl) giveAnvil(st, q, 1);
-    }
+    if (st.rp.length) moveReapers(st);
+    for (const q of st.pl) q.cat = (q.cat || []).filter(c => c[1] >= st.r);
+    if (checkWin(st)) return;
+    if (st.op.g && [3, 6, 9].includes(st.r)) { log(st, `🎉 ${st.r}턴 증강 타임!`); for (const q of live(st)) givePick(st, q); }
+    if (st.op.g && st.r >= 10 && st.r % 2 === 0) { log(st, `🔨 ${st.r}턴 모루 타임!`); for (const q of live(st)) giveAnvil(st, q, 1); }
   }
   beginTurn(st, depth);
 }
 
-function hasMove(P, v) {
-  if (v > 0) return P.pc.some(pc => pc[0] !== 'F');
-  return P.pc.some(onBoard);
+function movablePieces(st, P, e) {
+  // [ownerIndex, k] 목록 (무더기 대표)
+  const out = [];
+  const add = (Q, k) => out.push([pidx(st, Q), k]);
+  const v = e[0];
+  let homeDone = false;
+  P.pc.forEach((pc, k) => {
+    if (!alive(pc) || pc[0] === 'F' || P.pt[k] === 'pawn') return;
+    if (pc[0] === 'H') { if (homeDone) return; if (v < 0 && !has(P, 'rv')) return; homeDone = true; add(P, k); return; }
+    add(P, k);
+  });
+  if (has(P, 'hy')) for (const Q of others(st, P)) Q.pc.forEach((pc, k) => { if (onBoard(pc) && Q.pt[k] !== 'pawn') add(Q, k); });
+  return out;
 }
 function tidy(st) {
-  if (st.ph !== 'play' || st.tw > 0) return;
+  if (st.ph !== 'play' || st.tw > 0 || st.pr) return;
   const P = st.pl[st.t];
   const before = st.q.length;
-  st.q = st.q.filter(e => hasMove(P, e[0]));
-  if (st.q.length < before) log(st, `🙃 ${P.n} 빽도 쓸 말이 없어서 버림`);
+  st.q = st.q.filter(e => movablePieces(st, P, e).length);
+  if (st.q.length < before) log(st, `🙃 ${P.n} 쓸 수 없는 결과 버림`);
   if (!st.q.length) nextTurn(st);
 }
 
-function sampleThrow(P) {
-  const w = P.w.slice();
-  if (has(P, 'te') && P.te) { w[4] += 0.015 * P.te; w[5] += 0.015 * P.te; }
-  if (P.sd) { w[4] *= 0.5; w[5] *= 0.5; }
-  const tot = w.reduce((a, b) => a + b, 0);
-  let r = Math.random() * tot;
-  for (let j = 0; j < 6; j++) { r -= w[j]; if (r < 0) return VALS[j]; }
-  return 2;
+// ---- 던지기
+function maskFor(v) {
+  if (v === -1) return 1;
+  if (v === 5) return 0;
+  const n = v === 4 ? 4 : v; const idx = [1, 2, 3, 0]; let m = 0;
+  for (let k = 0; k < n; k++) m |= 1 << idx[k];
+  return m;
 }
-function sticksFor(v) {
-  if (v === -1) return [true, false, false, false];
-  if (v === 5) return [false, false, false, false];
-  const n = v === 4 ? 4 : v;
-  const f = [false, false, false, false];
-  const idx = [1, 2, 3, 0];
-  for (let k = 0; k < n; k++) f[idx[k]] = true;
-  return f;
+function valFromMask(m, n) {
+  let c = 0; for (let i = 0; i < n; i++) if (m >> i & 1) c++;
+  if (n === 6) { if (c === 6) return -99; if (c === 0) return 5; if (c === 5) return 4; if (c === 1 && (m & 1)) return -1; return c; }
+  if (c === 0) return 5; if (c === 1 && (m & 1)) return -1; return c;
 }
-
-function doThrow(st, P) {
-  let v = sampleThrow(P), note = '';
-  if (v === -1 && chance(P.x.bm)) { v = 5; note += ' 🔄역전'; }
-  let bbAgain = false;
-  if (has(P, 'bb') && (v === 4 || v === 5)) { note += ` 📘${YUT_NAME[v]}→걸`; v = 3; bbAgain = true; }
-  if (has(P, 'ld') && v === 1) { v = 2; note += ' 🦵'; }
-  let b = 0;
-  if (has(P, 'td')) {
-    if (P.tl === v) P.tn++; else { P.tl = v; P.tn = 0; }
-    if (P.tn) { b += P.tn; note += ` 🩰+${P.tn}`; P.tds = (P.tds || 0) + 1; }
+function sample(P) {
+  if (has(P, 'gy')) { let m = 0; for (let i = 0; i < 6; i++) if (Math.random() < 0.5) m |= 1 << i; return [valFromMask(m, 6), m, 6]; }
+  if (has(P, 'md')) { const v = Math.random() < 0.5 ? 5 : 1; return [v, maskFor(v), 4]; }
+  const w = P.w; const tot = w.reduce((a, b) => a + b, 0); let r = Math.random() * tot;
+  for (let j = 0; j < 6; j++) { r -= w[j]; if (r < 0) return [VALS[j], maskFor(VALS[j]), 4]; }
+  return [2, maskFor(2), 4];
+}
+function startThrow(st, P) {
+  if (P.hand) { P.hand = 0; st.pr = { i: P.id, k: 'opt', src: 'hd', o: [-1, 1, 2, 3, 4, 5].map(v => ({ l: YUT_NAME[v], v })) }; log(st, `🃏 ${P.n} 손은 눈보다 빠르다!`); return; }
+  if (has(P, 'gd') && !P.lone) { st.pr = { i: P.id, k: 'opt', src: 'gd', o: [{ l: '도', v: 1 }, { l: '개', v: 2 }] }; return; }
+  const res = [];
+  if (P.lone) { P.lone = 0; res.push([3, maskFor(3), 4]); log(st, `🥀 ${P.n} 외톨이 발동`); }
+  else if (has(P, 'dd')) { for (let i = 0; i < 2; i++) { const r = sample(P); if (r[0] === 5) { r[0] = 1; r[1] = maskFor(1); } res.push(r); } }
+  else res.push(sample(P));
+  finishThrow(st, P, res);
+}
+function finishThrow(st, P, res, note = '') {
+  st.tw--; st.thn++;
+  let again = false; const names = [];
+  for (let [v, m, n] of res) {
+    if (v === -99) { names.push('탈락'); continue; }
+    if (v === -1 && chance(P.x.bm)) { v = 5; note += ' 🔄'; }
+    P.th |= 1 << VALS.indexOf(v);
+    if (v === 2) P.gc++;
+    st.q.push([v, 0, m | 256 | (n === 6 ? 128 : 0)]);
+    names.push(YUT_NAME[v]);
+    if (v === 3) { P.glc++; if (has(P, 'jm') && P.glc % 2 === 0) { st.q.push([2, 0, 0]); note += ' 🥁개+1'; } }
+    if (v === 4 || v === 5) again = true;
   }
-  if (has(P, 'ge') && P.gx && v > 0) { b += P.gx; note += ` 🤩+${P.gx}`; P.gx = 0; }
+  const first = res[0];
   st.ds++;
-  st.d = { s: st.ds, v, f: sticksFor(v), w: P.id };
-  st.q.push([v, b]);
-  st.tw--;
-  let again = v === 4 || v === 5 || bbAgain;
-  if (has(P, 'ct') && v === 5) { P.iv = 1; P.ivs = 'ct'; note += ' 🚫무적'; }
-  if (has(P, 'fm') && v === 5) {
-    const T = pickOne(others(st, P)); T.sk = 1; note += ` 🧚${T.n} 다람쥐됨`;
-    fx(st, { t: 'fm', p: st.pl.indexOf(P), q: st.pl.indexOf(T) });
+  st.d = { s: st.ds, v: first[0], f: Array.from({ length: first[2] }, (_, i) => !!(first[1] >> i & 1)), w: P.id, v2: res[1] ? res[1][0] : undefined };
+  if (res.some(r => r[0] === -99)) {
+    P.out = 1; P.pc = P.pc.map(pc => pc[0] === 'F' ? pc : ['X', 0]);
+    log(st, `☠️ ${P.n} 과유불급! 윷 6개 전부 앞면 → 탈락`); fx(st, { t: 'c', s: '☠️' });
+    st.q = []; st.tw = 0;
+    if (!checkWin(st)) nextTurn(st);
+    return;
   }
   if (!again && chance(P.x.rt)) { again = true; note += ' 🔁'; }
-  if (chance(P.x.dp)) { st.q.push([v, b]); note += ' 👯복제'; }
+  if (chance(P.x.dp) && st.q.length) { st.q.push(st.q[st.q.length - 1].slice()); note += ' 👯복제'; }
   if (again) st.tw++;
-  log(st, `🥢 ${P.n}: ${YUT_NAME[v]}!${note}${again ? ' 🔥한 번 더' : ''}`);
+  log(st, `🥢 ${P.n}: ${names.join(' + ')}!${note}${again ? ' 🔥한 번 더' : ''}`);
+  // 폰 전진
+  const done = {};
+  P.pc.forEach((pc, k) => {
+    if (P.pt[k] !== 'pawn' || !alive(pc) || pc[0] === 'F') return;
+    const key = pc[0] === 'H' ? 'H' + k : nodeOf(pc);
+    if (done[key]) return; done[key] = 1;
+    log(st, `♟️ ${P.n}의 폰 전진`);
+    moveStack(st, P, P, k, 1, { force: true });
+  });
+  if (checkWin(st)) return;
   tidy(st);
 }
 
-function preview(st, P, qi, k) {
-  const e = st.q[qi]; const pc = P.pc[k];
-  if (!e || !pc || pc[0] === 'F') return null;
-  const s = stepsFor(st, P, e);
-  if (pc[0] === 'H') { if (s <= 0) return null; let r = fwd(pc, s); if (r.sw && has(P, 'sw') && r.pc[0] !== 'F') r = { pc: fwd(r.pc, 1).pc }; return r.pc; }
-  if (s < 0) return back(pc, -s);
-  if (s === 0) return pc;
-  let r = fwd(pc, s);
-  if (r.sw && has(P, 'sw') && r.pc[0] !== 'F') r = { pc: fwd(r.pc, 1).pc };
-  return r.pc;
+// ---- 사용형 증강
+function myTurnFree(st, P) { return st.ph === 'play' && st.pl[st.t] === P && !st.pk.length && !st.pr && !P.out; }
+function convertible(P) { return P.pc.map((_, k) => k).filter(k => alive(P.pc[k]) && P.pc[k][0] !== 'F' && !P.pt[k]); }
+function badukPair(st, P) {
+  const mine = new Set(ownStackNodes(P));
+  let best = null;
+  for (const L of LINES) for (let i = 0; i < L.length; i++) for (let j = i + 2; j < L.length; j++) {
+    if (!mine.has(L[i]) || !mine.has(L[j])) continue;
+    const mid = L.slice(i + 1, j);
+    const n = st.pl.reduce((s, q) => q === P ? s : s + q.pc.filter(pc => mid.includes(nodeOf(pc))).length, 0);
+    if (!best || n > best.n) best = { mid, n };
+  }
+  return best;
 }
-
-function doMove(st, P, qi, k) {
-  const e = st.q[qi]; const pc = P.pc[k];
-  if (!e || !pc || pc[0] === 'F') return false;
-  let s = stepsFor(st, P, e);
-  if (pc[0] === 'H' && s <= 0) return false;
-  const ks = pc[0] === 'H' ? [k] : stackOf(P, nodeOf(pc));
-  if (pc[0] === 'H' && chance(P.x.hs)) { s += 2; log(st, '🚀 출발 부스터 +2'); }
-  if (s > 0 && chance(P.x.mv)) { s += 1; log(st, '👣 한 칸 더!'); }
-  st.q.splice(qi, 1);
-  let nw, safe = false, passed = [];
-  if (s > 0) {
-    passed = passedNodes(pc, s);
-    let r = fwd(pc, s);
-    if (r.sw && r.pc[0] !== 'F') {
-      if (has(P, 'sw')) { r = { pc: fwd(r.pc, 1).pc, sw: true }; log(st, `🥷 ${P.n} 그림자 질주 +1`); }
-      if (has(P, 'ss') && r.pc[0] !== 'F') safe = true;
-    }
-    nw = r.pc;
-  } else nw = back(pc, -s);
-  for (const j of ks) P.pc[j] = safe ? [nw[0], nw[1], 1] : nw.slice();
-  if (safe) log(st, `🛟 ${P.n}의 말 안전 상태`);
-  if (nw[0] === 'F') log(st, `🏁 ${P.n} 말 ${ks.length}개 났다!`);
-  else {
-    settle(st, P, ks);
-    const cur = P.pc[ks[0]];
-    if (onBoard(cur)) {
-      const node = nodeOf(cur);
-      if (node === 22) log(st, `🎯 ${P.n} 방 도착!`);
-      if (node === 0 && has(P, 'km')) { log(st, `👑 ${P.n} 나는 왕이다! 프리즘 증강`); P.kc = 1; fx(st, { t: 'km', p: st.pl.indexOf(P) }); givePick(st, P, 1, 3); }
-      // 도주 계획
-      for (const q of others(st, P)) {
-        if (!has(q, 'ep')) continue;
-        const seen = {};
-        for (let j = 0; j < q.pc.length; j++) {
-          const qp = q.pc[j]; if (!onBoard(qp)) continue;
-          const qn = nodeOf(qp); if (seen[qn]) continue; seen[qn] = 1;
-          const qstack = stackOf(q, qn);
-          q.epu = q.epu || [0, 0, 0, 0];
-          if (qstack.every(m => q.epu[m])) continue;
-          let hit = false;
-          for (let d = 1; d <= 3 && !hit; d++) { const f = fwd(P.pc[ks[0]], d).pc; if (onBoard(f) && nodeOf(f) === qn) hit = true; }
-          if (!hit) continue;
-          const qf = fwd(qp, 1).pc;
-          for (const m of qstack) { q.pc[m] = qf.slice(); q.epu[m] = 1; }
-          const mb = stepBack(P.pc[ks[0]]); const mn = nodeOf(P.pc[ks[0]]);
-          fx(st, { t: 'ep', n: qn, m: nodeOf(qf), x: mn, y: nodeOf(mb) });
-          for (const m of stackOf(P, mn)) P.pc[m] = mb.slice();
-          log(st, `🏃 ${q.n} 도주 계획! 도망 +1, ${P.n} -1`);
-          break;
-        }
+function cannonTargets(st, P, k) {
+  const pc = P.pc[k]; if (!onBoard(pc)) return [];
+  const node = nodeOf(pc); const out = new Set();
+  const enemyAt = n => others(st, P).some(q => q.pc.some(x => nodeOf(x) === n));
+  for (const L of LINES) {
+    const i = L.indexOf(node); if (i < 0) continue;
+    for (const d of [1, -1]) {
+      let j = i + d, screen = false;
+      while (j >= 0 && j < L.length) {
+        const n = L[j];
+        if (!screen) { if (occupied(st, n)) screen = true; }
+        else { if (occupied(st, n)) { if (enemyAt(n)) out.add(n); break; } out.add(n); }
+        j += d;
       }
     }
   }
-  if (has(P, 'sr') && passed.length) {
-    for (const q of others(st, P)) if (q.pc.some(x => passed.includes(nodeOf(x)))) {
-      const vn = nodeOf(q.pc.find(x => passed.includes(nodeOf(x))));
-      if (onBoard(nw)) fx(st, { t: 'sr', n: nodeOf(nw), m: vn });
-      q.sd = 1; log(st, `🔦 ${q.n} 감쇠 광선 맞음 (다음 턴 윷·모 확률 절반)`); }
+  out.delete(node);
+  return [...out];
+}
+function posForNode(P, k, node) {
+  // 포 이동: 노드에 맞는 위치 찾기 (A 경로 우선)
+  for (const r of ['A', 'B', 'C', 'D']) { const i = ROUTES[r].indexOf(node); if (i >= 0 && !(r === 'A' && i === 0)) return switchRoute([r, i]); }
+  return null;
+}
+function canUse(st, P, id) {
+  if (!myTurnFree(st, P)) return false;
+  if (id === 'pox') return !P.pot && P.pc.some((pc, k) => P.pt[k] === 'po' && onBoard(pc) && cannonTargets(st, P, k).length);
+  if (!has(P, id) || !(P.u[id] > 0)) return false;
+  const A = AUG[id];
+  if (A.tc && (st.thn > 0 || st.tw !== 1 || st.q.length)) return false;
+  switch (id) {
+    case 'tr': return ownStackNodes(P, 2).length > 0;
+    case 'cb': return ownStackNodes(P, 3).length > 0;
+    case 'sn': return st.tw > 0;
+    case 'sl': return st.q.length > 0 && !!(st.q[st.q.length - 1][2] & 256);
+    case 'bd': { const b = badukPair(st, P); return !!b && b.n > 0; }
+    case 'gb': case 'vg': case 'zb': case 'po': case 'pw': return convertible(P).length > 0;
+    case 'tt': case 'as': case 'hs': case 'fi': case 'sc': return ownStackNodes(P).length > 0;
+    case 'hd': case 'lo': return st.tw > 0 && !P.hand && !P.lone;
+    case 'yt': return others(st, P).some(q => !q.out);
+    case 'db': return P.gc > 0;
   }
-  if (checkWin(st)) return true;
-  tidy(st);
   return true;
+}
+function spend(P, id) { if (id !== 'sn') P.u[id]--; }
+function useAug(st, P, id) {
+  if (!canUse(st, P, id)) return false;
+  const pi = pidx(st, P);
+  const stackPrompt = (src, min, extra) => { st.pr = Object.assign({ i: P.id, k: 'cell', src, c: ownStackNodes(P, min) }, extra || {}); };
+  switch (id) {
+    case 'pox': {
+      const k = P.pc.findIndex((pc, j) => P.pt[j] === 'po' && onBoard(pc) && cannonTargets(st, P, j).length);
+      st.pr = { i: P.id, k: 'cell', src: 'pox', c: cannonTargets(st, P, k), pk: k }; return true;
+    }
+    case 'tr': spend(P, id); stackPrompt('tr', 2); return true;
+    case 'cb': spend(P, id); stackPrompt('cb', 3); return true;
+    case 'dg': spend(P, id); st.q.push([2, 0, 0]); log(st, `🐕 ${P.n} 개들을 풀어라! 개 +1`); tidy(st); return true;
+    case 'ln': spend(P, id); st.tw++; P.sk++; log(st, `💳 ${P.n} 대출! 던지기 +1 (다음 차례 건너뜀)`); return true;
+    case 'db': spend(P, id); for (let i = 0; i < P.gc; i++) st.q.push([5, 0, 0]); log(st, `🐶 ${P.n} 도베르만! 모 ${P.gc}개`); fx(st, { t: 'c', s: '🐶' }); tidy(st); return true;
+    case 'sn': st.tw--; st.pr = { i: P.id, k: 'cell', src: 'sn', c: Array.from({ length: 28 }, (_, i) => i + 1) }; return true;
+    case 'bd': {
+      spend(P, id); const b = badukPair(st, P); let n = 0;
+      for (const q of others(st, P)) for (const m of b.mid) { let k; while ((k = q.pc.findIndex(pc => nodeOf(pc) === m)) >= 0) { const d = killStack(st, q, k, P); if (!d) break; n += d; } }
+      st.tw += n; log(st, `⚫ ${P.n} 바둑! ${n}개 잡고 던지기 +${n}`); fx(st, { t: 'c', s: '⚫' });
+      if (!checkWin(st)) tidy(st); return true;
+    }
+    case 'gb': case 'vg': case 'zb': case 'po': case 'pw': {
+      spend(P, id);
+      const seen = {}; const o = [];
+      convertible(P).forEach(k => { const pc = P.pc[k]; const key = pc[0] === 'H' ? 'H' : nodeOf(pc); if (seen[key]) return; seen[key] = 1; o.push({ l: pc[0] === 'H' ? '대기 중인 말' : `${nodeOf(pc)}번 칸 말`, v: k }); });
+      st.pr = { i: P.id, k: 'opt', src: 'cv', ty: { gb: 'gob', vg: 'van', zb: 'zom', po: 'po', pw: 'pawn' }[id], o };
+      return true;
+    }
+    case 'hd': spend(P, id); P.hand = 1; log(st, `🃏 ${P.n} 다음 던지기는 원하는 대로!`); return true;
+    case 'lo': spend(P, id); P.lone = 1; log(st, `🥀 ${P.n} 외톨이 준비`); return true;
+    case 'sl': {
+      spend(P, id);
+      const e = st.q[st.q.length - 1]; const n = e[2] & 128 ? 6 : 4; const m = e[2] & 63;
+      st.pr = { i: P.id, k: 'opt', src: 'sl', o: Array.from({ length: n }, (_, i) => { const v = valFromMask(m ^ (1 << i), n); return { l: `${i + 1}번 막대 뒤집기 → ${YUT_NAME[v]}`, v: i }; }) };
+      return true;
+    }
+    case 'tt': spend(P, id); stackPrompt('tt'); return true;
+    case 'as': spend(P, id); stackPrompt('as'); return true;
+    case 'hs': spend(P, id); stackPrompt('hs'); return true;
+    case 'fi': spend(P, id); stackPrompt('fi'); return true;
+    case 'sc': spend(P, id); stackPrompt('sc'); return true;
+    case 'yt': spend(P, id); st.pr = { i: P.id, k: 'opt', src: 'yt', o: others(st, P).filter(q => !q.out).map(q => ({ l: q.n, v: pidx(st, q) })) }; return true;
+  }
+  return false;
+}
+
+function applyAug(st, P, id) {
+  const A = AUG[id]; const pi = pidx(st, P);
+  log(st, `${A.e} ${P.n} → ${A.n}`);
+  if (A.k === 'p') P.a.push(id);
+  if (A.k === 'u') { if (!P.a.includes(id)) P.a.push(id); P.u[id] = (P.u[id] || 0) + A.u; }
+  switch (id) {
+    case 'nm': {
+      const T = pickOne(others(st, P).filter(q => !q.out)); if (!T) break;
+      log(st, `🎯 나만 아니면 돼~ 걸린 사람: ${T.n}`); fx(st, { t: 'c', s: '🎯' });
+      for (const n of ownStackNodes(T)) { const k = T.pc.findIndex(pc => nodeOf(pc) === n); if (k >= 0) killStack(st, T, k, P); }
+      break;
+    }
+    case 'rb': {
+      log(st, '🔴 크고 빨간 버튼 꾹!'); fx(st, { t: 'c', s: '🔴' });
+      for (const q of st.pl) for (const n of DIAG) { let k; while ((k = q.pc.findIndex(pc => nodeOf(pc) === n)) >= 0) { if (!killStack(st, q, k, P)) break; } }
+      break;
+    }
+    case 'rp': st.rp.push({ n: 22, o: pi }); fx(st, { t: 'e', n: 22, s: '💀' }); break;
+    case 'pp': {
+      const free = Array.from({ length: 28 }, (_, i) => i + 1).filter(n => !st.pp.some(p => p[0] === n));
+      if (free.length) { const n = pickOne(free); st.pp.push([n, pi]); fx(st, { t: 'e', n, s: '💩' }); log(st, `💩 히히 똥! ${n}번 칸`); }
+      break;
+    }
+    case 'ob': givePick(st, P); log(st, `☝️ ${P.n} 이의있음! 다시 고름`); break;
+    case 'lc': { const o = others(st, P).filter(q => !q.out).map(q => ({ l: q.n, v: pidx(st, q) })); if (o.length && P.pc.some(pc => alive(pc) && pc[0] !== 'F')) st.pr = { i: P.id, k: 'opt', src: 'lc', o }; break; }
+    case 'dv': st.pr = { i: P.id, k: 'opt', src: 'dv', o: AUG_IDS.map(x => ({ l: `${AUG[x].e} ${AUG[x].n}`, v: x })) }; break;
+    case 'cf': {
+      const o = [];
+      for (const q of others(st, P)) for (const x of q.a) if (x !== 'ct' && !catted(q, x) && (AUG[x].k === 'p' || q.u[x] > 0)) o.push({ l: `${q.n}: ${AUG[x].e} ${AUG[x].n}`, v: pidx(st, q) * 100 + AUG_IDS.indexOf(x) });
+      if (o.length) st.pr = { i: P.id, k: 'opt', src: 'cf', o }; else log(st, '🎭 바꿀 증강이 없음');
+      break;
+    }
+  }
+}
+
+function answer(st, P, v) {
+  const pr = st.pr; st.pr = null;
+  const pi = pidx(st, P);
+  switch (pr.src) {
+    case 'hd': case 'gd': { const val = +v; finishThrow(st, P, [[val, maskFor(val), 4]], pr.src === 'hd' ? ' 🃏' : ' 🐖'); return; }
+    case 'lc': {
+      const T = st.pl[v]; if (!T) break;
+      let k = P.pc.findIndex(pc => pc[0] === 'H'); if (k < 0) k = P.pc.findIndex(pc => alive(pc) && pc[0] !== 'F');
+      if (k >= 0) { P.pc[k] = ['X', 0]; addPiece(T, ['H', 0], ''); P.lc = T.id; log(st, `🩸 ${P.n}이(가) ${T.n}한테 말을 줌 (같이 이기기)`); }
+      break;
+    }
+    case 'dv': if (AUG[v]) { P.dl = v; log(st, `📦 ${P.n} 다음 증강 배달 예약`); } break;
+    case 'cf': { const T = st.pl[Math.floor(v / 100)], x = AUG_IDS[v % 100]; if (T && x) { T.cat.push([x, st.r + 3]); log(st, `🎭 ${T.n}의 ${AUG[x].n} → 3라운드 동안 🐱고양이`); fx(st, { t: 'c', s: '🐱' }); } break; }
+    case 'cv': { P.pt[v] = pr.ty; log(st, `✨ ${P.n}의 말이 ${TYPE_NAME[pr.ty]}(으)로 변신!`); break; }
+    case 'yt': { const T = st.pl[v]; if (T) { T.sk += 2; log(st, `🥏 ${P.n}의 윷이 ${T.n}한테 명중! 차례 2번 건너뜀`); fx(st, { t: 'c', s: '🥏' }); } break; }
+    case 'sl': {
+      const e = st.q[st.q.length - 1]; if (!e) break;
+      const n = e[2] & 128 ? 6 : 4; const m = (e[2] & 63) ^ (1 << v); const nv = valFromMask(m, n);
+      if (nv === -99) { e[0] = 5; } else e[0] = nv;
+      e[2] = m | (e[2] & 384);
+      log(st, `🤏 ${P.n} 슬쩍! → ${YUT_NAME[e[0]]}`);
+      break;
+    }
+    case 'sn': P.sn = +v; log(st, `🔭 ${P.n} ${v}번 칸 조준 완료`); fx(st, { t: 'e', n: +v, s: '🎯' }); break;
+    case 'tr': {
+      const k = P.pc.findIndex(pc => nodeOf(pc) === +v); const ks = stackOf(P, +v);
+      let cur = P.pc[k].slice(0, 2); let moved = 0;
+      while (true) {
+        const node = ROUTES[cur[0]][cur[1]];
+        if (moved > 0 && CORNERS.includes(node)) break;
+        if (cur[1] + 1 > ROUTES[cur[0]].length - 1) { cur = ['F', 0]; break; }
+        const nx = [cur[0], cur[1] + 1]; const nn = ROUTES[nx[0]][nx[1]];
+        if (occupied(st, nn)) break;
+        cur = nx; moved++;
+        if (poopAt(st, nn, pi)) break;
+      }
+      if (cur[0] !== 'F') cur = switchRoute(cur);
+      for (const j of ks) P.pc[j] = cur.slice();
+      updateRiders(st, P, ks);
+      log(st, `🚚 ${P.n} 8톤 트럭 돌진! ${moved}칸`); fx(st, { t: 'c', s: '🚚' });
+      if (!checkWin(st)) { st.q = []; st.tw = 0; nextTurn(st); }
+      return;
+    }
+    case 'cb': {
+      const keep = stackOf(P, +v);
+      log(st, `💥 ${P.n} 3단 합체 필살기!!!`); fx(st, { t: 'c', s: '💥' });
+      for (const q of st.pl) { const nodes = [...new Set(q.pc.map((pc, j) => (q === P && keep.includes(j)) ? -1 : nodeOf(pc)).filter(n => n >= 0))]; for (const n of nodes) { const k = q.pc.findIndex((pc, j) => nodeOf(pc) === n && !(q === P && keep.includes(j))); if (k >= 0) killStack(st, q, k, P); } }
+      if (!checkWin(st)) { st.q = []; st.tw = 0; nextTurn(st); }
+      return;
+    }
+    case 'tt': {
+      if (pr.stage !== 2) {
+        const k = P.pc.findIndex(pc => nodeOf(pc) === +v);
+        const back = []; let cur = P.pc[k].slice(0, 2);
+        for (let s = 0; s < 25; s++) { if (cur[0] === 'A' && cur[1] === 1) break; cur = stepBack(cur); const n = ROUTES[cur[0]][cur[1]]; if (!back.some(b => b[0] === n)) back.push([n, cur.slice()]); if (n === 0) break; }
+        if (!back.length) break;
+        st.pr = { i: P.id, k: 'cell', src: 'tt', stage: 2, from: +v, c: back.map(b => b[0]), pos: back.map(b => b[1]) };
+        return;
+      }
+      const ks = stackOf(P, pr.from); const idx = pr.c.indexOf(+v); if (idx < 0) break;
+      for (const j of ks) P.pc[j] = pr.pos[idx].slice();
+      updateRiders(st, P, ks);
+      log(st, `⏳ ${P.n} 시간 여행!`); fx(st, { t: 'e', n: +v, s: '⏳' });
+      settle(st, P, P, ks, false);
+      break;
+    }
+    case 'as': stackOf(P, +v).forEach(j => P.so[j] = 1); log(st, `🗡️ ${P.n} 말뭉치에 암살자의 영혼 깃듦`); break;
+    case 'hs': stackOf(P, +v).forEach(j => P.sh[j] = 1); log(st, `🔰 ${P.n} 천상의 보호막`); break;
+    case 'fi': { const ks = stackOf(P, +v); P.cf = { pos: P.pc[ks[0]].slice(0, 2), ks }; log(st, `🔥 ${P.n} ${v}번 칸에 화톳불 설치`); break; }
+    case 'sc': {
+      const ks = stackOf(P, +v); const j0 = ks[0];
+      P.pc[j0] = ['H', 0]; P.so[j0] = 0; P.rd[j0] = 0;
+      P.pc.forEach((pc, j) => { if (onBoard(pc)) P.sh[j] = 1; });
+      log(st, `🕯️ ${P.n} 희생! 나머지 말에 보호막`); fx(st, { t: 'e', n: +v, s: '🕯️' });
+      break;
+    }
+    case 'pox': {
+      const k = pr.pk; const ks = stackOf(P, nodeOf(P.pc[k]));
+      const pos = posForNode(P, k, +v); if (!pos) break;
+      for (const R of others(st, P)) { const j = R.pc.findIndex(x => nodeOf(x) === +v); if (j >= 0) killStack(st, R, j, P); }
+      for (const j of ks) P.pc[j] = pos.slice();
+      updateRiders(st, P, ks);
+      P.pot = 1; log(st, `🏯 ${P.n}의 포 발사! ${v}번 칸으로`); fx(st, { t: 'e', n: +v, s: '🏯' });
+      break;
+    }
+  }
+  if (!checkWin(st)) tidy(st);
 }
 
 function act(st, pid, a) {
   if (!a || st.ph !== 'play') return false;
   const P = st.pl.find(q => q.id === pid);
   if (!P) return false;
-  if (a.t === 'pick') {
+  if (a.t === 'ans') {
+    if (!st.pr || st.pr.i !== pid) return false;
+    const pr = st.pr;
+    if (pr.k === 'opt' && !pr.o.some(o => o.v === a.v)) return false;
+    if (pr.k === 'cell' && !pr.c.includes(+a.v)) return false;
+    answer(st, P, a.v); return true;
+  }
+  if (a.t === 'pick' || a.t === 'det') {
     const idx = st.pk.findIndex(x => x.i === pid);
     if (idx < 0) return false;
     const e = st.pk[idx];
+    if (a.t === 'det') {
+      if (e.k !== 'a' || e.dt || !has(P, 'dt') || e.o.length < 2) return false;
+      const x = e.o[a.v | 0]; if (x === undefined) return false;
+      e.o.splice(a.v | 0, 1); e.dt = 1;
+      const h = P.pc.findIndex(pc => pc[0] === 'H');
+      log(st, `🔍 ${P.n} 명탐정! ${AUG[x].n} 지움${h >= 0 ? ' → 대기 말 1개 완주' : ''}`);
+      if (h >= 0) P.pc[h] = ['F', 0];
+      checkWin(st); return true;
+    }
     const opt = e.o[a.v | 0];
     if (opt === undefined) return false;
+    if (catForced(st, P, e) && opt !== 'ct') return false;
     st.pk.splice(idx, 1);
     if (e.k === 'v') applyAnvil(st, P, e, opt); else if (AUG[opt]) applyAug(st, P, opt);
     if (!checkWin(st)) tidy(st);
     return true;
   }
-  if (st.pk.length || st.pl[st.t].id !== pid) return false;
-  if (a.t === 'sci') {
-    if (st.mc !== pid) return false;
-    st.mc = null;
-    if (a.v) { P.iv = 1; P.ivs = 'ms'; log(st, `🧪 ${P.n} 실험 결과: 이번 턴 무적`); }
-    else { P.mb = 1; log(st, `🧪 ${P.n} 실험 결과: 이동 +1`); }
+  if (a.t === 'ride') { P.rideOn = P.rideOn ? 0 : 1; return true; }
+  if (a.t === 'help') {
+    if (!myTurnFree(st, P) || P.hu) return false;
+    const H = others(st, P).find(q => has(q, 'hp')); if (!H) return false;
+    P.hu = 1; st.q.push([2, 0, 0]); H.hb++; log(st, `🤝 ${P.n} 상부상조 개 받음 (${H.n}은 다음 차례에 걸)`);
+    tidy(st); return true;
+  }
+  if (a.t === 'use') { return useAug(st, P, a.v); }
+  if (a.t === 'gob') {
+    if (!myTurnFree(st, P) || P.gbt) return false;
+    const k = a.p | 0; if (P.pt[k] !== 'gob' || !alive(P.pc[k]) || P.pc[k][0] === 'F') return false;
+    const s = a.v > 0 ? 1 : -1;
+    if (P.pc[k][0] === 'H' && s < 0 && !has(P, 'rv')) return false;
+    P.gbt = 1; log(st, `👹 ${P.n}의 도깨비 ${s > 0 ? '도' : '빽도'}!`);
+    moveStack(st, P, P, k, s);
+    if (!checkWin(st)) tidy(st);
     return true;
   }
-  if (st.mc) return false;
-  if (a.t === 'throw') { if (st.tw <= 0) return false; doThrow(st, P); return true; }
-  if (a.t === 'move') { if (st.tw > 0) return false; return doMove(st, P, a.v | 0, a.p | 0); }
+  if (!myTurnFree(st, P)) return false;
+  if (a.t === 'throw') { if (st.tw <= 0) return false; startThrow(st, P); return true; }
+  if (a.t === 'move') {
+    if (st.tw > 0) return false;
+    const e = st.q[a.v | 0]; if (!e) return false;
+    const oi = a.o === undefined ? pidx(st, P) : a.o | 0;
+    const Q = st.pl[oi]; if (!Q) return false;
+    const k = a.p | 0;
+    if (!movablePieces(st, P, e).some(m => m[0] === oi && (m[1] === k || (Q.pc[k] && Q.pc[k][0] === 'H' && Q.pc[m[1]][0] === 'H')))) return false;
+    let s = stepsFor(st, P, e, Q);
+    if (Q === P && Q.pc[k][0] === 'H' && chance(P.x.hs)) { s += 2; log(st, '🚀 출발 부스터 +2'); }
+    if (s > 0 && chance(P.x.mv)) { s += 1; log(st, '👣 한 칸 더!'); }
+    st.q.splice(a.v | 0, 1);
+    if (Q !== P) log(st, `🌀 ${P.n}이(가) 최면으로 ${Q.n}의 말을 움직임`);
+    moveStack(st, P, Q, k, s);
+    if (!checkWin(st)) tidy(st);
+    return true;
+  }
   return false;
 }
 
+function preview(st, P, qi, k, oi) {
+  const e = st.q[qi]; const Q = oi === undefined ? P : st.pl[oi];
+  if (!e || !Q) return null; const pc = Q.pc[k];
+  if (!pc || !alive(pc) || pc[0] === 'F') return null;
+  const s = stepsFor(st, P, e, Q);
+  if (pc[0] === 'H' && s < 0 && !has(Q, 'rv')) return null;
+  return walk(st, Q, pc, s, Q.lp[k]).pc;
+}
+
+// ---- 봇
+function botAnswer(st) {
+  const pr = st.pr; const P = st.pl.find(q => q.id === pr.i);
+  if (pr.k === 'opt') {
+    if (pr.src === 'hd') return { t: 'ans', v: 5 };
+    if (pr.src === 'sl') { let best = 0, bv = -9; const e = st.q[st.q.length - 1]; const n = e[2] & 128 ? 6 : 4; pr.o.forEach(o => { const v = valFromMask((e[2] & 63) ^ (1 << o.v), n); if (v > bv) { bv = v; best = o.v; } }); return { t: 'ans', v: best }; }
+    return { t: 'ans', v: pickOne(pr.o).v };
+  }
+  if (pr.src === 'sn') {
+    let best = pickOne(pr.c), bs = 0;
+    for (const n of pr.c) { const s = st.pl.reduce((a, q) => q === P ? a : a + q.pc.filter(pc => nodeOf(pc) === n).length, 0); if (s > bs) { bs = s; best = n; } }
+    return { t: 'ans', v: best };
+  }
+  return { t: 'ans', v: pickOne(pr.c) };
+}
 function botAction(st, pid) {
+  if (st.pr) return st.pr.i === pid ? botAnswer(st) : null;
   const e = st.pk.find(x => x.i === pid);
-  if (e) return { t: 'pick', v: rnd(0, e.o.length - 1) };
+  const P = st.pl.find(q => q.id === pid);
+  if (e) {
+    if (catForced(st, P, e)) return { t: 'pick', v: e.o.indexOf('ct') };
+    return { t: 'pick', v: rnd(0, e.o.length - 1) };
+  }
   if (st.pk.length || st.ph !== 'play' || st.pl[st.t].id !== pid) return null;
-  if (st.mc === pid) return { t: 'sci', v: rnd(0, 1) };
+  // 증강 가끔 사용
+  if (Math.random() < 0.35) {
+    const usable = P.a.filter(id => AUG[id].k === 'u' && canUse(st, P, id)).concat(canUse(st, P, 'pox') ? ['pox'] : []);
+    if (usable.length) return { t: 'use', v: pickOne(usable) };
+  }
+  if (!P.gbt && P.pt.includes('gob') && Math.random() < 0.5) {
+    const k = P.pt.findIndex((t, j) => t === 'gob' && alive(P.pc[j]) && P.pc[j][0] !== 'F');
+    if (k >= 0) return { t: 'gob', p: k, v: 1 };
+  }
+  if (!P.hu && others(st, P).some(q => has(q, 'hp')) && Math.random() < 0.5) return { t: 'help' };
   if (st.tw > 0) return { t: 'throw' };
-  const P = st.pl[st.t];
   let best = null, bs = -1e9;
-  st.q.forEach((_, qi) => {
-    let homeDone = false;
-    P.pc.forEach((pc, k) => {
-      if (pc[0] === 'H') { if (homeDone) return; homeDone = true; }
-      const nw = preview(st, P, qi, k);
-      if (!nw) return;
+  st.q.forEach((en, qi) => {
+    movablePieces(st, P, en).forEach(([oi, k]) => {
+      const Q = st.pl[oi]; const pc = Q.pc[k];
+      const nw = preview(st, P, qi, k, oi); if (!nw) return;
       let s = Math.random() * 3;
-      if (nw[0] === 'F') s += 60;
+      if (Q !== P) { s = (remaining(nw) - remaining(pc)) * 2 - 5; }
+      else if (nw[0] === 'F') s += 60;
       else {
         const nd = nodeOf(nw);
         if (others(st, P).some(q => q.pc.some(x => nodeOf(x) === nd))) s += 100;
         if ([5, 10, 22].includes(nd)) s += 25;
-        if (P.pc.some((x, j) => j !== k && nodeOf(x) === nd)) s += 8;
         s += (remaining(pc) - remaining(nw)) * 2;
         if (pc[0] === 'H') s += 5;
       }
-      if (s > bs) { bs = s; best = { t: 'move', v: qi, p: k }; }
+      if (s > bs) { bs = s; best = { t: 'move', v: qi, p: k, o: oi }; }
     });
   });
   return best;
 }
 
-function chat(st, pi, text) {
-  st.li = (st.li || 0) + 1;
-  st.ch = st.ch || [];
-  st.ch.push([st.li, pi, String(text).slice(0, 120)]);
-  while (st.ch.length > 40) st.ch.shift();
-}
-
-if (typeof module !== 'undefined') module.exports = { chat, newState, startGame, act, botAction, preview, AUG, PSTAT, ROUTES, YUT_NAME, VALS, nodeOf, onBoard };
+if (typeof module !== 'undefined') module.exports = { chat, newState, startGame, act, botAction, preview, canUse, catForced, movablePieces, AUG, PSTAT, ROUTES, YUT_NAME, VALS, TYPE_NAME, nodeOf, onBoard, alive, has };
 
 </script>
 <script>
@@ -949,17 +1303,20 @@ const isBotLike = p => p.b || p.o;
 function scheduleBots() {
   clearTimeout(botTimer);
   if (mode === 'client' || !state || state.ph !== 'play') return;
-  const pend = state.pk.find(e => { const p = state.pl.find(q => q.id === e.i); return p && isBotLike(p); });
-  if (pend) {
-    botTimer = setTimeout(() => { if (state.pk.includes(pend)) { act(state, pend.i, { t: 'pick', v: Math.floor(Math.random() * pend.o.length) }); changed(); } }, 1500);
-    return;
+  const botty = id => { const p = state.pl.find(q => q.id === id); return p && isBotLike(p); };
+  let who = null;
+  if (state.pr) { if (botty(state.pr.i)) who = state.pr.i; else return; }
+  else {
+    const pend = state.pk.find(e => botty(e.i));
+    if (pend) who = pend.i;
+    else if (state.pk.length) return;
+    else { const cur = state.pl[state.t]; if (cur && isBotLike(cur)) who = cur.id; }
   }
-  if (state.pk.length) return;
-  const cur = state.pl[state.t];
-  if (cur && isBotLike(cur)) {
-    const a = botAction(state, cur.id);
-    if (a) botTimer = setTimeout(() => { act(state, cur.id, a); changed(); }, a.t === 'throw' ? 1600 : 1300);
-  }
+  if (!who) return;
+  const a = botAction(state, who);
+  if (!a) return;
+  const delay = a.t === 'throw' ? 1600 : a.t === 'pick' ? 1400 : 1300;
+  botTimer = setTimeout(() => { if (act(state, who, a)) changed(); else { scheduleBots(); } }, delay);
 }
 function doAct(pid, a) {
   if (mode === 'client') { net && net.send({ k: 'act', a }); return; }
@@ -1166,135 +1523,165 @@ function boardSVG() {
   return s + `</svg>`;
 }
 
-function curP() { return state && state.ph === 'play' ? state.pl[state.t] : null; }
+const curP = () => state && state.ph === 'play' ? state.pl[state.t] : null;
+const myP = () => state ? (mode === 'local' ? curP() : state.pl.find(q => q.id === myId)) : null;
+// 지금 내가 조작할 수 있는 차례인가 (로컬이면 사람 차례면 됨)
 function isMyTurn() {
   const cur = curP();
-  return cur && !state.pk.length && !isBotLike(cur) && (mode === 'local' || cur.id === myId);
+  return cur && !state.pk.length && !state.pr && !isBotLike(cur) && (mode === 'local' || cur.id === myId);
 }
-// "나" 패널에 보여줄 플레이어 (로컬이면 지금 차례인 사람)
 function mePlayer() {
   if (!state) return null;
   if (mode === 'local') { const c = curP(); if (c && !c.b) return c; return state.pl.find(q => q.id === 'h0') || state.pl[0]; }
   return state.pl.find(q => q.id === myId) || null;
 }
-function movable(qi) {
-  const P = curP(); const out = [];
-  if (!P) return out;
-  P.pc.forEach((pc, k) => { if (onBoard(pc) && preview(state, P, qi, k)) out.push(k); });
-  return out;
+// 프롬프트가 내 거인가
+function myPrompt() {
+  const pr = state && state.pr; if (!pr) return null;
+  const P = state.pl.find(q => q.id === pr.i); if (!P) return null;
+  if (mode === 'local') return P.b ? null : pr;
+  return pr.i === myId ? pr : null;
 }
 const qName = e => YUT_NAME[e[0]] + (e[1] ? '+' + e[1] : '');
 const nameOf = id => (state.pl.find(q => q.id === id) || {}).n || '?';
+const TYPE_EMO = { gob: '👹', van: '⚔️', zom: '🧟', po: '🏯', pawn: '♟️' };
 
-function boardHTML(cur, mine, can, homeK, canHome) {
+function boardHTML(cur, mine, can, homeK) {
   let h = `<div class="board" id="board">${boardSVG()}`;
-  let quake = false;
+  // 바닥 표시: 똥, 사신, 화톳불, 명사수 조준
+  const marks = {};
+  const addM = (n, s) => { (marks[n] = marks[n] || []).push(s); };
+  (state.pp || []).forEach(p => addM(p[0], '💩'));
+  (state.rp || []).forEach(r => addM(r.n, '💀'));
+  state.pl.forEach(q => { if (q.cf) addM(nodeOf(q.cf.pos), '🔥'); if (q.sn !== null && q.sn !== undefined) addM(q.sn, '🎯'); });
+  for (const n in marks) { const [x, y] = NODE_XY[n]; h += `<div class="mark ${marks[n].includes('💀') ? 'reaper' : ''}" style="left:${pct(x)}%;top:${pct(y)}%">${marks[n].join('')}</div>`; }
   state.pl.forEach((q, pi) => {
     const seen = {};
-    const sc = pieceScale(q);
-    if (sc >= 1.5 && q.pc.some(onBoard)) quake = true;
-    const hasA = id => q.a.includes(id);
     q.pc.forEach((pc, k) => {
       if (!onBoard(pc)) return;
       const nd = nodeOf(pc);
-      const cnt = q.pc.filter(x => onBoard(x) && nodeOf(x) === nd).length;
+      const stk = q.pc.map((_, j) => j).filter(j => onBoard(q.pc[j]) && nodeOf(q.pc[j]) === nd);
       const first = !seen[nd]; seen[nd] = 1;
       const [x, y] = NODE_XY[nd];
-      const off = pi * 1.2 - 1.8;
-      const isCan = pi === state.t && can.includes(k);
-      const shY = q.iv, shB = pc[2] || (hasA('vw') && !q.vu);
-      const wind = (hasA('ge') && q.gx > 0) || (hasA('sw') && pc[0] !== 'A');
-      let inner = `<span class="lab">${q.sk ? '🐿️' : esc(q.n[0] || '')}</span>`;
-      if (hasA('gc')) inner += '<span class="gl"></span>';
-      if (shB) inner += '<span class="sh b"></span>';
-      if (shY) inner += `<span class="sh y ${shB ? 'b2' : ''}"></span>`;
-      if (q.kc) inner += '<span class="crown">👑</span>';
-      if (wind) inner += '<span class="wind"><i></i><i></i><i></i></span>';
-      if (first && cnt > 1) inner += `<span class="cnt">×${cnt}</span>`;
-      const cls = ['ptok', isCan ? 'can' : '', sc > 1 ? 'big' : '', hasA('gc') ? 'glossy' : '', q.sk ? 'sq' : ''].join(' ');
-      h += `<div class="${cls}" id="pt-${pi}-${k}" style="--sc:${sc};left:${pct(x) + off}%;top:${pct(y) + off}%;background-color:${COLORS[q.c]};${first ? '' : 'opacity:0;'}" ${isCan ? `onclick="moveP(${k})"` : ''}>${inner}</div>`;
+      const off = pi * 1.2 - 1.8 + (q.rd[k] ? 2.2 : 0);
+      const isCan = can.some(c => c[0] === pi && stk.includes(c[1]));
+      const types = [...new Set(stk.map(j => q.pt[j]).filter(Boolean))];
+      let inner = `<span class="lab">${types.length ? types.map(t => TYPE_EMO[t]).join('') : esc(q.n[0] || '')}</span>`;
+      if (stk.some(j => q.sh[j])) inner += '<span class="sh b"></span>';
+      if (stk.some(j => q.so[j])) inner += '<span class="soul">🗡️</span>';
+      if (q.rd[k]) inner += '<span class="soul" style="left:-8px;right:auto">🚌</span>';
+      if (first && stk.length > 1) inner += `<span class="cnt">×${stk.length}</span>`;
+      h += `<div class="ptok ${isCan ? 'can' : ''} ${types.length ? 'typed' : ''}" id="pt-${pi}-${k}" style="left:${pct(x) + off}%;top:${pct(y) + off}%;background-color:${COLORS[q.c]};${first ? '' : 'opacity:0;pointer-events:none;'}" ${isCan ? `onclick="moveP(${pi},${k})"` : ''}>${inner}</div>`;
     });
   });
+  // 이동 미리보기
   if (mine) {
     const shown = {};
-    const targets = can.slice(); if (canHome) targets.push(homeK);
-    targets.forEach(k => {
-      const nw = preview(state, cur, selQ, k);
+    can.forEach(([oi, k]) => {
+      const nw = preview(state, cur, selQ, k, oi);
       if (!nw || nw[0] === 'F') return;
       const nd = nodeOf(nw); if (shown[nd]) return; shown[nd] = 1;
       const [x, y] = NODE_XY[nd];
       h += `<div class="dest" style="left:${pct(x)}%;top:${pct(y)}%"></div>`;
     });
   }
-  h += `</div>`;
-  if (quake) h = h.replace('<div class="board" id="board">', '<div class="board quake" id="board">');
-  return h;
-}
-// 말 크기: 커지는 효과는 곱해서 최대 200%, 탭댄서는 혼자 15%까지, 다른 축소랑은 계속 겹침
-function pieceScale(q) {
-  const A = id => q.a.includes(id);
-  let g = 1, s = 1;
-  if (A('gl')) g *= 1.35;
-  if (q.iv && q.ivs === 'ms') g *= 1.15;
-  if (A('gs')) s *= 0.75;
-  if (q.sd) s *= 0.8;
-  if (q.mb) s *= 0.85;
-  if (A('td')) s *= Math.max(0.15, 1 - 0.1 * (q.tds || 0));
-  return Math.max(0.06, Math.min(2, g * s));
+  // 칸 고르기 프롬프트
+  const pr = myPrompt();
+  if (pr && pr.k === 'cell') pr.c.forEach(n => { const [x, y] = NODE_XY[n]; h += `<div class="pick" style="left:${pct(x)}%;top:${pct(y)}%" onclick="ans(${n})"></div>`; });
+  return h + `</div>`;
 }
 
 function piecesHTML(q) {
-  const home = q.pc.filter(pc => pc[0] === 'H').length, done = q.pc.filter(pc => pc[0] === 'F').length;
-  return `<span class="pcs">대기 ${('<span class="mini" style="background:' + COLORS[q.c] + '"></span>').repeat(home)} 완주 ${done}/${q.pc.length}</span>`;
+  const al = q.pc.filter(alive);
+  const home = al.filter(pc => pc[0] === 'H').length, done = al.filter(pc => pc[0] === 'F').length;
+  return `<span class="pcs">대기 ${('<span class="mini" style="background:' + COLORS[q.c] + '"></span>').repeat(home)} 완주 ${done}/${al.length}</span>`;
 }
 function statusList(q) {
   const st = [];
-  if (q.iv) st.push('🛡️무적'); if (q.sk) st.push('🐿️다람쥐'); if (q.sd) st.push('🔦감쇠'); if (q.te) st.push(`🛞×${q.te}`); if (q.gx) st.push(`🤩+${q.gx}`); if (q.o) st.push('🤖대신 플레이');
+  if (q.out) st.push('☠️탈락');
+  if (q.sk) st.push(`😵건너뜀×${q.sk}`);
+  if (q.o) st.push('🤖대신 플레이');
+  if (q.hand) st.push('🃏원하는 결과 준비');
+  if (q.lone) st.push('🥀외톨이 준비');
+  if (q.a.includes('ak')) st.push('🎼' + [-1, 1, 2, 3, 4, 5].map((v, i) => q.th >> i & 1 ? YUT_NAME[v] : '·').join(''));
+  if (q.a.includes('af') && q.af) st.push(`🎣${q.af}/2`);
+  if (q.bk && q.bk.length) st.push(`🎁적립 ${q.bk.map(v => YUT_NAME[v]).join(',')}`);
+  if (q.lc) st.push(`🩸${esc(nameOf(q.lc))}랑 동반승리`);
+  const z = q.pc.filter((pc, j) => alive(pc) && q.pt[j] === 'zom').length; if (z) st.push(`🧟좀비 ${z}`);
   if (q.x) for (const k in q.x) if (PSTAT[k] && q.x[k]) st.push(`${PSTAT[k].e}${PSTAT[k].n} ${q.x[k]}%`);
   return st;
 }
 const BAR_COL = ['#9aa6b8', '#ff8fb1', '#ffb86b', '#8be28b', '#6bc6ff', '#c88bff'];
 
-function meHTML(cur, mine, can, homeK, canHome, selE) {
+function augChips(q, interactive) {
+  return q.a.map(x => {
+    const A = AUG[x]; if (!A) return '';
+    const cat = (q.cat || []).find(c => c[0] === x);
+    if (cat) return `<span class="aug catted" onclick="showTip('${x}')">🐱 <s>${A.n}</s></span>`;
+    if (A.k === 'u') {
+      const left = x === 'sn' ? '∞' : (q.u[x] || 0);
+      const ok = interactive && canUse(state, q, x);
+      return `<button class="aug use ${ok ? 'ok' : ''}" ${ok ? `onclick="useA('${x}')"` : `onclick="showTip('${x}')"`}>${A.e} ${A.n} <b>${left}</b></button>`;
+    }
+    return `<span class="aug" onclick="showTip('${x}')">${A.e} ${A.n}</span>`;
+  }).join('');
+}
+
+function meHTML(cur, mine, can, homeK) {
   const me = mePlayer();
-  if (!me) return `<div class="me o-me"><div class="hint">관전 중 👀</div>${controlsHTML(cur, mine, can, homeK, canHome, selE)}</div>`;
+  if (!me || !me.pc) return `<div class="me o-me"><div class="hint">관전 중 👀</div>${controlsHTML(cur, mine, can, homeK)}</div>`;
   const myTurnNow = state.ph === 'play' && cur && cur.id === me.id;
   let h = `<div class="me o-me ${myTurnNow ? 'turnon' : ''}"><div class="hd"><span class="dot" style="background:${COLORS[me.c]}"></span>${esc(me.n)}${piecesHTML(me)}</div>`;
   if (myTurnNow) h += `<div style="text-align:right;margin-top:4px"><span class="tag" style="background:var(--y);color:#1a1033">${mode === 'local' ? esc(me.n) + ' 차례!' : '내 차례!'}</span></div>`;
-  h += controlsHTML(cur, mine, can, homeK, canHome, selE);
+  h += controlsHTML(cur, mine, can, homeK);
   if (me.w) {
-    const bbOn = me.a.includes('bb');
-    h += `<div class="bars">${[1, 2, 3, 4, 5, 0].map(j => { const p = me.w[j] * 100; if (bbOn && (j === 4 || j === 5)) return `<span class="bl" style="color:#ff9aa8">${YUT_NAME[VALS[j]]}</span><span class="bt lock">🔒 → 걸</span><span class="bv" style="color:#ff9aa8">${p.toFixed(1)}%</span>`; return `<span class="bl">${YUT_NAME[VALS[j]]}</span><span class="bt"><span class="bf" style="display:block;width:${Math.min(100, p * 2.2)}%;background:${BAR_COL[j]}"></span></span><span class="bv">${p.toFixed(1)}%</span>`; }).join('')}</div>`;
+    const ruled = me.a.includes('gy') ? '🎋 윷 6개' : me.a.includes('md') ? '🎰 모 아니면 도' : me.a.includes('gd') ? '🐖 도·개 선택' : '';
+    if (ruled) h += `<div class="hint" style="color:#ff9aa8;margin-top:10px">${ruled} 규칙 적용 중</div>`;
+    h += `<div class="bars">${[1, 2, 3, 4, 5, 0].map(j => { const p = me.w[j] * 100; return `<span class="bl">${YUT_NAME[VALS[j]]}</span><span class="bt"><span class="bf" style="display:block;width:${Math.min(100, p * 2.2)}%;background:${BAR_COL[j]}"></span></span><span class="bv">${p.toFixed(1)}%</span>`; }).join('')}</div>`;
     const st = statusList(me);
     if (st.length) h += `<div class="stats">${st.map(s => `<span>${s}</span>`).join('')}</div>`;
   }
-  if (me.a && me.a.length) h += `<div class="augs">${me.a.map(x => AUG[x] ? `<span class="aug t${AUG[x].t}" onclick="showTip('${x}')">${AUG[x].e} ${AUG[x].n}</span>` : '').join('')}</div>`;
+  const inter = isMyTurn() && myTurnNow;
+  if (me.a.length) h += `<div class="augs">${augChips(me, inter)}</div>`;
+  // 특수 행동 버튼
+  const extra = [];
+  if (inter) {
+    if (canUse(state, me, 'pox')) extra.push(`<button class="aug use ok" onclick="useA('pox')">🏯 포 쏘기</button>`);
+    me.pt.forEach((t, k) => { if (t === 'gob' && !me.gbt && alive(me.pc[k]) && me.pc[k][0] !== 'F') { extra.push(`<button class="aug use ok" onclick="gob(${k},1)">👹 도깨비 도</button>`); if (onBoard(me.pc[k])) extra.push(`<button class="aug use ok" onclick="gob(${k},-1)">👹 도깨비 빽도</button>`); } });
+    if (!me.hu && state.pl.some(q => q !== me && q.a.includes('hp') && !(q.cat || []).some(c => c[0] === 'hp'))) extra.push(`<button class="aug use ok" onclick="helpMe()">🤝 상부상조 개 받기</button>`);
+  }
+  if (me.a.includes('fr')) extra.push(`<button class="aug use ${me.rideOn ? 'ok' : ''}" onclick="ride()">🚌 무임승차 ${me.rideOn ? 'ON' : 'OFF'}</button>`);
+  if (extra.length) h += `<div class="augs">${extra.join('')}</div>`;
   return h + `</div>`;
 }
 
-function controlsHTML(cur, mine, can, homeK, canHome, selE) {
+function controlsHTML(cur, mine, can, homeK) {
   if (state.ph !== 'play') return '';
   const d = state.d;
   const fl = d ? d.f : [true, false, true, false];
-  let h = `<div class="throwrow"><div class="sticks" id="sticks">${fl.map((f, i) => `<div class="stick ${f ? 'flat' : 'round'} ${f && i === 0 ? 'mark' : ''}"></div>`).join('')}</div>
-    <div class="yname" id="yname">${d ? YUT_NAME[d.v] : '🥢'}</div></div>`;
+  let h = `<div class="throwrow"><div class="sticks ${fl.length > 4 ? 'six' : ''}" id="sticks">${fl.map((f, i) => `<div class="stick ${f ? 'flat' : 'round'} ${f && i === 0 ? 'mark' : ''}"></div>`).join('')}</div>
+    <div class="yname" id="yname">${d ? YUT_NAME[d.v] + (d.v2 !== undefined ? '<small>+' + YUT_NAME[d.v2] + '</small>' : '') : '🥢'}</div></div>`;
   if (d) h += `<div class="hint" style="margin:0">${esc(nameOf(d.w))}의 마지막 결과</div>`;
   if (state.q.length) h += `<div class="chips">${state.q.map((e, i) => `<button class="chip ${mine && i === selQ ? 'on' : ''}" ${mine ? `onclick="selQ=${i};render()"` : 'disabled'}>${qName(e)}</button>`).join('')}</div>`;
-  if (state.pk.length) {
+  const pr = state.pr;
+  if (pr) {
+    const mp = myPrompt();
+    if (mp && mp.k === 'cell') h += `<div class="hint" style="color:var(--y)">👆 ${PROMPT_TXT[mp.src] || '칸을 골라'} (반짝이는 칸 탭)</div>`;
+    else if (!mp) h += `<div class="hint">🤔 ${esc(nameOf(pr.i))} 고르는 중...</div>`;
+  } else if (state.pk.length) {
     const ws = [...new Set(state.pk.map(e => nameOf(e.i)))];
     h += `<div class="hint">🃏 ${ws.map(esc).join(', ')} 고르는 중...</div>`;
-  } else if (state.mc) {
-    if (isMyTurn()) h += `<div class="hint">🧪 미친 과학자! 이번 턴 실험을 골라</div><div class="row"><button class="btn cyan" onclick="doAct(state.pl[state.t].id,{t:'sci',v:0})">👣 이동 +1</button><button class="btn" onclick="doAct(state.pl[state.t].id,{t:'sci',v:1})">🛡️ 무적</button></div>`;
-    else h += `<div class="hint">🧪 ${esc(cur.n)} 실험 고르는 중...</div>`;
   } else if (isMyTurn()) {
     if (state.tw > 0) h += `<button class="btn pink" style="font-size:21px;padding:16px" onclick="doAct(state.pl[state.t].id,{t:'throw'})">윷 던지기!${state.tw > 1 ? ` (${state.tw}번)` : ''}</button>`;
     else {
-      h += `<div class="hint">${can.length ? '반짝이는 말을 탭해서 ' + qName(selE) + ' 이동' : ''}${can.length && canHome ? ' / ' : ''}${canHome ? '새 말 올려도 됨' : ''}</div>`;
-      if (canHome) h += `<button class="btn cyan" onclick="moveP(${homeK})">🆕 새 말 올리기 (${qName(selE)})</button>`;
+      const selE = state.q[selQ];
+      h += `<div class="hint">${can.length ? '반짝이는 말을 탭해서 ' + qName(selE) + ' 이동' : '움직일 수 있는 말이 없어'}</div>`;
+      if (homeK >= 0) h += `<button class="btn cyan" onclick="moveP(${state.t},${homeK})">🆕 새 말 올리기 (${qName(selE)})</button>`;
     }
-  } else h += `<div class="hint">${esc(cur.n)} ${state.tw > 0 ? '던지는 중...' : '말 옮기는 중...'}</div>`;
+  } else if (cur) h += `<div class="hint">${esc(cur.n)} ${state.tw > 0 ? '던지는 중...' : '말 옮기는 중...'}</div>`;
   return h;
 }
+const PROMPT_TXT = { tr: '트럭으로 보낼 말뭉치', cb: '합체 필살기 쓸 말뭉치', sn: '명사수로 조준할 칸', tt: '시간 여행 보낼 말뭉치', as: '영혼 넣을 말뭉치', hs: '보호막 씌울 말뭉치', fi: '화톳불 놓을 말뭉치', sc: '희생할 말이 있는 칸', pox: '포가 날아갈 칸' };
 
 function oppsHTML() {
   const me = mePlayer();
@@ -1302,11 +1689,11 @@ function oppsHTML() {
   return `<div class="opps-grid o-opps">${opps.map(q => {
     const pi = state.pl.indexOf(q);
     const turn = state.ph === 'play' && pi === state.t;
-    const st = statusList(q);
-    return `<div class="opp ${turn ? 'turnon' : ''}"><div class="hd"><span class="dot" style="width:16px;height:16px;border-width:2px;background:${COLORS[q.c]}"></span>${esc(q.n)}${q.b ? '<span class="tag">봇</span>' : ''}${turn ? '<span class="tag" style="background:var(--y);color:#1a1033">차례</span>' : ''}${piecesHTML(q)}</div>
-      ${q.w ? `<div class="pr">${[1, 2, 3, 4, 5].map(j => q.a.includes('bb') && j >= 4 ? `<span style="color:#ff9aa8">${YUT_NAME[VALS[j]]}→걸 🔒</span>` : `<span>${YUT_NAME[VALS[j]]} <b>${(q.w[j] * 100).toFixed(0)}%</b></span>`).join('')}</div>` : ''}
+    const st = q.pc ? statusList(q) : [];
+    return `<div class="opp ${turn ? 'turnon' : ''} ${q.out ? 'dead' : ''}"><div class="hd"><span class="dot" style="width:16px;height:16px;border-width:2px;background:${COLORS[q.c]}"></span>${esc(q.n)}${q.b ? '<span class="tag">봇</span>' : ''}${turn ? '<span class="tag" style="background:var(--y);color:#1a1033">차례</span>' : ''}${q.pc ? piecesHTML(q) : ''}</div>
+      ${q.w ? `<div class="pr">${[1, 2, 3, 4, 5].map(j => `<span>${YUT_NAME[VALS[j]]} <b>${(q.w[j] * 100).toFixed(0)}%</b></span>`).join('')}</div>` : ''}
       ${st.length ? `<div class="pr" style="color:var(--y)">${st.map(s => `<span>${s}</span>`).join('')}</div>` : ''}
-      ${q.a.length ? `<div class="ae">${q.a.map(x => AUG[x] ? `<span title="${AUG[x].n}" onclick="showTip('${x}')">${AUG[x].e}</span>` : '').join('')}</div>` : ''}</div>`;
+      ${q.a && q.a.length ? `<div class="ae">${q.a.map(x => AUG[x] ? `<span title="${AUG[x].n}" onclick="showTip('${x}')">${(q.cat || []).some(c => c[0] === x) ? '🐱' : AUG[x].e}</span>` : '').join('')}</div>` : ''}</div>`;
   }).join('')}</div>`;
 }
 
@@ -1324,30 +1711,39 @@ function chatHTML() {
 
 function gameHTML() {
   const cur = curP();
-  const mine = isMyTurn() && !state.mc && state.tw === 0 && state.q.length;
+  const mine = isMyTurn() && state.tw === 0 && state.q.length;
   if (selQ >= (state.q || []).length) selQ = 0;
-  const selE = mine ? state.q[selQ] : null;
-  const can = mine ? movable(selQ) : [];
-  const homeK = mine ? cur.pc.findIndex(pc => pc[0] === 'H') : -1;
-  const canHome = homeK >= 0 && !!preview(state, cur, selQ, homeK);
+  let can = [], homeK = -1;
+  if (mine) {
+    const all = movablePieces(state, cur, state.q[selQ]).filter(([oi, k]) => !!preview(state, cur, selQ, k, oi));
+    const ci = state.t;
+    homeK = (all.find(([oi, k]) => oi === ci && cur.pc[k][0] === 'H') || [0, -1])[1];
+    can = all.filter(([oi, k]) => state.pl[oi].pc[k][0] !== 'H');
+  }
   let top = `<div class="topbar o-top"><span>${state.r}턴 ${roomLabel ? `<span class="tag">${esc(roomLabel)}</span>` : ''}</span>
     ${state.ph === 'end' ? '<span class="turn">게임 끝!</span>' : `<span class="turn"><span class="dot" style="width:12px;height:12px;border-width:2px;vertical-align:-1px;background:${COLORS[cur.c]}"></span> ${esc(cur.n)} 차례</span>`}
     <span><button class="tag" style="font-size:12px;padding:5px 8px" onclick="toggleGuide()">📖</button> <button class="tag" style="font-size:12px;padding:5px 8px" onclick="leave()">나가기</button></span></div>`;
   if (state.ph === 'end') {
-    top += `<div class="win o-top">🏆 ${esc(nameOf(state.w))} 우승!</div>`;
+    const ws = (state.ws && state.ws.length ? state.ws : [state.w]).map(id => esc(nameOf(id))).join(' & ');
+    top += `<div class="win o-top">🏆 ${ws} 우승!</div>`;
     top += mode !== 'client' ? `<button class="btn pink o-top" onclick="backToLobby()">한 판 더!</button>` : `<div class="note o-top" style="text-align:center">방장이 한 판 더 누르면 대기실로 감</div>`;
   }
   return `<div class="gwrap">
-    <div class="col">${top}<div class="o-board">${boardHTML(cur, mine, can, homeK, canHome)}</div>${chatHTML()}</div>
-    <div class="col">${meHTML(cur, mine, can, homeK, canHome, selE)}${oppsHTML()}</div>
+    <div class="col">${top}<div class="o-board">${boardHTML(cur, mine, can, homeK)}</div>${chatHTML()}</div>
+    <div class="col">${meHTML(cur, mine, can, homeK)}${oppsHTML()}</div>
   </div>`;
 }
 
-function moveP(k) {
+function moveP(oi, k) {
   const P = curP(); if (!P) return;
-  doAct(P.id, { t: 'move', v: selQ, p: k });
+  doAct(P.id, { t: 'move', v: selQ, p: k, o: oi });
   selQ = 0;
 }
+function useA(id) { const P = curP(); if (P) doAct(P.id, { t: 'use', v: id }); }
+function gob(k, v) { const P = curP(); if (P) doAct(P.id, { t: 'gob', p: k, v }); }
+function helpMe() { const P = curP(); if (P) doAct(P.id, { t: 'help' }); }
+function ride() { const me = mePlayer(); if (me) doAct(me.id, { t: 'ride' }); }
+function ans(v) { const pr = state.pr; if (pr) doAct(pr.i, { t: 'ans', v }); }
 
 let prevPos = {};
 function afterGameRender() {
@@ -1383,83 +1779,20 @@ function spawnFx(cls, html, x, y, dur) {
   setTimeout(() => el.remove(), dur || 1500);
   return el;
 }
-function fly(el, from, to, dur, extra) {
-  el.animate([
-    { transform: `translate(-50%,-50%) translate(0,0) ${extra ? extra[0] : ''}`, opacity: 1 },
-    { transform: `translate(-50%,-50%) translate(${to[0] - from[0]}px,${to[1] - from[1]}px) ${extra ? extra[1] : ''}`, opacity: extra && extra[2] !== undefined ? extra[2] : 1 },
-  ], { duration: dur, easing: 'cubic-bezier(.3,.7,.4,1)', fill: 'forwards' });
-}
 function playFx() {
   const list = state.fx || [];
   const maxId = list.length ? list[list.length - 1].id : 0;
   if (lastFx < 0 || maxId < lastFx) { lastFx = maxId; return; }
   const fresh = list.filter(f => f.id > lastFx);
   lastFx = maxId;
-  const cx = innerWidth / 2, cy = innerHeight / 2;
   fresh.forEach((f, i) => setTimeout(() => {
-    const A = f.n !== undefined ? nodePt(f.n) : null, B = f.m !== undefined ? nodePt(f.m) : null;
-    switch (f.t) {
-      case 'tc': spawnFx('hole', '', cx, cy, 1700); break;
-      case 'tp': spawnFx('prism', '', cx, cy, 1500); break;
-      case 'tg': spawnFx('gold', '', cx, cy, 1400); break;
-      case 'km': spawnFx('big pop', '👑', cx, cy, 1200); break;
-      case 'fm': {
-        const T = state.pl[f.q]; if (!T) break;
-        const k = T.pc.findIndex(onBoard);
-        const to = k >= 0 ? nodePt(nodeOf(T.pc[k])) : [cx, cy];
-        const from = nodePt(22) || [cx, cy];
-        const el = spawnFx('big', '🧚', from[0], from[1], 1500);
-        fly(el, from, to, 1000, ['rotate(-20deg)', 'rotate(20deg) scale(.8)']);
-        setTimeout(() => spawnFx('big pop', '✨', to[0], to[1], 1100), 950);
-        break;
-      }
-      case 'cc': {
-        if (!A) break;
-        spawnFx('big pop', '🤡', A[0], A[1] - 20, 1200);
-        spawnFx('boom', '💥', A[0], A[1], 900);
-        const home = nodePt(0) || A;
-        const col = state.pl[f.p] ? COLORS[state.pl[f.p].c] : '#fff';
-        for (let j = 0; j < Math.max(1, f.c || 1); j++) {
-          const g = spawnFx('ghost', '', A[0], A[1], 1300); g.style.background = col;
-          const to = [home[0] + 40 + j * 14, home[1] + 30];
-          fly(g, A, to, 1100, ['rotate(0)', `rotate(${720 + j * 90}deg) scale(.4)`, 0]);
-        }
-        break;
-      }
-      case 'db': {
-        if (!A) break;
-        spawnFx('boom', '💥', A[0], A[1], 900);
-        if (B) { const s = spawnFx('big', '💨', A[0], A[1], 900); fly(s, A, B, 600, ['scale(.6)', 'scale(1.2)', 0]); }
-        break;
-      }
-      case 'ep': {
-        if (!A || !B) break;
-        const s = spawnFx('big', '💨', A[0], A[1], 800); s.style.fontSize = '36px';
-        fly(s, A, B, 450, ['scale(.6)', 'scale(1.3)', 0]);
-        const X = f.x !== undefined ? nodePt(f.x) : null;
-        if (X) spawnFx('big pop', '😱', X[0], X[1] - 10, 1000).style.fontSize = '30px';
-        break;
-      }
-      case 'ty': {
-        if (!A || !B) break;
-        const s = spawnFx('big', '🌪️', A[0], A[1], 1300);
-        fly(s, A, B, 900, ['rotate(0) scale(.7)', 'rotate(1080deg) scale(1.3)']);
-        setTimeout(() => spawnFx('boom', '💨', B[0], B[1], 800), 850);
-        break;
-      }
-      case 'sr': {
-        if (!A || !B) break;
-        const len = Math.hypot(B[0] - A[0], B[1] - A[1]), ang = Math.atan2(B[1] - A[1], B[0] - A[0]) * 180 / Math.PI;
-        const el = spawnFx('beam', '', A[0], A[1], 800);
-        el.style.width = len + 'px'; el.style.transform = `translate(0,-50%) rotate(${ang}deg)`;
-        setTimeout(() => spawnFx('pop', '<span style="font-size:26px">⚡</span>', B[0], B[1], 900), 250);
-        break;
-      }
-    }
-  }, i * 350));
+    if (f.t === 'c') { spawnFx('big pop', f.s, innerWidth / 2, innerHeight / 2, 1200).style.fontSize = '90px'; return; }
+    const A = nodePt(f.n); if (!A) return;
+    spawnFx(f.s === '💥' ? 'boom' : 'big pop', f.s, A[0], A[1], 1100);
+  }, i * 280));
 }
 
-// ---- 증강/모루 선택 (세로 카드 3장)
+// ---- 증강/모루 선택 + 프롬프트
 let modalKey = '';
 const pickedU = new Set();
 function myPick() {
@@ -1468,11 +1801,20 @@ function myPick() {
   return state.pk.find(e => e.i === myId && !pickedU.has(e.u)) || null;
 }
 function renderModal() {
+  const box = $('#modal');
+  const mp = state && state.ph === 'play' && screen === 'game' ? myPrompt() : null;
+  if (mp && mp.k === 'opt') {
+    const key = 'pr' + JSON.stringify(mp.o).length + mp.src + (mp.stage || '') + state.li;
+    if (key === modalKey) return; modalKey = key;
+    const many = mp.o.length > 8;
+    box.innerHTML = `<div class="modal"><h2>${PROMPT_TITLE[mp.src] || '골라!'}</h2><div class="who">${esc(nameOf(mp.i))}</div>
+      <div class="olist ${many ? 'many' : ''}">${mp.o.map(o => `<button class="obtn" onclick="pickOpt(${JSON.stringify(o.v).replace(/"/g, '&quot;')})">${esc(o.l)}</button>`).join('')}</div></div>`;
+    return;
+  }
   const pk = myPick();
-  const key = pk ? 'u' + pk.u : '';
+  const key = pk ? 'u' + pk.u + '-' + pk.o.length : '';
   if (key === modalKey) return;
   modalKey = key;
-  const box = $('#modal');
   if (!pk) { box.innerHTML = ''; return; }
   const tn = ['', '실버', '골드', '프리즘'];
   const P = state.pl.find(q => q.id === pk.i);
@@ -1490,43 +1832,50 @@ function renderModal() {
       h += `<button class="acard t${pk.t}" onclick="choose('${pk.i}',${pk.u},${i})"><div class="tier">${tn[pk.t]} 모루</div><div class="em">${em}</div><div class="an">${an}</div><div class="ad">${ad}</div></button>`;
     });
   } else {
-    h = `<div class="modal"><h2>증강 선택!</h2><div class="who">${esc(nameOf(pk.i))}${mode === 'local' ? '의 증강' : ''}</div><div class="cards">`;
+    const forced = catForced(state, P, pk);
+    const det = P.a.includes('dt') && !(P.cat || []).some(c => c[0] === 'dt') && !pk.dt && pk.o.length > 1;
+    h = `<div class="modal"><h2>증강 선택!</h2><div class="who">${esc(nameOf(pk.i))}${mode === 'local' ? '의 증강' : ''}${forced ? ' · 🐱 고양이를 골라야 해!' : ''}</div><div class="cards">`;
     pk.o.forEach((id, i) => {
       const A = AUG[id];
-      h += `<button class="acard t${A.t}" onclick="choose('${pk.i}',${pk.u},${i})"><div class="tier">${tn[A.t]}${A.o ? ' · 즉시발동' : ''}</div><div class="em">${A.e}</div><div class="an">${A.n}</div><div class="ad">${A.d}</div></button>`;
+      const kind = A.k === 'u' ? (id === 'sn' ? '사용형 · 무제한' : `사용형 · ${A.u}회`) : A.k === 'o' ? '즉시 발동' : '패시브';
+      const dis = forced && id !== 'ct';
+      h += `<div class="acwrap"><button class="acard tn ${dis ? 'off' : ''}" ${dis ? 'disabled' : `onclick="choose('${pk.i}',${pk.u},${i})"`}><div class="tier">${kind}</div><div class="em">${A.e}</div><div class="an">${A.n}</div><div class="ad">${A.d}</div></button>
+        ${det ? `<button class="detb" onclick="detect('${pk.i}',${pk.u},${i})">🔍 지우고 말 완주</button>` : ''}</div>`;
     });
   }
   box.innerHTML = h + `</div></div>`;
 }
+const PROMPT_TITLE = { hd: '🃏 원하는 결과를 골라', gd: '🐖 도? 개?', lc: '🩸 말을 줄 사람', dv: '📦 배달시킬 증강', cf: '🎭 고양이로 바꿀 증강', cv: '✨ 변신시킬 말', yt: '🥏 윷 맞힐 사람', sl: '🤏 뒤집을 윷가락' };
+function pickOpt(v) { const pr = state.pr; if (!pr) return; $('#modal').innerHTML = ''; modalKey = 'done' + Math.random(); doAct(pr.i, { t: 'ans', v }); }
 function choose(pid, u, i) { pickedU.add(u); $('#modal').innerHTML = ''; modalKey = 'done' + u; doAct(pid, { t: 'pick', v: i }); }
+function detect(pid, u, i) { modalKey = ''; doAct(pid, { t: 'det', v: i }); }
 
 // ---- 도감
 function toggleGuide() { showGuide = !showGuide; render(); }
-function showTip(x) { tipAug = x; render(); clearTimeout(showTip.t); showTip.t = setTimeout(() => { tipAug = null; render(); }, 3000); }
+function showTip(x) { tipAug = x; render(); clearTimeout(showTip.t); showTip.t = setTimeout(() => { tipAug = null; render(); }, 3500); }
 const RULES = [
   ['🥢', '윷 던지기', '도 1칸 · 개 2칸 · 걸 3칸 · 윷 4칸 · 모 5칸 · 빽도 1칸 뒤로 (✕ 표시 막대 하나만 뒤집히면 빽도)'],
   ['🔥', '한 번 더', '윷이나 모가 나오면 한 번 더 던짐. 결과를 다 모은 다음에 원하는 말에 하나씩 씀'],
   ['💥', '잡기', '상대 말 있는 칸에 멈추면 잡아서 집으로 보내고 한 번 더 던짐'],
-  ['🏋️', '업기', '내 말끼리 같은 칸에 멈추면 업혀서 같이 움직임 (잡히면 같이 집 감)'],
+  ['🏋️', '업기', '내 말끼리 같은 칸에 멈추면 업혀서 같이 움직임'],
   ['↘️', '지름길', '모서리(큰 동그라미)에 딱 멈추면 대각선 지름길로 감. 가운데 방에 멈추면 출발점 쪽 최단 루트로'],
   ['🏁', '나기', '출발점을 지나가면 그 말은 남. 출발점에 딱 멈추면 아직 판 위에 있는 거'],
-  ['🏆', '승리', '내 말 4개 전부 먼저 나면 이김'],
+  ['🏆', '승리', '내 말 전부 먼저 나면 이김 (증강으로 특수 승리도 있음)'],
 ];
 function guideHTML() {
   let h = `<div class="guide" onclick="if(event.target===this)toggleGuide()"><div class="in"><div class="row" style="justify-content:space-between"><div class="title" style="font-size:30px;margin:0;transform:none;text-align:left">📖 도감</div><button class="btn ghost" style="flex:0 0 70px;margin:0;padding:10px" onclick="toggleGuide()">닫기</button></div>`;
   h += `<div class="gh" style="color:var(--c)">룰</div>`;
   RULES.forEach(t => h += `<div class="gi"><span class="em">${t[0]}</span><span><b>${t[1]}</b><span class="d">${t[2]}</span></span></div>`);
-  h += `<div class="note" style="font-size:13px;color:#d9ccff">증강 모드 ON이면 시작할 때 + 3턴 · 6턴 · 9턴에 전원 증강 3개 중 1개 선택 (전원 같은 등급 · 실버/골드/프리즘 1/3씩), 10턴부터는 2턴마다 전원 모루 하나씩</div>`;
-  h += `<div class="gh" style="color:var(--c)">🔨 능력치 모루</div><div class="note" style="font-size:13px;color:#d9ccff;line-height:1.7">능력치! 증강을 먹으면 모루를 받음 (실버 1개 · 골드 2개 · 프리즘 3개). 모루는 실버 60% · 골드 30% · 프리즘 10%로 뜸.<br>
+  h += `<div class="note" style="font-size:13px;color:#d9ccff">증강 모드 ON이면 시작할 때 + 3턴 · 6턴 · 9턴에 증강 3개 중 1개 선택, 10턴부터는 2턴마다 모루 하나씩</div>`;
+  [['p', '패시브 증강'], ['u', '사용형 증강 (내 차례에 버튼 눌러서 씀)'], ['o', '즉시 발동 증강']].forEach(([k, nm]) => {
+    h += `<div class="gh" style="color:var(--y)">${nm}</div>`;
+    Object.values(AUG).filter(A => A.k === k).forEach(A => h += `<div class="gi"><span class="em">${A.e}</span><span><b>${A.n}${A.k === 'u' ? ` <span class="tag">${A.u >= 99 ? '무제한' : A.u + '회'}</span>` : ''}</b><span class="d">${A.d}</span></span></div>`);
+  });
+  h += `<div class="gh" style="color:var(--c)">🔨 능력치 모루</div><div class="note" style="font-size:13px;color:#d9ccff;line-height:1.7">모루는 실버 60% · 골드 30% · 프리즘 10%로 뜸.<br>
   <b>실버 모루</b>: 도개걸윷모 중 3개 → 고른 거 확률 -4%, 나머지 넷이 +1%씩<br>
   <b>골드 모루</b>: 도개걸윷모 중 3개 → 고른 거 확률 +4%, 나머지 넷이 -1%씩<br>
   <b>프리즘 모루</b>: 아래 특수 능력치 중 3개</div>`;
   Object.values(PSTAT).forEach(S => h += `<div class="gi"><span class="em">${S.e}</span><span><b>${S.n}${S.add ? ` +${S.add}%` : ''}</b><span class="d">${S.d}</span></span></div>`);
-  h += `<div class="note" style="font-size:12px">기본 확률: 도 18.8% · 개 37.5% · 걸 25% · 윷 6.3% · 모 6.3% · 빽도 6.3%</div>`;
-  [[3, '프리즘', 'var(--pr)'], [2, '골드', 'var(--g)'], [1, '실버', 'var(--s)']].forEach(([t, nm, col]) => {
-    h += `<div class="gh" style="color:${col}">${nm} 증강</div>`;
-    Object.values(AUG).filter(A => A.t === t).forEach(A => h += `<div class="gi"><span class="em">${A.e}</span><span><b>${A.n}${A.o ? ' <span class="tag">즉시발동</span>' : ''}</b><span class="d">${A.d}</span></span></div>`);
-  });
   return h + `<div style="height:30px"></div></div></div>`;
 }
 
