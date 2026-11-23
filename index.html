@@ -14,7 +14,7 @@ html,body{margin:0;background:radial-gradient(circle at 20% 0%,#3b1f78,var(--bg)
 button{font-family:inherit;cursor:pointer;border:0}
 #app{max-width:480px;margin:0 auto;padding:12px 10px 40px}
 #app.wide{max-width:1180px}
-.title{font-family:'Black Han Sans',sans-serif;font-size:44px;text-align:center;margin:18px 0 0;letter-spacing:1px;background:linear-gradient(90deg,var(--y),var(--p),var(--c));-webkit-background-clip:text;background-clip:text;color:transparent;transform:rotate(-2deg)}
+.title{margin-bottom:20px!important;font-family:'Black Han Sans',sans-serif;font-size:44px;text-align:center;margin:18px 0 0;letter-spacing:1px;background:linear-gradient(90deg,var(--y),var(--p),var(--c));-webkit-background-clip:text;background-clip:text;color:transparent;transform:rotate(-2deg)}
 .sub{text-align:center;color:var(--mut);margin:6px 0 20px;font-size:14px}
 .panel{background:var(--card);border-radius:18px;padding:14px;margin:10px 0;box-shadow:0 4px 0 #0004}
 .panel h3{margin:0 0 10px;font-size:15px;color:var(--y);display:flex;align-items:center;gap:6px}
@@ -1023,7 +1023,6 @@ function homeHTML() {
   if (bcList) bcHTML = bcList.length ? bcList.map(r => `<div class="room">${esc(r.host || '?')}의 방 <span class="tag">${r.ph === 'lobby' ? '대기중' : '게임중'}</span><button class="btn cyan sm" onclick="joinBCRoom('${r.id}')">${r.ph === 'lobby' ? '참가' : '관전'}</button></div>`).join('') : '<div class="note">이 컴퓨터에서 열린 방이 없어</div>';
   return `
   <div class="title">혼돈 윷놀이</div>
-  <div class="sub">진짜 윷놀이 + 칼바람 증강 + 능력치 모루 🥢</div>
   <div class="panel"><h3>닉네임</h3><input id="nm" maxlength="8" placeholder="최대 8글자" value="${esc(myName)}"></div>
   <div class="panel">
     <h3>🌐 온라인</h3>
