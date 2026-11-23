@@ -196,13 +196,13 @@ const DELTA = 0.04;
 
 const AUG = {
   // 프리즘
-  gl: { n: '거인', e: '🗿', t: 3, d: '멈춘 칸 앞뒤 1칸에 있는 상대 말까지 깔아뭉개서 잡음' },
+  gl: { n: '거인', e: '🗿', t: 3, d: '멈춘 칸 앞뒤 1칸에 있는 상대 말까지 깔아뭉개서 잡음 (깔아뭉갠 건 한 번 더 없음)' },
   gs: { n: '거인 학살자', e: '🗡️', t: 3, d: '나보다 앞선 상대가 있으면 이동 +1, 거인 가진 상대가 있으면 +2' },
   gc: { n: '유리 대포', e: '💎', t: 3, d: '모든 이동 +2. 대신 내 말이 하나라도 잡히면 판 위 내 말 전부 집으로' },
   tc: { n: '전환: 혼돈', e: '🎲', t: 3, d: '랜덤 증강 2개 획득 (대부분 골드)', o: 1 },
   ct: { n: '난공불락', e: '🚫', t: 3, d: '모가 나오면 다음 내 턴까지 내 말 전부 안 잡힘' },
-  bb: { n: '기본으로 돌아가기', e: '📘', t: 3, d: '윷·모가 아예 안 나옴. 대신 도·개·걸 이동 +1' },
-  ms: { n: '미친 과학자', e: '🧪', t: 3, d: '매 턴 시작에 "이동 +1" 또는 "이번 턴 안 잡힘" 중 선택' },
+  bb: { n: '기본으로 돌아가기', e: '📘', t: 3, d: '윷·모가 나오면 걸로 바뀜 (한 번 더는 유지). 대신 도·개·걸 이동 +1' },
+  ms: { n: '미친 과학자', e: '🧪', t: 3, d: '3턴마다 한 번, 턴 시작에 "이동 +1" 또는 "이번 턴 안 잡힘" 중 선택' },
   km: { n: '나는 왕이다', e: '👑', t: 3, d: '말이 참먹이(출발점 칸)에 딱 멈추면 프리즘 증강 하나' },
   td: { n: '탭댄서', e: '🩰', t: 3, d: '같은 결과가 연속으로 나올 때마다 보너스 +1씩 커짐 (도도도도 → 1, 2, 3, 4칸)' },
   fm: { n: '요정 마법', e: '🧚', t: 3, d: '모가 나오면 랜덤 상대 한 명을 다람쥐로 변신 → 다음 턴 쉼' },
@@ -217,7 +217,7 @@ const AUG = {
   st2: { n: '능력치 더하기 능력치!', e: '🔨', t: 2, d: '모루 2개 획득', o: 1 },
   // 실버
   db: { n: '폭격기', e: '💣', t: 1, d: '내 말이 잡히면 잡은 말이 2칸 뒤로 날아감' },
-  ep: { n: '도주 계획', e: '🏃', t: 1, d: '상대 말이 내 말 뒤 1~3칸 안에 멈추면 내 말 +1, 그 말 -1' },
+  ep: { n: '도주 계획', e: '🏃', t: 1, d: '상대 말이 내 말 뒤 1~3칸 안에 멈추면 내 말 +1, 그 말 -1 (말마다 1번)' },
   sw: { n: '그림자 질주', e: '🥷', t: 1, d: '지름길에 들어가면 +1칸 더' },
   ss: { n: '빠르고 안전하게', e: '🛟', t: 1, d: '지름길에 들어간 말은 다음 내 턴까지 안 잡힘' },
   ty: { n: '태풍', e: '🌪️', t: 1, d: '잡을 때 다른 상대 말 하나도 1칸 뒤로 날림' },
@@ -276,7 +276,7 @@ function startGame(st) {
   st.ph = 'play'; st.t = 0; st.r = 1; st.pk = []; st.fx = []; st.d = null; st.w = null; st.lg = []; st.mc = null;
   for (const q of st.pl) {
     q.a = []; q.pc = Array.from({ length: 4 }, () => ['H', 0]);
-    q.w = BASE_W.slice(); q.x = {}; q.ivs = ''; q.kc = 0; q.tds = 0; q.te = 0; q.gx = 0; q.vu = 0; q.iv = 0; q.sk = 0; q.ov = 0; q.sd = 0; q.mb = 0; q.tl = null; q.tn = 0;
+    q.w = BASE_W.slice(); q.x = {}; q.ivs = ''; q.kc = 0; q.tds = 0; q.epu = [0, 0, 0, 0]; q.mst = 0; q.te = 0; q.gx = 0; q.vu = 0; q.iv = 0; q.sk = 0; q.ov = 0; q.sd = 0; q.mb = 0; q.tl = null; q.tn = 0;
   }
   log(st, '🎮 게임 시작!');
   if (st.op.g) { const t = rollTier(100 / 3, 100 / 3); for (const q of st.pl) givePick(st, q, 1, t); log(st, `🃏 첫 증강을 골라라 (${['', '실버', '골드', '프리즘'][t]})`); }
@@ -431,14 +431,14 @@ function settle(st, P, ks) {
     if (pc[1] - 1 >= 0) targets.push(R[pc[1] - 1]);
     if (pc[1] + 1 < R.length) targets.push(R[pc[1] + 1]);
   }
-  let caught = 0, boom = false, bomb = false;
+  let caught = 0, direct = 0, boom = false, bomb = false;
   for (const tn of [...new Set(targets)]) {
     for (const q of others(st, P)) {
       const k = q.pc.findIndex(x => nodeOf(x) === tn);
       if (k < 0) continue;
       if (tryCatch(st, q, k, P)) {
         caught++;
-        if (tn !== node) log(st, '🗿 거인이 깔아뭉갬!');
+        if (tn === node) direct++; else log(st, '🗿 거인이 깔아뭉갬!');
         if (has(q, 'cc')) boom = true; else if (has(q, 'db')) bomb = true;
       }
     }
@@ -460,10 +460,12 @@ function settle(st, P, ks) {
         log(st, `🌪️ 태풍! ${q.n}의 말 1칸 날아감`);
       }
     }
-    let extra = 1;
-    if (chance(P.x.cx)) { extra++; log(st, '⛓️ 연쇄 사냥 발동!'); }
-    st.tw += extra;
-    log(st, `🔥 ${P.n} 잡아서 ${extra}번 더!`);
+    if (direct) {
+      let extra = 1;
+      if (chance(P.x.cx)) { extra++; log(st, '⛓️ 연쇄 사냥 발동!'); }
+      st.tw += extra;
+      log(st, `🔥 ${P.n} 잡아서 ${extra}번 더!`);
+    }
   }
   if (boom) {
     fx(st, { t: 'cc', n: node, p: st.pl.indexOf(P), c: stackOf(P, node).length });
@@ -497,7 +499,7 @@ function beginTurn(st, depth = 0) {
     P.ov = P.ov ? 0 : 1;
     if (!P.ov) { log(st, `🌊 ${P.n} 범람 휴식 턴`); return nextTurn(st, depth + 1); }
   }
-  if (has(P, 'ms')) st.mc = P.id;
+  if (has(P, 'ms')) { if ((P.mst || 0) % 3 === 0) st.mc = P.id; P.mst = (P.mst || 0) + 1; }
 }
 function nextTurn(st, depth = 0) {
   const P = st.pl[st.t];
@@ -535,7 +537,6 @@ function sampleThrow(P) {
   const w = P.w.slice();
   if (has(P, 'te') && P.te) { w[4] += 0.015 * P.te; w[5] += 0.015 * P.te; }
   if (P.sd) { w[4] *= 0.5; w[5] *= 0.5; }
-  if (has(P, 'bb')) { w[4] = 0; w[5] = 0; }
   const tot = w.reduce((a, b) => a + b, 0);
   let r = Math.random() * tot;
   for (let j = 0; j < 6; j++) { r -= w[j]; if (r < 0) return VALS[j]; }
@@ -554,6 +555,8 @@ function sticksFor(v) {
 function doThrow(st, P) {
   let v = sampleThrow(P), note = '';
   if (v === -1 && chance(P.x.bm)) { v = 5; note += ' 🔄역전'; }
+  let bbAgain = false;
+  if (has(P, 'bb') && (v === 4 || v === 5)) { note += ` 📘${YUT_NAME[v]}→걸`; v = 3; bbAgain = true; }
   if (has(P, 'ld') && v === 1) { v = 2; note += ' 🦵'; }
   let b = 0;
   if (has(P, 'td')) {
@@ -565,7 +568,7 @@ function doThrow(st, P) {
   st.d = { s: st.ds, v, f: sticksFor(v), w: P.id };
   st.q.push([v, b]);
   st.tw--;
-  let again = v === 4 || v === 5;
+  let again = v === 4 || v === 5 || bbAgain;
   if (has(P, 'ct') && v === 5) { P.iv = 1; P.ivs = 'ct'; note += ' 🚫무적'; }
   if (has(P, 'fm') && v === 5) {
     const T = pickOne(others(st, P)); T.sk = 1; note += ` 🧚${T.n} 다람쥐됨`;
@@ -626,11 +629,14 @@ function doMove(st, P, qi, k) {
         for (let j = 0; j < q.pc.length; j++) {
           const qp = q.pc[j]; if (!onBoard(qp)) continue;
           const qn = nodeOf(qp); if (seen[qn]) continue; seen[qn] = 1;
+          const qstack = stackOf(q, qn);
+          q.epu = q.epu || [0, 0, 0, 0];
+          if (qstack.every(m => q.epu[m])) continue;
           let hit = false;
           for (let d = 1; d <= 3 && !hit; d++) { const f = fwd(P.pc[ks[0]], d).pc; if (onBoard(f) && nodeOf(f) === qn) hit = true; }
           if (!hit) continue;
           const qf = fwd(qp, 1).pc;
-          for (const m of stackOf(q, qn)) q.pc[m] = qf.slice();
+          for (const m of qstack) { q.pc[m] = qf.slice(); q.epu[m] = 1; }
           const mb = stepBack(P.pc[ks[0]]); const mn = nodeOf(P.pc[ks[0]]);
           fx(st, { t: 'ep', n: qn, m: nodeOf(qf), x: mn, y: nodeOf(mb) });
           for (const m of stackOf(P, mn)) P.pc[m] = mb.slice();
@@ -1258,7 +1264,7 @@ function meHTML(cur, mine, can, homeK, canHome, selE) {
   h += controlsHTML(cur, mine, can, homeK, canHome, selE);
   if (me.w) {
     const bbOn = me.a.includes('bb');
-    h += `<div class="bars">${[1, 2, 3, 4, 5, 0].map(j => { const p = me.w[j] * 100; if (bbOn && (j === 4 || j === 5)) return `<span class="bl" style="color:#ff9aa8">${YUT_NAME[VALS[j]]}</span><span class="bt lock">🔒 봉인</span><span class="bv" style="color:#ff9aa8">0%</span>`; return `<span class="bl">${YUT_NAME[VALS[j]]}</span><span class="bt"><span class="bf" style="display:block;width:${Math.min(100, p * 2.2)}%;background:${BAR_COL[j]}"></span></span><span class="bv">${p.toFixed(1)}%</span>`; }).join('')}</div>`;
+    h += `<div class="bars">${[1, 2, 3, 4, 5, 0].map(j => { const p = me.w[j] * 100; if (bbOn && (j === 4 || j === 5)) return `<span class="bl" style="color:#ff9aa8">${YUT_NAME[VALS[j]]}</span><span class="bt lock">🔒 → 걸</span><span class="bv" style="color:#ff9aa8">${p.toFixed(1)}%</span>`; return `<span class="bl">${YUT_NAME[VALS[j]]}</span><span class="bt"><span class="bf" style="display:block;width:${Math.min(100, p * 2.2)}%;background:${BAR_COL[j]}"></span></span><span class="bv">${p.toFixed(1)}%</span>`; }).join('')}</div>`;
     const st = statusList(me);
     if (st.length) h += `<div class="stats">${st.map(s => `<span>${s}</span>`).join('')}</div>`;
   }
@@ -1298,7 +1304,7 @@ function oppsHTML() {
     const turn = state.ph === 'play' && pi === state.t;
     const st = statusList(q);
     return `<div class="opp ${turn ? 'turnon' : ''}"><div class="hd"><span class="dot" style="width:16px;height:16px;border-width:2px;background:${COLORS[q.c]}"></span>${esc(q.n)}${q.b ? '<span class="tag">봇</span>' : ''}${turn ? '<span class="tag" style="background:var(--y);color:#1a1033">차례</span>' : ''}${piecesHTML(q)}</div>
-      ${q.w ? `<div class="pr">${[1, 2, 3, 4, 5].map(j => q.a.includes('bb') && j >= 4 ? `<span style="color:#ff9aa8">${YUT_NAME[VALS[j]]} 🔒</span>` : `<span>${YUT_NAME[VALS[j]]} <b>${(q.w[j] * 100).toFixed(0)}%</b></span>`).join('')}</div>` : ''}
+      ${q.w ? `<div class="pr">${[1, 2, 3, 4, 5].map(j => q.a.includes('bb') && j >= 4 ? `<span style="color:#ff9aa8">${YUT_NAME[VALS[j]]}→걸 🔒</span>` : `<span>${YUT_NAME[VALS[j]]} <b>${(q.w[j] * 100).toFixed(0)}%</b></span>`).join('')}</div>` : ''}
       ${st.length ? `<div class="pr" style="color:var(--y)">${st.map(s => `<span>${s}</span>`).join('')}</div>` : ''}
       ${q.a.length ? `<div class="ae">${q.a.map(x => AUG[x] ? `<span title="${AUG[x].n}" onclick="showTip('${x}')">${AUG[x].e}</span>` : '').join('')}</div>` : ''}</div>`;
   }).join('')}</div>`;
