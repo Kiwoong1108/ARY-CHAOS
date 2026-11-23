@@ -701,7 +701,13 @@ function toast(msg) {
   setTimeout(() => t.remove(), 2600);
   while ($('#toasts').children.length > 3) $('#toasts').firstChild.remove();
 }
-const randCode = () => { const c = 'abcdefghjkmnpqrstuvwxyz23456789'; return Array.from({ length: 4 }, () => c[Math.floor(Math.random() * c.length)]).join(''); };
+const randCode = () => {
+  const L = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', D = '0123456789', A = L + D;
+  const pick = s => s[Math.floor(Math.random() * s.length)];
+  let c;
+  do { c = Array.from({ length: 5 }, () => pick(A)).join(''); } while (!/[A-Z]/.test(c) || !/[0-9]/.test(c));
+  return c;
+};
 
 // =====================================================
 // 네트워크: 호스트가 상태를 들고, 손님은 행동만 보냄
@@ -720,7 +726,7 @@ function peerHost(pub) {
         const conns = {};
         const n = {
           kind: 'peer', role: 'host',
-          label: pub ? `공개방 #${String(slot + 1).padStart(2, '0')}` : code.toUpperCase(),
+          label: pub ? `공개방 #${String(slot + 1).padStart(2, '0')}` : code,
           code: pub ? 'p' + (slot + 1) : code,
           broadcast(m) { for (const k in conns) try { conns[k].send(m); } catch (e) {} },
           sendTo(cid, m) { try { conns[cid] && conns[cid].send(m); } catch (e) {} },
@@ -925,12 +931,12 @@ async function createPeerRoom(pub) {
 async function joinPeerRoom(code) {
   if (!saveName()) { toast('닉네임 먼저!'); return; }
   if (!PEER_OK()) { toast('온라인 라이브러리를 못 불러왔어'); return; }
-  code = String(code || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  code = String(code || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
   let id, label;
-  const pm = code.match(/^p(\d{1,2})$/);
+  const pm = code.match(/^P(\d{1,2})$/);
   if (pm && +pm[1] >= 1 && +pm[1] <= PUB_SLOTS) { id = PREFIX + 'pub-' + (+pm[1] - 1); label = `공개방 #${String(+pm[1]).padStart(2, '0')}`; }
-  else if (code.length === 4) { id = PREFIX + code; label = code.toUpperCase(); }
-  else { toast('코드 4글자! (공개방은 P01~P24)'); return; }
+  else if (code.length === 5) { id = PREFIX + code; label = code; }
+  else { toast('코드 5자리! (공개방은 P01~P24)'); return; }
   joinErr = ''; toast('들어가는 중...');
   try {
     net = await peerJoin(id);
@@ -1023,7 +1029,7 @@ function homeHTML() {
     <h3>🌐 온라인</h3>
     <div class="row"><button class="btn pink" onclick="createPeerRoom(true)" ${pk ? '' : 'disabled'}>공개방 만들기</button><button class="btn ghost" onclick="createPeerRoom(false)" ${pk ? '' : 'disabled'}>비공개방 만들기</button></div>
     <div class="row" style="margin-top:10px">
-      <input id="code" maxlength="4" placeholder="방 코드 (공개방은 P01~P24)" style="text-transform:uppercase">
+      <input id="code" maxlength="5" placeholder="방 코드 5자리 (공개방은 P01~P24)" style="text-transform:uppercase">
       <button class="btn cyan" style="margin:0;flex:0 0 80px" onclick="joinPeerRoom($('#code').value)" ${pk ? '' : 'disabled'}>참가</button>
     </div>
     <h3 style="margin-top:14px">🔎 공개방 목록 <button class="btn ghost sm" style="margin-left:auto" onclick="scanPublic()" ${pk && !pubScanning ? '' : 'disabled'}>${pubScanning ? '찾는 중' : '새로고침'}</button></h3>
