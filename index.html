@@ -58,6 +58,43 @@ input:focus{border-color:var(--c)}
 @keyframes pulse{to{box-shadow:0 0 0 6px #ffd23faa,0 3px 0 #0008}}
 .dest{position:absolute;width:6.5%;aspect-ratio:1;border-radius:50%;border:3px dashed var(--y);transform:translate(-50%,-50%);z-index:4;pointer-events:none;animation:blink .8s infinite alternate}
 @keyframes blink{to{opacity:.3}}
+/* 말 꾸미기 */
+.ptok .lab{position:relative;z-index:2;line-height:1}
+.ptok.glossy{background-image:radial-gradient(circle at 32% 26%,rgba(255,255,255,.95) 0 9%,rgba(255,255,255,.45) 18%,transparent 42%),radial-gradient(circle at 70% 80%,rgba(0,0,0,.35),transparent 60%)!important;border-color:#e8f6ff}
+.ptok.glossy .gl{position:absolute;inset:0;border-radius:50%;overflow:hidden;pointer-events:none}
+.ptok.glossy .gl::before{content:'';position:absolute;top:-20%;left:-60%;width:40%;height:140%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.75),transparent);transform:rotate(25deg);animation:shine 2.6s infinite}
+@keyframes shine{0%{left:-60%}60%,100%{left:130%}}
+.ptok .sh{position:absolute;inset:-8px;border-radius:50%;pointer-events:none;animation:shp 1.1s infinite alternate}
+.ptok .sh.y{border:3px solid #ffe066;box-shadow:0 0 14px 4px #ffd23fbb,inset 0 0 10px #ffd23f88}
+.ptok .sh.b{border:3px solid #6ad4ff;box-shadow:0 0 14px 4px #3ea8ffbb,inset 0 0 10px #3ea8ff88}
+.ptok .sh.y.b2{inset:-13px}
+@keyframes shp{to{transform:scale(1.08);opacity:.75}}
+.ptok .crown{position:absolute;top:-62%;left:50%;transform:translateX(-50%);font-size:150%;filter:drop-shadow(0 2px 1px #0008);z-index:3;animation:crb 1.4s infinite alternate}
+@keyframes crb{to{transform:translateX(-50%) translateY(-2px) rotate(6deg)}}
+.ptok.sq{font-size:150%}
+.ptok .wind{position:absolute;right:88%;top:50%;width:120%;height:70%;transform:translateY(-50%);pointer-events:none;z-index:-1}
+.ptok .wind i{position:absolute;right:0;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#fff);opacity:0;animation:wnd .7s infinite linear}
+.ptok .wind i:nth-child(1){top:15%;width:70%;animation-delay:0s}.ptok .wind i:nth-child(2){top:50%;width:100%;animation-delay:.23s}.ptok .wind i:nth-child(3){top:85%;width:60%;animation-delay:.46s}
+@keyframes wnd{0%{transform:translateX(30%);opacity:0}30%{opacity:.9}100%{transform:translateX(-60%);opacity:0}}
+.board.quake{animation:quake 2.4s infinite}
+@keyframes quake{0%,86%,100%{transform:translate(0,0)}88%{transform:translate(-3px,1px)}90%{transform:translate(3px,-2px)}92%{transform:translate(-2px,2px)}94%{transform:translate(2px,-1px)}96%{transform:translate(-1px,1px)}}
+.bt.lock{background:repeating-linear-gradient(45deg,#5a1f2c 0 6px,#3a1420 6px 12px);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#ff9aa8;height:14px!important}
+/* 이펙트 레이어 */
+#fxl{position:fixed;inset:0;pointer-events:none;z-index:45;overflow:hidden}
+.fx{position:fixed;transform:translate(-50%,-50%);pointer-events:none}
+.fx.big{font-size:54px;filter:drop-shadow(0 4px 4px #0009)}
+.fx.boom{font-size:64px;animation:boom .8s ease-out forwards}
+@keyframes boom{0%{transform:translate(-50%,-50%) scale(.2);opacity:0}25%{transform:translate(-50%,-50%) scale(1.3);opacity:1}100%{transform:translate(-50%,-50%) scale(1.6);opacity:0}}
+.fx.pop{animation:fpop 1.1s ease-out forwards}
+@keyframes fpop{0%{transform:translate(-50%,-50%) scale(.2);opacity:0}20%{transform:translate(-50%,-60%) scale(1.25);opacity:1}75%{opacity:1}100%{transform:translate(-50%,-110%) scale(1);opacity:0}}
+.fx.hole{width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,#000 0 22%,#1a0533 34%,transparent 66%),conic-gradient(from 0deg,#7b2cff,#000,#c13cff,#000,#3b1fff,#000,#7b2cff);mix-blend-mode:normal;animation:hole 1.6s ease-in-out forwards;filter:blur(1px)}
+@keyframes hole{0%{transform:translate(-50%,-50%) scale(0) rotate(0);opacity:0}25%{opacity:.95}60%{transform:translate(-50%,-50%) scale(1) rotate(540deg);opacity:.95}100%{transform:translate(-50%,-50%) scale(0) rotate(1080deg);opacity:0}}
+.fx.prism{width:520px;height:520px;border-radius:50%;background:conic-gradient(#ff4f6d,#ffb43f,#ffe066,#3fe07a,#3ea8ff,#c06bff,#ff4f6d);filter:blur(40px);animation:glow 1.4s ease-out forwards}
+.fx.gold{width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,#fff6c9 0,#ffd23f 30%,#e09b1a 55%,transparent 72%);filter:blur(22px);animation:glow 1.3s ease-out forwards}
+@keyframes glow{0%{transform:translate(-50%,-50%) scale(.1);opacity:0}30%{opacity:.85}100%{transform:translate(-50%,-50%) scale(1.3);opacity:0}}
+.fx.beam{height:7px;border-radius:6px;transform-origin:0 50%;background:linear-gradient(90deg,#fff9b0,#d8ff4f,#7dff6b);box-shadow:0 0 12px 4px #c8ff5a99;animation:beam .7s ease-out forwards}
+@keyframes beam{0%{opacity:0;clip-path:inset(0 100% 0 0)}30%{opacity:1;clip-path:inset(0 0 0 0)}100%{opacity:0}}
+.fx.ghost{width:34px;height:34px;border-radius:50%;border:3px solid #fff;box-shadow:0 3px 0 #0008}
 /* 채팅 */
 .chat{background:var(--card2);border-radius:18px;padding:10px 12px;display:flex;flex-direction:column;gap:8px;box-shadow:0 4px 0 #0004}
 .chat .msgs{height:190px;overflow:auto;font-size:13px;line-height:1.6;display:flex;flex-direction:column}
@@ -142,6 +179,7 @@ input:focus{border-color:var(--c)}
 <body>
 <div id="app"></div>
 <div id="modal"></div>
+<div id="fxl"></div>
 <div id="toasts"></div>
 <script>
 // ===== 혼돈 윷놀이 엔진 v2 (롤 칼바람 증강 + 능력치 모루) =====
@@ -208,6 +246,12 @@ const pickOne = arr => arr[Math.floor(Math.random() * arr.length)];
 const chance = pct => pct > 0 && Math.random() * 100 < pct;
 const r4 = x => Math.round(x * 10000) / 10000;
 
+function fx(st, o) {
+  st.fi = (st.fi || 0) + 1;
+  st.fx = st.fx || [];
+  st.fx.push(Object.assign({ id: st.fi }, o));
+  while (st.fx.length > 12) st.fx.shift();
+}
 function log(st, txt) {
   st.li = (st.li || 0) + 1;
   st.lg.push([st.li, txt]);
@@ -229,13 +273,13 @@ function newState() {
 }
 
 function startGame(st) {
-  st.ph = 'play'; st.t = 0; st.r = 1; st.pk = []; st.d = null; st.w = null; st.lg = []; st.mc = null;
+  st.ph = 'play'; st.t = 0; st.r = 1; st.pk = []; st.fx = []; st.d = null; st.w = null; st.lg = []; st.mc = null;
   for (const q of st.pl) {
     q.a = []; q.pc = Array.from({ length: 4 }, () => ['H', 0]);
-    q.w = BASE_W.slice(); q.x = {}; q.te = 0; q.gx = 0; q.vu = 0; q.iv = 0; q.sk = 0; q.ov = 0; q.sd = 0; q.mb = 0; q.tl = null; q.tn = 0;
+    q.w = BASE_W.slice(); q.x = {}; q.ivs = ''; q.kc = 0; q.tds = 0; q.te = 0; q.gx = 0; q.vu = 0; q.iv = 0; q.sk = 0; q.ov = 0; q.sd = 0; q.mb = 0; q.tl = null; q.tn = 0;
   }
   log(st, '🎮 게임 시작!');
-  if (st.op.g) { for (const q of st.pl) givePick(st, q); log(st, '🃏 첫 증강을 골라라'); }
+  if (st.op.g) { const t = rollTier(100 / 3, 100 / 3); for (const q of st.pl) givePick(st, q, 1, t); log(st, `🃏 첫 증강을 골라라 (${['', '실버', '골드', '프리즘'][t]})`); }
   beginTurn(st);
 }
 
@@ -246,7 +290,7 @@ function augPool(P, tier, excl = []) {
 }
 function givePick(st, P, n = 1, tier = 0) {
   for (let i = 0; i < n; i++) {
-    const t = tier || rollTier(50, 35);
+    const t = tier || rollTier(100 / 3, 100 / 3);
     let pool = augPool(P, t);
     const o = [];
     while (o.length < 3 && pool.length) { const x = pickOne(pool); o.push(x); pool = pool.filter(y => y !== x); }
@@ -291,6 +335,7 @@ function applyAug(st, P, id) {
   const A = AUG[id];
   log(st, `${A.e} ${P.n} → ${A.n}`);
   if (!A.o) P.a.push(id);
+  if (id === 'tc' || id === 'tp' || id === 'tg') fx(st, { t: id, p: st.pl.indexOf(P) });
   const NOT = ['tc', 'tp', 'tg'];
   const randomOf = tier => { const pool = augPool(P, tier, NOT); return pool.length ? pickOne(pool) : null; };
   switch (id) {
@@ -410,6 +455,7 @@ function settle(st, P, ks) {
       for (const q of others(st, P)) { const seen = {}; q.pc.forEach((x, j) => { if (onBoard(x) && !seen[nodeOf(x)]) { seen[nodeOf(x)] = 1; cands.push([q, j]); } }); }
       if (cands.length) {
         const [q, j] = pickOne(cands); const nd = nodeOf(q.pc[j]); const nb = stepBack(q.pc[j]);
+        fx(st, { t: 'ty', n: node, m: nd, k: nodeOf(nb) });
         for (const m of stackOf(q, nd)) q.pc[m] = nb.slice();
         log(st, `🌪️ 태풍! ${q.n}의 말 1칸 날아감`);
       }
@@ -420,10 +466,12 @@ function settle(st, P, ks) {
     log(st, `🔥 ${P.n} 잡아서 ${extra}번 더!`);
   }
   if (boom) {
+    fx(st, { t: 'cc', n: node, p: st.pl.indexOf(P), c: stackOf(P, node).length });
     for (const j of stackOf(P, node)) P.pc[j] = ['H', 0];
     log(st, `🤡 펑!!! 광대가 터져서 ${P.n}의 말도 집으로`);
   } else if (bomb) {
     const nb = back(pc, 2);
+    fx(st, { t: 'db', n: node, m: nodeOf(nb) });
     for (const j of stackOf(P, node)) P.pc[j] = nb.slice();
     log(st, `💣 폭격기 폭발! ${P.n}의 말 2칸 뒤로`);
   }
@@ -441,7 +489,7 @@ function checkWin(st) {
 function beginTurn(st, depth = 0) {
   st.tw = 1; st.q = []; st.mc = null;
   const P = st.pl[st.t];
-  P.iv = 0; P.mb = 0;
+  P.iv = 0; P.ivs = ''; P.mb = 0;
   P.pc.forEach((pc, k) => { if (pc.length > 2) P.pc[k] = [pc[0], pc[1]]; });
   if (depth > 8) return;
   if (P.sk) { P.sk = 0; log(st, `🐿️ ${P.n} 다람쥐라서 이번 턴 쉼`); return nextTurn(st, depth + 1); }
@@ -458,8 +506,9 @@ function nextTurn(st, depth = 0) {
   if (st.t === 0) {
     st.r++;
     if (st.op.g && [3, 6, 9].includes(st.r)) {
-      log(st, `🎉 ${st.r}턴 증강 타임! 전원 하나씩`);
-      for (const q of st.pl) givePick(st, q);
+      const t = rollTier(100 / 3, 100 / 3);
+      log(st, `🎉 ${st.r}턴 증강 타임! 전원 ${['', '실버', '골드', '프리즘'][t]} 증강`);
+      for (const q of st.pl) givePick(st, q, 1, t);
     }
     if (st.op.g && st.r >= 10 && st.r % 2 === 0) {
       log(st, `🔨 ${st.r}턴 모루 타임! 전원 모루 하나씩`);
@@ -509,7 +558,7 @@ function doThrow(st, P) {
   let b = 0;
   if (has(P, 'td')) {
     if (P.tl === v) P.tn++; else { P.tl = v; P.tn = 0; }
-    if (P.tn) { b += P.tn; note += ` 🩰+${P.tn}`; }
+    if (P.tn) { b += P.tn; note += ` 🩰+${P.tn}`; P.tds = (P.tds || 0) + 1; }
   }
   if (has(P, 'ge') && P.gx && v > 0) { b += P.gx; note += ` 🤩+${P.gx}`; P.gx = 0; }
   st.ds++;
@@ -517,9 +566,10 @@ function doThrow(st, P) {
   st.q.push([v, b]);
   st.tw--;
   let again = v === 4 || v === 5;
-  if (has(P, 'ct') && v === 5) { P.iv = 1; note += ' 🚫무적'; }
+  if (has(P, 'ct') && v === 5) { P.iv = 1; P.ivs = 'ct'; note += ' 🚫무적'; }
   if (has(P, 'fm') && v === 5) {
     const T = pickOne(others(st, P)); T.sk = 1; note += ` 🧚${T.n} 다람쥐됨`;
+    fx(st, { t: 'fm', p: st.pl.indexOf(P), q: st.pl.indexOf(T) });
   }
   if (!again && chance(P.x.rt)) { again = true; note += ' 🔁'; }
   if (chance(P.x.dp)) { st.q.push([v, b]); note += ' 👯복제'; }
@@ -568,7 +618,7 @@ function doMove(st, P, qi, k) {
     if (onBoard(cur)) {
       const node = nodeOf(cur);
       if (node === 22) log(st, `🎯 ${P.n} 방 도착!`);
-      if (node === 0 && has(P, 'km')) { log(st, `👑 ${P.n} 나는 왕이다! 프리즘 증강`); givePick(st, P, 1, 3); }
+      if (node === 0 && has(P, 'km')) { log(st, `👑 ${P.n} 나는 왕이다! 프리즘 증강`); P.kc = 1; fx(st, { t: 'km', p: st.pl.indexOf(P) }); givePick(st, P, 1, 3); }
       // 도주 계획
       for (const q of others(st, P)) {
         if (!has(q, 'ep')) continue;
@@ -582,6 +632,7 @@ function doMove(st, P, qi, k) {
           const qf = fwd(qp, 1).pc;
           for (const m of stackOf(q, qn)) q.pc[m] = qf.slice();
           const mb = stepBack(P.pc[ks[0]]); const mn = nodeOf(P.pc[ks[0]]);
+          fx(st, { t: 'ep', n: qn, m: nodeOf(qf), x: mn, y: nodeOf(mb) });
           for (const m of stackOf(P, mn)) P.pc[m] = mb.slice();
           log(st, `🏃 ${q.n} 도주 계획! 도망 +1, ${P.n} -1`);
           break;
@@ -590,7 +641,10 @@ function doMove(st, P, qi, k) {
     }
   }
   if (has(P, 'sr') && passed.length) {
-    for (const q of others(st, P)) if (q.pc.some(x => passed.includes(nodeOf(x)))) { q.sd = 1; log(st, `🔦 ${q.n} 감쇠 광선 맞음 (다음 턴 윷·모 확률 절반)`); }
+    for (const q of others(st, P)) if (q.pc.some(x => passed.includes(nodeOf(x)))) {
+      const vn = nodeOf(q.pc.find(x => passed.includes(nodeOf(x))));
+      if (onBoard(nw)) fx(st, { t: 'sr', n: nodeOf(nw), m: vn });
+      q.sd = 1; log(st, `🔦 ${q.n} 감쇠 광선 맞음 (다음 턴 윷·모 확률 절반)`); }
   }
   if (checkWin(st)) return true;
   tidy(st);
@@ -616,7 +670,7 @@ function act(st, pid, a) {
   if (a.t === 'sci') {
     if (st.mc !== pid) return false;
     st.mc = null;
-    if (a.v) { P.iv = 1; log(st, `🧪 ${P.n} 실험 결과: 이번 턴 무적`); }
+    if (a.v) { P.iv = 1; P.ivs = 'ms'; log(st, `🧪 ${P.n} 실험 결과: 이번 턴 무적`); }
     else { P.mb = 1; log(st, `🧪 ${P.n} 실험 결과: 이동 +1`); }
     return true;
   }
@@ -1128,13 +1182,12 @@ const nameOf = id => (state.pl.find(q => q.id === id) || {}).n || '?';
 
 function boardHTML(cur, mine, can, homeK, canHome) {
   let h = `<div class="board" id="board">${boardSVG()}`;
+  let quake = false;
   state.pl.forEach((q, pi) => {
     const seen = {};
-    let sc = 1;
-    if (q.a.includes('gl')) sc *= 1.35;
-    if (q.a.includes('gs')) sc *= 0.75;
-    if (q.sd) sc *= 0.8;
-    sc = Math.max(0.6, Math.min(1.4, sc));
+    const sc = pieceScale(q);
+    if (sc >= 1.5 && q.pc.some(onBoard)) quake = true;
+    const hasA = id => q.a.includes(id);
     q.pc.forEach((pc, k) => {
       if (!onBoard(pc)) return;
       const nd = nodeOf(pc);
@@ -1143,7 +1196,17 @@ function boardHTML(cur, mine, can, homeK, canHome) {
       const [x, y] = NODE_XY[nd];
       const off = pi * 1.2 - 1.8;
       const isCan = pi === state.t && can.includes(k);
-      h += `<div class="ptok ${isCan ? 'can' : ''} ${sc > 1 ? 'big' : ''}" id="pt-${pi}-${k}" style="--sc:${sc};left:${pct(x) + off}%;top:${pct(y) + off}%;background:${COLORS[q.c]};${first ? '' : 'opacity:0;'}" ${isCan ? `onclick="moveP(${k})"` : ''}>${esc(q.n[0] || '')}${first && cnt > 1 ? `<span class="cnt">×${cnt}</span>` : ''}</div>`;
+      const shY = q.iv, shB = pc[2] || (hasA('vw') && !q.vu);
+      const wind = (hasA('ge') && q.gx > 0) || (hasA('sw') && pc[0] !== 'A');
+      let inner = `<span class="lab">${q.sk ? '🐿️' : esc(q.n[0] || '')}</span>`;
+      if (hasA('gc')) inner += '<span class="gl"></span>';
+      if (shB) inner += '<span class="sh b"></span>';
+      if (shY) inner += `<span class="sh y ${shB ? 'b2' : ''}"></span>`;
+      if (q.kc) inner += '<span class="crown">👑</span>';
+      if (wind) inner += '<span class="wind"><i></i><i></i><i></i></span>';
+      if (first && cnt > 1) inner += `<span class="cnt">×${cnt}</span>`;
+      const cls = ['ptok', isCan ? 'can' : '', sc > 1 ? 'big' : '', hasA('gc') ? 'glossy' : '', q.sk ? 'sq' : ''].join(' ');
+      h += `<div class="${cls}" id="pt-${pi}-${k}" style="--sc:${sc};left:${pct(x) + off}%;top:${pct(y) + off}%;background-color:${COLORS[q.c]};${first ? '' : 'opacity:0;'}" ${isCan ? `onclick="moveP(${k})"` : ''}>${inner}</div>`;
     });
   });
   if (mine) {
@@ -1157,7 +1220,21 @@ function boardHTML(cur, mine, can, homeK, canHome) {
       h += `<div class="dest" style="left:${pct(x)}%;top:${pct(y)}%"></div>`;
     });
   }
-  return h + `</div>`;
+  h += `</div>`;
+  if (quake) h = h.replace('<div class="board" id="board">', '<div class="board quake" id="board">');
+  return h;
+}
+// 말 크기: 커지는 효과는 곱해서 최대 200%, 탭댄서는 혼자 15%까지, 다른 축소랑은 계속 겹침
+function pieceScale(q) {
+  const A = id => q.a.includes(id);
+  let g = 1, s = 1;
+  if (A('gl')) g *= 1.35;
+  if (q.iv && q.ivs === 'ms') g *= 1.15;
+  if (A('gs')) s *= 0.75;
+  if (q.sd) s *= 0.8;
+  if (q.mb) s *= 0.85;
+  if (A('td')) s *= Math.max(0.15, 1 - 0.1 * (q.tds || 0));
+  return Math.max(0.06, Math.min(2, g * s));
 }
 
 function piecesHTML(q) {
@@ -1180,7 +1257,8 @@ function meHTML(cur, mine, can, homeK, canHome, selE) {
   if (myTurnNow) h += `<div style="text-align:right;margin-top:4px"><span class="tag" style="background:var(--y);color:#1a1033">${mode === 'local' ? esc(me.n) + ' 차례!' : '내 차례!'}</span></div>`;
   h += controlsHTML(cur, mine, can, homeK, canHome, selE);
   if (me.w) {
-    h += `<div class="bars">${[1, 2, 3, 4, 5, 0].map(j => { const p = me.w[j] * 100; return `<span class="bl">${YUT_NAME[VALS[j]]}</span><span class="bt"><span class="bf" style="display:block;width:${Math.min(100, p * 2.2)}%;background:${BAR_COL[j]}"></span></span><span class="bv">${p.toFixed(1)}%</span>`; }).join('')}</div>`;
+    const bbOn = me.a.includes('bb');
+    h += `<div class="bars">${[1, 2, 3, 4, 5, 0].map(j => { const p = me.w[j] * 100; if (bbOn && (j === 4 || j === 5)) return `<span class="bl" style="color:#ff9aa8">${YUT_NAME[VALS[j]]}</span><span class="bt lock">🔒 봉인</span><span class="bv" style="color:#ff9aa8">0%</span>`; return `<span class="bl">${YUT_NAME[VALS[j]]}</span><span class="bt"><span class="bf" style="display:block;width:${Math.min(100, p * 2.2)}%;background:${BAR_COL[j]}"></span></span><span class="bv">${p.toFixed(1)}%</span>`; }).join('')}</div>`;
     const st = statusList(me);
     if (st.length) h += `<div class="stats">${st.map(s => `<span>${s}</span>`).join('')}</div>`;
   }
@@ -1220,7 +1298,7 @@ function oppsHTML() {
     const turn = state.ph === 'play' && pi === state.t;
     const st = statusList(q);
     return `<div class="opp ${turn ? 'turnon' : ''}"><div class="hd"><span class="dot" style="width:16px;height:16px;border-width:2px;background:${COLORS[q.c]}"></span>${esc(q.n)}${q.b ? '<span class="tag">봇</span>' : ''}${turn ? '<span class="tag" style="background:var(--y);color:#1a1033">차례</span>' : ''}${piecesHTML(q)}</div>
-      ${q.w ? `<div class="pr">${[1, 2, 3, 4, 5].map(j => `<span>${YUT_NAME[VALS[j]]} <b>${(q.w[j] * 100).toFixed(0)}%</b></span>`).join('')}</div>` : ''}
+      ${q.w ? `<div class="pr">${[1, 2, 3, 4, 5].map(j => q.a.includes('bb') && j >= 4 ? `<span style="color:#ff9aa8">${YUT_NAME[VALS[j]]} 🔒</span>` : `<span>${YUT_NAME[VALS[j]]} <b>${(q.w[j] * 100).toFixed(0)}%</b></span>`).join('')}</div>` : ''}
       ${st.length ? `<div class="pr" style="color:var(--y)">${st.map(s => `<span>${s}</span>`).join('')}</div>` : ''}
       ${q.a.length ? `<div class="ae">${q.a.map(x => AUG[x] ? `<span title="${AUG[x].n}" onclick="showTip('${x}')">${AUG[x].e}</span>` : '').join('')}</div>` : ''}</div>`;
   }).join('')}</div>`;
@@ -1278,9 +1356,101 @@ function afterGameRender() {
     lastThrow = state.d.s;
     if (!first) { const s = $('#sticks'); if (s) s.classList.add('toss'); const y = $('#yname'); if (y) y.classList.add('big'); }
   }
+  playFx();
   const fresh = (state.lg || []).filter(l => l[0] > shownLog);
   if (shownLog && fresh.length) fresh.slice(-2).forEach(l => { if (!l[1].startsWith('🥢')) toast(l[1]); });
   if (state.lg && state.lg.length) shownLog = Math.max(shownLog, state.lg[state.lg.length - 1][0]);
+}
+
+// ---- 이펙트
+let lastFx = -1;
+function nodePt(n) {
+  const b = $('#board'); if (!b || NODE_XY[n] === undefined) return null;
+  const r = b.getBoundingClientRect(); const [x, y] = NODE_XY[n];
+  return [r.left + pct(x) / 100 * r.width, r.top + pct(y) / 100 * r.height];
+}
+function spawnFx(cls, html, x, y, dur) {
+  const el = document.createElement('div');
+  el.className = 'fx ' + cls; el.innerHTML = html || '';
+  el.style.left = x + 'px'; el.style.top = y + 'px';
+  $('#fxl').appendChild(el);
+  setTimeout(() => el.remove(), dur || 1500);
+  return el;
+}
+function fly(el, from, to, dur, extra) {
+  el.animate([
+    { transform: `translate(-50%,-50%) translate(0,0) ${extra ? extra[0] : ''}`, opacity: 1 },
+    { transform: `translate(-50%,-50%) translate(${to[0] - from[0]}px,${to[1] - from[1]}px) ${extra ? extra[1] : ''}`, opacity: extra && extra[2] !== undefined ? extra[2] : 1 },
+  ], { duration: dur, easing: 'cubic-bezier(.3,.7,.4,1)', fill: 'forwards' });
+}
+function playFx() {
+  const list = state.fx || [];
+  const maxId = list.length ? list[list.length - 1].id : 0;
+  if (lastFx < 0 || maxId < lastFx) { lastFx = maxId; return; }
+  const fresh = list.filter(f => f.id > lastFx);
+  lastFx = maxId;
+  const cx = innerWidth / 2, cy = innerHeight / 2;
+  fresh.forEach((f, i) => setTimeout(() => {
+    const A = f.n !== undefined ? nodePt(f.n) : null, B = f.m !== undefined ? nodePt(f.m) : null;
+    switch (f.t) {
+      case 'tc': spawnFx('hole', '', cx, cy, 1700); break;
+      case 'tp': spawnFx('prism', '', cx, cy, 1500); break;
+      case 'tg': spawnFx('gold', '', cx, cy, 1400); break;
+      case 'km': spawnFx('big pop', '👑', cx, cy, 1200); break;
+      case 'fm': {
+        const T = state.pl[f.q]; if (!T) break;
+        const k = T.pc.findIndex(onBoard);
+        const to = k >= 0 ? nodePt(nodeOf(T.pc[k])) : [cx, cy];
+        const from = nodePt(22) || [cx, cy];
+        const el = spawnFx('big', '🧚', from[0], from[1], 1500);
+        fly(el, from, to, 1000, ['rotate(-20deg)', 'rotate(20deg) scale(.8)']);
+        setTimeout(() => spawnFx('big pop', '✨', to[0], to[1], 1100), 950);
+        break;
+      }
+      case 'cc': {
+        if (!A) break;
+        spawnFx('big pop', '🤡', A[0], A[1] - 20, 1200);
+        spawnFx('boom', '💥', A[0], A[1], 900);
+        const home = nodePt(0) || A;
+        const col = state.pl[f.p] ? COLORS[state.pl[f.p].c] : '#fff';
+        for (let j = 0; j < Math.max(1, f.c || 1); j++) {
+          const g = spawnFx('ghost', '', A[0], A[1], 1300); g.style.background = col;
+          const to = [home[0] + 40 + j * 14, home[1] + 30];
+          fly(g, A, to, 1100, ['rotate(0)', `rotate(${720 + j * 90}deg) scale(.4)`, 0]);
+        }
+        break;
+      }
+      case 'db': {
+        if (!A) break;
+        spawnFx('boom', '💥', A[0], A[1], 900);
+        if (B) { const s = spawnFx('big', '💨', A[0], A[1], 900); fly(s, A, B, 600, ['scale(.6)', 'scale(1.2)', 0]); }
+        break;
+      }
+      case 'ep': {
+        if (!A || !B) break;
+        const s = spawnFx('big', '💨', A[0], A[1], 800); s.style.fontSize = '36px';
+        fly(s, A, B, 450, ['scale(.6)', 'scale(1.3)', 0]);
+        const X = f.x !== undefined ? nodePt(f.x) : null;
+        if (X) spawnFx('big pop', '😱', X[0], X[1] - 10, 1000).style.fontSize = '30px';
+        break;
+      }
+      case 'ty': {
+        if (!A || !B) break;
+        const s = spawnFx('big', '🌪️', A[0], A[1], 1300);
+        fly(s, A, B, 900, ['rotate(0) scale(.7)', 'rotate(1080deg) scale(1.3)']);
+        setTimeout(() => spawnFx('boom', '💨', B[0], B[1], 800), 850);
+        break;
+      }
+      case 'sr': {
+        if (!A || !B) break;
+        const len = Math.hypot(B[0] - A[0], B[1] - A[1]), ang = Math.atan2(B[1] - A[1], B[0] - A[0]) * 180 / Math.PI;
+        const el = spawnFx('beam', '', A[0], A[1], 800);
+        el.style.width = len + 'px'; el.style.transform = `translate(0,-50%) rotate(${ang}deg)`;
+        setTimeout(() => spawnFx('pop', '<span style="font-size:26px">⚡</span>', B[0], B[1], 900), 250);
+        break;
+      }
+    }
+  }, i * 350));
 }
 
 // ---- 증강/모루 선택 (세로 카드 3장)
@@ -1340,7 +1510,7 @@ function guideHTML() {
   let h = `<div class="guide" onclick="if(event.target===this)toggleGuide()"><div class="in"><div class="row" style="justify-content:space-between"><div class="title" style="font-size:30px;margin:0;transform:none;text-align:left">📖 도감</div><button class="btn ghost" style="flex:0 0 70px;margin:0;padding:10px" onclick="toggleGuide()">닫기</button></div>`;
   h += `<div class="gh" style="color:var(--c)">룰</div>`;
   RULES.forEach(t => h += `<div class="gi"><span class="em">${t[0]}</span><span><b>${t[1]}</b><span class="d">${t[2]}</span></span></div>`);
-  h += `<div class="note" style="font-size:13px;color:#d9ccff">증강 모드 ON이면 시작할 때 + 3턴 · 6턴 · 9턴에 전원 증강 3개 중 1개 선택 (실버 50% · 골드 35% · 프리즘 15%), 10턴부터는 2턴마다 전원 모루 하나씩</div>`;
+  h += `<div class="note" style="font-size:13px;color:#d9ccff">증강 모드 ON이면 시작할 때 + 3턴 · 6턴 · 9턴에 전원 증강 3개 중 1개 선택 (전원 같은 등급 · 실버/골드/프리즘 1/3씩), 10턴부터는 2턴마다 전원 모루 하나씩</div>`;
   h += `<div class="gh" style="color:var(--c)">🔨 능력치 모루</div><div class="note" style="font-size:13px;color:#d9ccff;line-height:1.7">능력치! 증강을 먹으면 모루를 받음 (실버 1개 · 골드 2개 · 프리즘 3개). 모루는 실버 60% · 골드 30% · 프리즘 10%로 뜸.<br>
   <b>실버 모루</b>: 도개걸윷모 중 3개 → 고른 거 확률 -4%, 나머지 넷이 +1%씩<br>
   <b>골드 모루</b>: 도개걸윷모 중 3개 → 고른 거 확률 +4%, 나머지 넷이 -1%씩<br>
