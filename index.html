@@ -218,7 +218,7 @@ const YUT_NAME = { '-1': '빽도', 1: '도', 2: '개', 3: '걸', 4: '윷', 5: '�
 const VALS = [-1, 1, 2, 3, 4, 5];
 const BASE_W = [1 / 16, 3 / 16, 6 / 16, 4 / 16, 1 / 16, 1 / 16];
 const DELTA = 0.04;
-const TYPE_NAME = { gob: '도깨비', van: '선봉장', zom: '좀비', po: '포', pawn: '폰' };
+const TYPE_NAME = { gob: '도깨비', van: '선봉장', zom: '좀비', po: '포', pawn: '폰', kc: '김첨지', qn: '중전마마', mon: '괴물', cul: '광신도', pel: '펠리컨', mar: '마라토너' };
 
 // k: p 패시브 / o 즉시 1회 / u 사용형(u: 횟수, tc: 차례 소모)
 const AUG = {
@@ -228,15 +228,15 @@ const AUG = {
   ct: { n: '고양이', e: '🐱', k: 'p', d: '아무 능력이 없음. 왜 있냐고? 귀엽잖아' },
   gt: { n: '간택', e: '😼', k: 'p', d: '이제 모든 플레이어는 선택창에 고양이가 나오면 무조건 고양이를 골라야 함' },
   cg: { n: '고양이 골라', e: '🙀', k: 'p', d: '선택창에 고양이가 나오면 무조건 고양이를 골라야 함' },
-  gy: { n: '과유불급', e: '🎋', k: 'p', d: '윷 6개로 던짐. 앞면 0개는 모, 5개는 윷, 6개 전부 앞면이면 탈락' },
-  gd: { n: '개돼지', e: '🐖', k: 'p', d: '매 턴 도와 개만 낼 수 있지만, 둘 중에 고를 수 있음' },
+  gy: { n: '과유불급', e: '🎋', k: 'p', d: '윷 6개로 던짐. 앞면 0개 모, 1개 도, 2개 개, 3~4개 걸, 5개 윷. 6개 전부 앞면이면 제일 앞선 내 말뭉치가 집으로 가고 차례 끝' },
+  gd: { n: '개돼지', e: '🐖', k: 'p', d: '매 턴 도와 개만 낼 수 있음. 던질 때마다 "도 두 개"나 "개 하나" 중에 고름' },
   lc: { n: '거머리', e: '🩸', k: 'o', d: '즉시 다른 플레이어에게 내 말 1개를 줌. 그 플레이어가 완주로 이기면 같이 이김' },
   nm: { n: '나만 아니면 돼~', e: '🎯', k: 'o', d: '즉시 랜덤 플레이어 한 명의 판 위 말을 전부 죽임' },
   ln: { n: '대출', e: '💳', k: 'u', u: 2, d: '2회용. 던지기 기회를 1번 얻지만 다음 차례를 건너뜀' },
   db: { n: '도베르만', e: '🐶', k: 'u', u: 1, d: '1회용. 지금까지 내가 낸 개 횟수만큼 모를 얻음' },
-  sn: { n: '명사수', e: '🔭', k: 'u', u: 99, d: '던지기 기회 1번을 쓰고 칸 하나를 찍음. 다음 라운드 내 차례가 시작되면 그 칸의 모든 말을 죽임' },
+  sn: { n: '명사수', e: '🔭', k: 'u', u: 99, d: '한 차례에 1번, 칸 하나를 찍음. 다음 내 차례가 시작되면 그 칸의 모든 말을 죽임' },
   dt: { n: '명탐정', e: '🔍', k: 'p', d: '증강 고를 때마다 선택지 하나를 지울 수 있음. 지우면 내 대기 말 1개가 바로 완주' },
-  md: { n: '모 아니면 도', e: '🎰', k: 'p', d: '모 아니면 도만 나옴 (반반)' },
+  md: { n: '모 아니면 도', e: '🎰', k: 'p', d: '모 아니면 도만 나옴 (모 30% · 도 70%)' },
   fr: { n: '무임승차', e: '🚌', k: 'p', d: '상대 말을 잡는 대신 업힐 수 있음 (켜고 끌 수 있음). 업히면 던지기 기회 +1 (한 차례에 1번까지)' },
   bd: { n: '바둑', e: '⚫', k: 'u', u: 1, d: '1회. 일직선 위에 있는 내 말뭉치 둘 사이의 상대 말을 전부 죽이고, 죽인 수만큼 던지기 기회를 얻음' },
   dv: { n: '배달', e: '📦', k: 'o', d: '증강 하나를 찍어두면 다음 증강 선택 때 무조건 나옴' },
@@ -246,7 +246,7 @@ const AUG = {
   po: { n: '변환: 포', e: '🏯', k: 'u', u: 1, d: '1회용. 일반 말을 포로 바꿈. 매 차례 한 번, 포는 말 있는 칸 하나를 넘어서 일직선으로 원하는 만큼 이동 가능' },
   pw: { n: '변환: 폰', e: '♟️', k: 'u', u: 1, d: '1회. 일반 말을 폰으로 바꿈. 폰은 조작할 수 없지만 내가 던질 때마다 도만큼 전진' },
   rp: { n: '사신', e: '💀', k: 'o', d: '즉시 중앙에 안 죽는 사신 소환. 라운드가 끝날 때마다 가까운 말 쪽으로 1칸 이동해서 죽임. 내 말은 안 쫓음' },
-  hp: { n: '상부상조', e: '🤝', k: 'p', d: '다른 플레이어들은 자기 차례에 1번 개를 받을 수 있음. 받으면 내 다음 차례에 내가 걸을 받음' },
+  hp: { n: '상부상조', e: '🤝', k: 'p', d: '다른 플레이어들은 자기 차례에 1번 개를 받을 수 있음. 받으면 내 다음 차례에 내가 도를 받음' },
   sm: { n: '사목', e: '🎲', k: 'p', d: '내 말이 일직선으로 연속된 4칸을 차지하거나, 내 말 4개가 한 말뭉치가 되면 승리' },
   cw: { n: '소 뒷걸음질', e: '🐄', k: 'p', d: '내가 빽도로 상대 말을 잡으면 승리' },
   hd: { n: '손은 눈보다 빠르다', e: '🃏', k: 'u', u: 1, d: '1회. 다음에 윷을 던질 때 원하는 결과를 냄' },
@@ -254,11 +254,11 @@ const AUG = {
   tt: { n: '시간 여행', e: '⏳', k: 'u', u: 1, d: '1회. 내 말 하나를 원하는 뒤쪽 칸으로 옮김' },
   ak: { n: '악보가 완성되었다!', e: '🎼', k: 'p', d: '이번 게임 동안 내가 빽도·도·개·걸·윷·모를 전부 내면 승리' },
   as: { n: '암살자의 영혼', e: '🗡️', k: 'u', u: 2, d: '2회용. 내 말뭉치 하나에 영혼을 넣음. 그 말을 지나가는 상대 말뭉치는 죽고 영혼은 사라짐' },
-  af: { n: '어부지리', e: '🎣', k: 'p', d: '내 차례가 아닐 때 다른 플레이어 말이 2개 죽을 때마다 개를 얻음 (내 다음 차례에 받음)' },
+  af: { n: '어부지리', e: '🎣', k: 'p', d: '내 차례가 아닐 때 다른 플레이어 말이 3개 죽을 때마다 개를 얻음 (내 다음 차례에 받음)' },
   cf: { n: '언제부터 착각한 거지?', e: '🎭', k: 'o', d: '상대 증강 하나를 골라 3라운드 동안 고양이로 바꿈 (다 쓴 증강은 못 바꿈)' },
   lo: { n: '외톨이', e: '🥀', k: 'u', u: 3, d: '3회용. 다음에 윷을 던지면 하나만 뒷면으로 나옴 (무조건 걸)' },
   yt: { n: '윷을 잘 던져봐', e: '🥏', k: 'u', u: 1, d: '1회. 윷을 던져 플레이어 한 명을 맞힘. 맞은 사람은 차례를 두 번 건너뜀' },
-  dd: { n: '이도류', e: '⚔', k: 'p', d: '윷을 두 번씩 던져서 결과 2개를 받음. 대신 모는 도로 바뀜' },
+  dd: { n: '이도류', e: '⚔', k: 'p', d: '윷을 두 번씩 던져서 결과 2개를 받음. 대신 모는 도로 바뀌고, 두 번째 결과는 최대 개, 윷이 나와도 한 번 더가 없음' },
   ob: { n: '이의있음!', e: '☝️', k: 'o', d: '이번 증강 선택을 취소하고 다시 고름' },
   jm: { n: '자진모리 장단', e: '🥁', k: 'p', d: '걸이 2번 나올 때마다 개를 얻음' },
   rv: { n: '천마군림보 - 달걸음', e: '🌙', k: 'p', d: '내 모든 말이 반대 방향으로 이동함 (빽도는 앞으로)' },
@@ -270,8 +270,47 @@ const AUG = {
   fi: { n: '화톳불', e: '🔥', k: 'u', u: 1, d: '1회용. 내 말뭉치 자리에 화톳불을 설치. 그 말이 죽으면 화톳불에서 부활하고 화톳불은 꺼짐' },
   sc: { n: '희생', e: '🕯️', k: 'u', u: 1, d: '1회. 판 위 내 말 하나를 죽이고, 판 위 내 다른 말 전부에 보호막을 씌움' },
   pp: { n: '히히 똥!', e: '💩', k: 'o', d: '랜덤 칸에 똥을 쌈. 다른 플레이어 말이 이동하다 똥을 밟으면 거기서 멈춤' },
+  // ===== 시작 전용 =====
+  nc: { n: '눈치싸움', e: '👀', k: 'o', ph: 's', d: '다음 증강 선택 때 모두에게 같은 선택지가 나옴. 가장 많이 선택된 증강은 무효. 내 선택이 무효가 안 되면 내 말 2개 완주' },
+  eqx: { n: '등가교환', e: '⚖️', k: 'o', ph: 's', d: '내 말 1개와 윷 1개를 빼고 시작 (말 3개, 윷 3개로 던짐)' },
+  mp: { n: '말이오? 파티', e: '🎪', k: 'o', ph: 's', d: '판에 함정 6개와 보상 4개를 설치. 정확히 멈춘 말을 밀거나 죽이거나 상을 줌. 내 함정은 나한테 안 통함' },
+  ap: { n: '모험가 파티', e: '🗺️', k: 'o', ph: 's', d: '내 모든 말이 랜덤 특수말이 됨. 8라운드 뒤 파티 해산으로 탈락. 말이 완주할 때마다 해산이 1라운드 늦춰짐' },
+  sg: { n: '스겜', e: '⏩', k: 'o', ph: 's', d: '모든 플레이어 말이 2개가 됨. 내 말은 도·개 칸에서 시작' },
+  kc: { n: '시작 변환: 김첨지', e: '🛺', k: 'o', ph: 's', d: '일반 말 하나를 김첨지로 바꿈. 김첨지가 내 차례 6번 안에 완주하면 승리' },
+  qq: { n: '시작 변환: 중전마마', e: '👸', k: 'o', ph: 's', d: '말 하나가 좌측 상단에 중전마마로 시작. 중전이 죽으면 탈락, 윷을 12번 던질 때까지 지키면 승리. 중전은 완주 못 함. 다른 말이 완주하면 목숨 +1' },
+  mo: { n: '시작 변환: 괴물', e: '👾', k: 'o', ph: 's', d: '완주 못 하는 괴물 하나만 가지고 시작. 괴물이 말을 12개 잡으면 승리. 괴물은 잡혀도 안 죽지만 목표가 1씩 늘어남' },
+  st1: { n: '시작 변환: 1성', e: '⭐', k: 'o', ph: 's', d: '말이 8개가 되고 모두 1성. 업을 때마다 성급이 합쳐짐. 8성을 만들면 승리' },
+  cl: { n: '애묘인', e: '😻', k: 'p', ph: 's', d: '누구든 고양이를 고른 플레이어가 있으면 승리' },
+  un: { n: '웅녀', e: '🧄', k: 'o', ph: 's', d: '랜덤 칸에 마늘 4개가 생김. 내 말로 4개를 다 모으면 승리' },
+  ir: { n: '이리 오너라 업고 놀자', e: '🎎', k: 'o', ph: 's', d: '내 말 전부를 업은 채로 도 칸에서 시작' },
+  jd: { n: '짐덩이와 복덩이', e: '🎒', k: 'o', ph: 's', d: '내 말 1개와 윷 1개를 더하고 시작 (말 5개, 윷 5개로 던짐)' },
+  cs: { n: '천상천하 유아독존', e: '☝', k: 'p', ph: 's', d: '윷판에 말뭉치가 내 것 하나만 있으면 승리' },
+  // ===== 중간 전용 =====
+  sv: { n: '777', e: '🎰', k: 'p', ph: 'm', d: '한 차례 안에 같은 윷 결과가 3번 이상 나오면 승리' },
+  nf: { n: '나만 친구 없어', e: '🥲', k: 'p', ph: 'm', d: '이걸 고른 뒤 다른 모든 플레이어가 내 말을 한 번씩 잡으면 승리' },
+  ms: { n: '마신 소환', e: '🛐', k: 'o', ph: 'm', d: '내 일반 말을 전부 광신도로 바꿈. 내 차례가 시작될 때 살아있는 광신도마다 의식 코인 1개. 코인 12개면 승리' },
+  mu: { n: '무신정변', e: '⚔️', k: 'p', ph: 'm', d: '이걸 고른 뒤 상대 말을 4개 이상 죽이면 승리' },
+  pe: { n: '변환: 펠리컨', e: '🦤', k: 'u', u: 1, ph: 'm', d: '1회용. 일반 말을 펠리컨으로 바꿈. 펠리컨은 잡은 말을 죽이지 않고 삼킴. 삼킨 채로 완주하면 그 플레이어 탈락' },
+  yo: { n: '역모', e: '🗡', k: 'p', ph: 'm', d: '나보다 완주한 말이 많은 플레이어의 말을 잡으면 던지기 1번 더' },
+  wt: { n: '잠깐!', e: '✋', k: 'o', ph: 'm', d: '다른 플레이어 하나를 골라, 그 사람의 가장 앞선 말뭉치를 2라운드 동안 못 움직이게 함' },
+  pz: { n: '평화 협정', e: '🕊️', k: 'p', ph: 'm', d: '다른 플레이어를 죽일 수 없고, 다른 플레이어한테 죽지도 않음 (증강으로 죽는 것도 포함)' },
+  bt: { n: '폭탄돌리기', e: '🧨', k: 'u', u: 1, ph: 'm', d: '1회용. 내 말 하나에 폭탄을 줌. 폭탄 든 말이 다른 말을 잡으면 폭탄이 넘어감. 6라운드 뒤 폭발해서 가진 사람 탈락' },
+  // ===== 마무리 전용 =====
+  gp: { n: '계획대로', e: '📓', k: 'o', ph: 'f', d: '최종 순위를 미리 적음. 다 맞히면 기존 순위를 없애고 나만 승리' },
+  kl: { n: '나에게 윷놀이는 "살인"이다', e: '🔪', k: 'o', ph: 'f', d: '모두에게 체력 3이 생김. 내가 말을 잡을 때마다 그 주인 체력 -1. 체력 0이면 탈락' },
+  nk: { n: '네크로맨서', e: '🧙', k: 'u', u: 1, ph: 'f', d: '1회. 탈락한 플레이어를 부활시킴. 그 사람이 이기면 나도 같이 이김. 안 썼으면 내 탈락을 1번 자동으로 막음' },
+  dc: { n: '독이 든 성배', e: '🍷', k: 'u', u: 99, ph: 'f', d: '한 차례에 1번, 던지기 기회 3번을 얻음. 쓴 차례에 모가 나오면 탈락' },
+  bz: { n: '동메달도 잘한 거야', e: '🥉', k: 'o', ph: 'f', d: '즉시 3위로 확정되고 게임에서 빠짐' },
+  ld: { n: '라스트 댄스', e: '💃', k: 'u', u: 1, ph: 'f', d: '1회. 던지기 기회 2번을 얻고 이번 차례 동안 모든 이동이 2배. 이번 차례가 끝나면 탈락' },
+  ec: { n: '메아리의 형상', e: '🔊', k: 'o', ph: 'f', d: '지금부터 모든 플레이어가 차례를 두 번씩 가짐' },
+  mr: { n: '변환: 마라토너', e: '🏃', k: 'u', u: 1, ph: 'f', d: '1회. 대기 중인 일반 말을 마라토너로 바꿈. 그 말이 완주하면 승리' },
+  sb: { n: '승부다!', e: '🤺', k: 'o', ph: 'f', d: '플레이어 하나를 고름. 그 사람이 자기 차례 3번 안에 말을 하나도 완주 못 하면 탈락, 완주하면 내가 탈락' },
+  rc: { n: '역전 찬스', e: '🎁', k: 'o', ph: 'f', d: '랜덤 증강 4개를 얻음' },
+  dm: { n: '영역 전개', e: '🌐', k: 'u', u: 1, ph: 'f', d: '1회. 판 위 내 말뭉치 하나를 못 움직이게 묶음. 내 차례 2번 동안 살아남으면 승리, 죽으면 탈락' },
+  cn2: { n: '카니발리즘', e: '🍖', k: 'p', ph: 'f', d: '내 말끼리 업을 수 없는 대신, 내 말을 잡을 수 있고 잡으면 한 번 더 던짐 (한 차례에 1번까지)' },
 };
 const AUG_IDS = Object.keys(AUG);
+const PH_NAME = { s: '시작 전용', m: '중간 전용', f: '마무리 전용' };
 
 const PSTAT = {
   rt: { n: '재던지기', e: '🔁', d: '던질 때 확률적으로 한 번 더', add: 8 },
@@ -317,10 +356,11 @@ function remaining(pc) {
   return ROUTES[pc[0]].length - pc[1];
 }
 const others = (st, P) => st.pl.filter(q => q.id !== P.id);
-const live = st => st.pl.filter(q => !q.out);
+const active = q => !q.out && !q.done;
+const live = st => st.pl.filter(active);
 const catted = (P, id) => (P.cat || []).some(c => c[0] === id);
 const has = (P, id) => P.a.includes(id) && !catted(P, id);
-const anyHas = (st, id) => st.pl.some(q => !q.out && has(q, id));
+const anyHas = (st, id) => st.pl.some(q => active(q) && has(q, id));
 const pidx = (st, P) => st.pl.indexOf(P);
 const stackOf = (P, node) => P.pc.map((_, k) => k).filter(k => onBoard(P.pc[k]) && nodeOf(P.pc[k]) === node);
 function ownStackNodes(P, min = 1) {
@@ -335,17 +375,19 @@ function newPlayerFields(q) {
   q.pt = ['', '', '', '']; q.sh = [0, 0, 0, 0]; q.so = [0, 0, 0, 0]; q.rd = [0, 0, 0, 0]; q.lp = [0, 0, 0, 0];
   q.w = BASE_W.slice(); q.x = {}; q.sk = 0; q.out = 0; q.th = 0; q.gc = 0; q.glc = 0; q.af = 0; q.bk = []; q.hb = 0; q.hu = 0;
   q.lc = null; q.dl = null; q.cat = []; q.sn = null; q.cf = null; q.rideOn = 1; q.gbt = 0; q.pot = 0; q.hand = 0; q.lone = 0; q.cow = 0;
+  q.fz = [0, 0, 0, 0]; q.yd = 0; q.done = 0; q.wf = ''; q.kills = 0; q.kb = []; q.cc = 0; q.gk = 0; q.mk = 0; q.mt = 12; q.ql = 1; q.qt = 0; q.kct = 0;
+  q.apd = 0; q.pred = null; q.nkp = null; q.dmz = null; q.poison = 0; q.ldn = 0; q.snt = 0; q.swl = []; q.t7 = {}; q.mu0 = 0; q.nf0 = 0; q.dct = 0;
 }
 function addPiece(P, pos, type) {
-  P.pc.push(pos.slice()); P.pt.push(type || ''); P.sh.push(0); P.so.push(0); P.rd.push(0); P.lp.push(0);
+  P.pc.push(pos.slice()); P.pt.push(type || ''); P.sh.push(0); P.so.push(0); P.rd.push(0); P.lp.push(0); P.fz.push(0);
   return P.pc.length - 1;
 }
 
 function newState() {
-  return { v: 5, ph: 'lobby', pl: [], ch: [], op: { n: 4, g: 1 }, t: 0, r: 1, tw: 0, q: [], pk: [], pu: 0, pr: null, d: null, ds: 0, lg: [], li: 0, w: null, ws: [], rp: [], pp: [], thn: 0, fx: [], fi: 0 };
+  return { v: 6, rk: [], lo: [], tp: [], gk: [], hp: null, bomb: null, duel: null, echo: 0, rep: 0, ncNext: 0, ph: 'lobby', pl: [], ch: [], op: { n: 4, g: 1 }, t: 0, r: 1, tw: 0, q: [], pk: [], pu: 0, pr: null, d: null, ds: 0, lg: [], li: 0, w: null, ws: [], rp: [], pp: [], thn: 0, fx: [], fi: 0 };
 }
 function startGame(st) {
-  st.ph = 'play'; st.t = 0; st.r = 1; st.pk = []; st.pr = null; st.d = null; st.w = null; st.ws = []; st.lg = []; st.rp = []; st.pp = []; st.fx = [];
+  st.ph = 'play'; st.t = 0; st.r = 1; st.pk = []; st.pr = null; st.d = null; st.w = null; st.ws = []; st.lg = []; st.rp = []; st.pp = []; st.fx = []; st.rk = []; st.lo = []; st.tp = []; st.gk = []; st.hp = null; st.bomb = null; st.duel = null; st.echo = 0; st.rep = 0; st.ncNext = 0; st.fin = null;
   for (const q of st.pl) newPlayerFields(q);
   st.ph = 'order'; st.ot = st.pl.map(q => q.id); st.ok = {}; st.pl.forEach(q => st.ok[q.id] = []);
   log(st, '🥢 선 뽑기! 다 같이 윷을 던져서 높은 사람부터 시작');
@@ -374,19 +416,45 @@ function orderThrow(st, P) {
   st.ph = 'play'; st.t = 0; st.ot = [];
   log(st, `📋 순서: ${st.pl.map((q, i) => (i + 1) + '. ' + q.n).join('  ')}`);
   log(st, '🎮 게임 시작!');
-  if (st.op.g) { for (const q of st.pl) givePick(st, q); log(st, '🃏 첫 증강을 골라라'); }
+  if (st.op.g) { pickRound(st, 's'); log(st, '🃏 첫 증강을 골라라 (시작 전용 포함)'); }
   beginTurn(st);
 }
 
 // ---- 증강 선택지
-function makeOpts(P) {
-  let pool = AUG_IDS.filter(id => id === 'ct' || AUG[id].k === 'o' || !P.a.includes(id));
+function makeOpts(P, ph) {
+  let pool = AUG_IDS.filter(id => (!AUG[id].ph || AUG[id].ph === ph) && (id === 'ct' || AUG[id].k === 'o' || !P.a.includes(id)));
   const o = [];
   if (P.dl && AUG[P.dl]) { o.push(P.dl); pool = pool.filter(x => x !== P.dl); P.dl = null; }
   while (o.length < 3 && pool.length) { const x = pickOne(pool); o.push(x); pool = pool.filter(y => y !== x); }
   return o;
 }
-function givePick(st, P, n = 1) { for (let i = 0; i < n; i++) { st.pu++; st.pk.push({ i: P.id, k: 'a', o: makeOpts(P), u: st.pu }); } }
+function givePick(st, P, n = 1, ph) { for (let i = 0; i < n; i++) { st.pu++; st.pk.push({ i: P.id, k: 'a', o: makeOpts(P, ph), u: st.pu }); } }
+function pickRound(st, ph) {
+  const ps = live(st);
+  if (st.ncNext) {
+    st.ncNext = 0;
+    const shared = makeOpts({ a: [], dl: null }, ph);
+    log(st, '👀 눈치싸움! 모두 같은 선택지');
+    for (const q of ps) { st.pu++; st.pk.push({ i: q.id, k: 'a', o: shared.slice(), u: st.pu, nc: 1 }); }
+    return;
+  }
+  for (const q of ps) givePick(st, q, 1, ph);
+}
+function resolveNc(st) {
+  const es = st.pk.filter(e => e.nc);
+  if (!es.length || es.some(e => e.ch === undefined)) return;
+  st.pk = st.pk.filter(e => !e.nc);
+  const cnt = {}; es.forEach(e => cnt[e.ch] = (cnt[e.ch] || 0) + 1);
+  const mx = Math.max(...Object.values(cnt));
+  const voided = mx >= 2 ? Object.keys(cnt).filter(x => cnt[x] === mx) : [];
+  if (voided.length) log(st, `👀 눈치싸움 결과: ${voided.map(x => AUG[x].n).join(', ')} 무효!`); else log(st, '👀 눈치싸움 결과: 겹친 게 없어서 무효 없음');
+  for (const en of es) {
+    const P = st.pl.find(q => q.id === en.i); if (!P || !active(P)) continue;
+    if (voided.includes(en.ch)) { log(st, `❌ ${P.n}의 ${AUG[en.ch].n} 무효`); continue; }
+    applyAug(st, P, en.ch);
+    if (has(P, 'nc')) { let n = 0; for (let j = 0; j < P.pc.length && n < 2; j++) if (P.pc[j][0] === 'H') { P.pc[j] = ['F', 0]; n++; } log(st, `👀 ${P.n} 눈치싸움 성공! 말 ${n}개 완주`); }
+  }
+}
 function rollTier(a, b) { const r = Math.random() * 100; return r < a ? 1 : r < a + b ? 2 : 3; }
 function giveAnvil(st, P, n = 1) {
   for (let i = 0; i < n; i++) {
@@ -427,6 +495,7 @@ function stepBack(pc) {
   if (r === 'C') return ['A', 9];
   return ['B', 2];
 }
+function back(pc, n) { let p = pc.slice(0, 2); for (let k = 0; k < n; k++) if (onBoard(p)) p = stepBack(p); return p; }
 function poopAt(st, node, qi) { return st.pp.some(p => p[0] === node && p[1] !== qi); }
 // 말 한 무더기를 steps만큼 걷게 함 (Q = 말 주인). 똥에서 멈춤.
 function walk(st, Q, pc, steps, lp0) {
@@ -460,31 +529,49 @@ function killStack(st, V, k, killer, opts = {}) {
   const node = nodeOf(V.pc[k]);
   if (node < 0) return 0;
   const ks = stackOf(V, node);
+  if (killer !== V && has(V, 'pz')) { log(st, `🕊️ ${V.n} 평화 협정으로 무사`); return 0; }
+  if (killer && killer !== V && has(killer, 'pz')) return 0;
+  if (ks.some(j => V.pt[j] === 'mon')) { V.mt++; log(st, `👾 ${V.n}의 괴물은 안 죽음! 대신 목표 +1 (${V.mk}/${V.mt})`); fx(st, { t: 'e', n: node, s: '👾' }); return 0; }
   if (ks.some(j => V.sh[j])) { ks.forEach(j => V.sh[j] = 0); log(st, `🔰 ${V.n} 보호막이 막아냄!`); fx(st, { t: 'e', n: node, s: '🔰' }); return 0; }
   if (chance(V.x.dg)) { log(st, `💨 ${V.n} 회피!`); return 0; }
   let dying = ks;
   if (has(V, 'fs') && ks.length > 1) { dying = [ks[0]]; log(st, `🫂 ${V.n} 프랜드 실드! 1개만 죽음`); }
-  let revived = 0, zombified = 0;
+  let revived = 0, zombified = 0, swallowed = 0, queenDead = false, domainDead = false, cfRev = false;
   const vi = pidx(st, V);
+  const pel = opts.ks && killer && opts.ks.some(j => killer.pt[j] === 'pel');
   for (const j of dying) {
     V.so[j] = 0; V.rd[j] = 0; V.lp[j] = 0;
-    if (V.cf && V.cf.ks.includes(j)) { V.pc[j] = V.cf.pos.slice(); revived++; continue; }
+    if (V.pt[j] === 'qn') { if (V.ql > 1) { V.ql--; V.pc[j] = ['C', 0]; revived++; log(st, `👸 ${V.n}의 중전마마 목숨 -1, 다시 좌측 상단으로`); continue; } queenDead = true; }
+    if (V.dmz && V.dmz.ks.includes(j)) domainDead = true;
+    if (V.pt[j] === 'pel' && V.swl.length) { for (const [rid, n] of V.swl) { const R = st.pl.find(q => q.id === rid); if (R && active(R)) for (let i = 0; i < n; i++) addPiece(R, ['H', 0], ''); } log(st, `🦤 ${V.n}의 펠리컨이 삼킨 말을 뱉어냄`); V.swl = []; }
+    if (pel && killer !== V) { V.pc[j] = ['X', 0]; const sw = killer.swl.find(x => x[0] === V.id); if (sw) sw[1]++; else killer.swl.push([V.id, 1]); swallowed++; continue; }
+    if (V.cf && V.cf.ks.includes(j)) { V.pc[j] = V.cf.pos.slice(); revived++; cfRev = true; continue; }
     if (opts.zombie && killer && killer !== V) {
       const pos = V.pc[j].slice();
       V.pc[j] = ['X', 0];
       addPiece(killer, pos, 'zom'); zombified++;
     } else V.pc[j] = ['H', 0];
   }
-  if (revived) { log(st, `🔥 ${V.n} 화톳불에서 부활!`); fx(st, { t: 'e', n: nodeOf(V.cf.pos), s: '🔥' }); V.cf = null; }
+  if (cfRev) { log(st, `🔥 ${V.n} 화톳불에서 부활!`); fx(st, { t: 'e', n: nodeOf(V.cf.pos), s: '🔥' }); V.cf = null; }
   // 죽은 말에 업혀 있던 다른 말들은 내려옴
   for (const R of st.pl) R.rd.forEach((r, j) => { if (r && r[0] === vi && dying.includes(r[1])) R.rd[j] = 0; });
   const dead = dying.length - revived;
+  if (swallowed) log(st, `🦤 ${killer.n}의 펠리컨이 ${V.n}의 말 ${swallowed}개를 꿀꺽!`);
+  if (dead > 0 && killer && killer !== V) {
+    killer.kills += dead;
+    if (has(V, 'nf') && !V.kb.includes(killer.id)) { V.kb.push(killer.id); log(st, `🥲 ${V.n}: ${killer.n}도 날 잡아줬어 (${V.kb.length})`); }
+    if (opts.ks && opts.ks.some(j => killer.pt[j] === 'mon')) { killer.mk += dead; log(st, `👾 ${killer.n}의 괴물 사냥 ${killer.mk}/${killer.mt}`); }
+    if (st.bomb && st.bomb.p === killer.id && opts.ks && opts.ks.includes(st.bomb.k)) { st.bomb.p = V.id; st.bomb.k = dying[0]; log(st, `🧨 폭탄이 ${V.n}한테 넘어감!`); }
+    if (st.hp && has(killer, 'kl') && st.hp[V.id] !== undefined) { st.hp[V.id] -= dead; log(st, `🔪 ${V.n} 체력 ${Math.max(0, st.hp[V.id])}`); if (st.hp[V.id] <= 0) eliminate(st, V, '체력 0'); }
+  }
+  if (queenDead) eliminate(st, V, '중전마마 사망');
+  if (domainDead) { V.dmz = null; eliminate(st, V, '영역 전개 실패'); }
   if (dead > 0) {
     const cur = st.pl[st.t];
     for (const H of st.pl) {
       if (H === V || H === cur || !has(H, 'af')) continue;
       H.af += dead;
-      while (H.af >= 2) { H.af -= 2; H.bk.push(2); log(st, `🎣 ${H.n} 어부지리! 개 적립`); }
+      while (H.af >= 3) { H.af -= 3; H.bk.push(2); log(st, `🎣 ${H.n} 어부지리! 개 적립`); }
     }
     if (zombified) log(st, `🧟 ${V.n}의 말 ${zombified}개가 ${killer.n}의 좀비가 됨!`);
     else log(st, `💀 ${killer ? killer.n + '이(가) ' : ''}${V.n}의 말 ${dead > 1 ? dead + '개를 ' : ''}잡았다!`);
@@ -516,9 +603,11 @@ function settle(st, P, Q, ks, backMove) {
     log(st, `💀 ${Q.n} 사신이 있는 칸에 들어감...`);
     killStack(st, Q, ks[0], null); return 0;
   }
-  let caught = 0;
+  let caught = 0, bonus = 0;
   const zombie = ks.some(j => Q.pt[j] === 'zom');
-  for (const R of others(st, Q)) {
+  const fin = q => q.pc.filter(pc => pc[0] === 'F').length;
+  for (const R of has(Q, 'pz') ? [] : others(st, Q)) {
+    if (!active(R)) continue;
     const ri = pidx(st, R);
     const vk = R.pc.map((_, j) => j).filter(j => nodeOf(R.pc[j]) === node && !(R.rd[j] && R.rd[j][0] === qi && ks.includes(R.rd[j][1])));
     if (!vk.length) continue;
@@ -528,9 +617,18 @@ function settle(st, P, Q, ks, backMove) {
       if (Q === P && !P.rdt) { st.tw++; P.rdt = 1; }
       break;
     }
-    const n = killStack(st, R, vk[0], Q, { zombie });
-    if (n > 0) { caught += n; if (backMove && has(Q, 'cw')) Q.cow = 1; }
+    const rf = fin(R), qf = fin(Q);
+    const n = killStack(st, R, vk[0], Q, { zombie, ks });
+    if (n > 0) { caught += n; if (backMove && has(Q, 'cw')) Q.cow = 1; if (has(Q, 'yo') && rf > qf) { bonus++; log(st, `🗡 ${Q.n} 역모! 던지기 +1`); } }
   }
+  // 카니발리즘: 내 말끼리 업지 않고 잡아먹음
+  if (has(Q, 'cn2')) {
+    const own = stackOf(Q, node).filter(j => !ks.includes(j) && !Q.rd[j]);
+    if (own.length) { own.forEach(j => { Q.pc[j] = ['H', 0]; Q.so[j] = 0; Q.sh[j] = 0; }); log(st, `🍖 ${Q.n} 카니발리즘! 내 말 ${own.length}개 잡아먹음`); fx(st, { t: 'e', n: node, s: '🍖' }); if (Q === P && !P.cnt) { st.tw++; P.cnt = 1; } }
+  }
+  // 웅녀 마늘
+  if (has(Q, 'un')) { const gi = st.gk.findIndex(g => g[0] === node && g[1] === pidx(st, Q)); if (gi >= 0) { st.gk.splice(gi, 1); Q.gk++; log(st, `🧄 ${Q.n} 마늘 획득 ${Q.gk}/4`); fx(st, { t: 'e', n: node, s: '🧄' }); } }
+  if (bonus && Q === P) st.tw += bonus;
   const mine = stackOf(Q, node).filter(j => !Q.rd[j] || ks.includes(j));
   if (mine.length > ks.length) log(st, `🏋️ ${Q.n} 업었다! (${mine.length}개)`);
   for (const j of mine) Q.pc[j] = pc.slice(0, 2);
@@ -566,9 +664,34 @@ function moveStack(st, P, Q, k, steps, opt = {}) {
       return true;
     }
   }
+  if (r.pc[0] === 'F' && ks.some(j => Q.pt[j] === 'qn' || Q.pt[j] === 'mon')) { r.pc = ['A', 1]; log(st, `🔁 ${Q.n}의 ${ks.some(j => Q.pt[j] === 'qn') ? '중전마마' : '괴물'}는 완주 못 하고 한 바퀴 더`); }
   for (const j of ks) { Q.pc[j] = r.pc[0] === 'F' ? ['F', 0] : r.pc.slice(0, 2); Q.lp[j] = r.lp; Q.rd[j] = 0; }
   updateRiders(st, Q, ks);
-  if (r.pc[0] === 'F') { log(st, `🏁 ${Q.n} 말 ${ks.length}개 났다!`); return true; }
+  if (r.pc[0] === 'F') {
+    log(st, `🏁 ${Q.n} 말 ${ks.length}개 났다!`);
+    for (const j of ks) {
+      if (Q.pt[j] === 'mar') Q.wf = '마라토너 완주';
+      if (Q.pt[j] === 'kc' && Q.kct <= 6) Q.wf = '김첨지 완주';
+      if (Q.pt[j] === 'pel' && Q.swl.length) { const vs = Q.swl.map(x => x[0]); Q.swl = []; vs.forEach(id => { const R = st.pl.find(q => q.id === id); if (R) eliminate(st, R, `${Q.n}의 펠리컨에게 삼켜진 채 끌려감`); }); }
+    }
+    if (Q.apd) { Q.apd += ks.length; log(st, `🗺️ ${Q.n} 파티 해산 ${ks.length}라운드 연장`); }
+    if (Q.pt.includes('qn')) { Q.ql += ks.length; log(st, `👸 ${Q.n} 중전마마 목숨 +${ks.length}`); }
+    if (st.duel && st.duel.b === Q.id) { const A = st.pl.find(q => q.id === st.duel.a); st.duel = null; if (A) eliminate(st, A, `${Q.n}와의 승부에서 패배`); }
+    return true;
+  }
+  // 함정 / 보상
+  const tn = nodeOf(Q.pc[ks[0]]);
+  const tp = st.tp.find(x => x[0] === tn);
+  if (tp && !(tp[1] === 't' && tp[2] === qi)) {
+    if (tp[1] === 't') {
+      if (Math.random() < 0.5) { log(st, `🎪 ${Q.n} 함정! 죽음`); fx(st, { t: 'e', n: tn, s: '☠️' }); killStack(st, Q, ks[0], null); return true; }
+      const nb = back(Q.pc[ks[0]], 3); for (const j of ks) Q.pc[j] = nb.slice(); log(st, `🎪 ${Q.n} 함정! 3칸 뒤로`); fx(st, { t: 'e', n: tn, s: '🌀' });
+    } else {
+      if (Math.random() < 0.5 || Q !== P) { const f = walk(st, Q, Q.pc[ks[0]], 3, Q.lp[ks[0]]); for (const j of ks) Q.pc[j] = f.pc[0] === 'F' ? ['F', 0] : f.pc.slice(0, 2); log(st, `🎪 ${Q.n} 보상! 3칸 앞으로`); fx(st, { t: 'e', n: tn, s: '⭐' }); if (f.pc[0] === 'F') return true; }
+      else { st.tw++; log(st, `🎪 ${Q.n} 보상! 던지기 +1`); fx(st, { t: 'e', n: tn, s: '⭐' }); }
+    }
+    updateRiders(st, Q, ks);
+  }
   settle(st, P, Q, ks, steps < 0 !== has(Q, 'rv') ? true : false);
   if (onBoard(Q.pc[ks[0]]) && nodeOf(Q.pc[ks[0]]) === 22) log(st, `🎯 ${Q.n} 방 도착!`);
   return true;
@@ -580,6 +703,7 @@ function stepsFor(st, P, e, Q) {
   if (v < 0) return -1;
   let s = v + (b || 0);
   if (Q === P && vanguardOn(P)) s += 1;
+  if (Q === P && P.ldn) s *= 2;
   return s;
 }
 
@@ -591,33 +715,83 @@ function sasmok(P) {
   for (const L of LINES) for (let i = 0; i + 3 < L.length; i++) if ([0, 1, 2, 3].every(d => nodes.has(L[i + d]))) return true;
   return false;
 }
+function eliminate(st, P, why) {
+  if (!active(P)) return false;
+  if (has(P, 'nk') && P.u.nk > 0) { P.u.nk = 0; log(st, `🧙 ${P.n} 네크로맨서가 탈락을 막음! (${why})`); fx(st, { t: 'c', s: '🧙' }); return false; }
+  P.out = 1;
+  P.pc = P.pc.map(pc => pc[0] === 'F' ? pc : ['X', 0]);
+  for (const R of st.pl) R.rd.forEach((r, j) => { if (r && st.pl[r[0]] === P) R.rd[j] = 0; });
+  st.lo.push(P.id);
+  st.pk = st.pk.filter(x => x.i !== P.id);
+  if (st.pr && st.pr.i === P.id) st.pr = null;
+  log(st, `☠️ ${P.n} 탈락! (${why})`); fx(st, { t: 'c', s: '☠️' });
+  return true;
+}
+function placeWin(st, P, why) {
+  if (!active(P)) return;
+  const group = [P];
+  if (why === '완주') for (const R of st.pl) if (R.lc === P.id && active(R) && !group.includes(R)) group.push(R);
+  for (const R of st.pl) if (R.nkp === P.id && active(R) && !group.includes(R)) group.push(R);
+  const place = st.rk.reduce((s, g) => s + g.length, 0) + 1;
+  for (const R of group) {
+    R.done = place;
+    R.pc = R.pc.map(pc => onBoard(pc) ? ['X', 0] : pc);
+    st.pk = st.pk.filter(x => x.i !== R.id);
+    if (st.pr && st.pr.i === R.id) st.pr = null;
+  }
+  st.rk.push(group.map(R => R.id));
+  log(st, `🏆 ${group.map(R => R.n).join(' & ')} ${place}위! (${why})`); fx(st, { t: 'c', s: place === 1 ? '🏆' : '🎖️' });
+}
+function finishGame(st) {
+  const rest = live(st);
+  const place = st.rk.reduce((s, g) => s + g.length, 0) + 1;
+  if (rest.length) st.rk.push(rest.map(R => R.id));
+  rest.forEach(R => R.done = place);
+  let fin = st.rk.slice();
+  st.lo.slice().reverse().forEach(id => fin.push([id]));
+  // 동메달: 3위 자리에 끼워넣기
+  const bz = fin.filter(g => g.some(id => st.pl.find(q => q.id === id).bz));
+  fin = fin.filter(g => !bz.includes(g));
+  bz.forEach(g => fin.splice(Math.min(2, fin.length), 0, g));
+  // 계획대로
+  const flat = fin.map(g => g[0]);
+  const planner = st.pl.find(q => q.pred && q.pred.length === flat.length && q.pred.every((id, i) => id === flat[i]) && !catted(q, 'gp'));
+  if (planner) { log(st, `📓 ${planner.n} 계획대로...! 순위를 전부 맞힘 → 혼자 승리`); fin = [[planner.id]].concat(fin.flat().filter(id => id !== planner.id).map(id => [id])); st.plan = 1; }
+  st.fin = fin;
+  fin.forEach((g, i) => g.forEach(id => { const q = st.pl.find(x => x.id === id); if (q) q.done = st.plan && i > 0 ? 0 : i + 1; }));
+  st.ph = 'end'; st.w = fin[0][0]; st.ws = fin[0];
+  log(st, `🎉 게임 끝! 1위: ${fin[0].map(id => st.pl.find(q => q.id === id).n).join(' & ')}`);
+}
+function specialWin(st, P) {
+  if (P.wf) return P.wf;
+  if (has(P, 'sm') && sasmok(P)) return '사목';
+  if (has(P, 'ak') && P.th === 63) return '악보 완성';
+  const total = st.pl.reduce((s, q) => s + q.pc.filter(alive).length, 0);
+  const z = P.pc.filter((pc, j) => alive(pc) && P.pt[j] === 'zom').length;
+  if (z > 0 && z * 2 >= total) return '좀비 대유행';
+  if (P.cow && has(P, 'cw')) return '소 뒷걸음질';
+  if (has(P, 'cl') && st.pl.some(q => q.a.includes('ct'))) return '애묘인';
+  if (has(P, 'un') && P.gk >= 4) return '웅녀';
+  if (has(P, 'cs')) { const stacks = new Set(); st.pl.forEach((q, qi) => q.pc.forEach(pc => { if (onBoard(pc)) stacks.add(qi + ':' + nodeOf(pc)); })); if (stacks.size === 1 && [...stacks][0].startsWith(pidx(st, P) + ':')) return '천상천하 유아독존'; }
+  if (has(P, 'st1')) { const c = {}; P.pc.forEach(pc => { if (onBoard(pc)) c[nodeOf(pc)] = (c[nodeOf(pc)] || 0) + 1; }); if (Object.values(c).some(n => n >= 8)) return '8성 달성'; }
+  if (P.mk && P.mk >= P.mt) return '괴물 사냥 완료';
+  if (has(P, 'ms') || P.cc) { if (P.cc >= 12) return '마신 강림'; }
+  if (has(P, 'mu') && P.kills - P.mu0 >= 4) return '무신정변';
+  if (has(P, 'nf')) { const os = st.pl.filter(q => q !== P); if (os.length && os.every(q => P.kb.includes(q.id))) return '나만 친구 없어'; }
+  return '';
+}
+// 게임 완전히 끝났으면 true
 function checkWin(st) {
   if (st.ph !== 'play') return true;
   const noSpecial = anyHas(st, 'cn');
-  const total = st.pl.reduce((s, q) => s + q.pc.filter(alive).length, 0);
-  const winners = []; const why = {};
-  const lv = live(st);
-  for (const P of lv) {
+  for (const P of live(st)) {
     const al = P.pc.filter(alive);
-    if (al.length && al.every(pc => pc[0] === 'F')) { winners.push(P); why[P.id] = '완주'; }
+    if (al.length && al.every(pc => pc[0] === 'F')) { placeWin(st, P, '완주'); continue; }
+    if (!noSpecial) { const w = specialWin(st, P); if (w) placeWin(st, P, w); }
+    P.cow = 0;
   }
-  if (!winners.length && !noSpecial) {
-    for (const P of lv) {
-      if (has(P, 'sm') && sasmok(P)) { winners.push(P); why[P.id] = '사목'; break; }
-      if (has(P, 'ak') && P.th === 63) { winners.push(P); why[P.id] = '악보 완성'; break; }
-      const z = P.pc.filter((pc, j) => alive(pc) && P.pt[j] === 'zom').length;
-      if (z > 0 && z * 2 >= total) { winners.push(P); why[P.id] = '좀비 대유행'; break; }
-      if (P.cow && has(P, 'cw')) { winners.push(P); why[P.id] = '소 뒷걸음질'; break; }
-    }
-  }
-  if (!winners.length && lv.length === 1 && st.pl.length > 1) { winners.push(lv[0]); why[lv[0].id] = '최후의 생존자'; }
-  if (!winners.length) { st.pl.forEach(q => q.cow = 0); return false; }
-  const main = winners[0];
-  const ws = [main.id];
-  if (!noSpecial && why[main.id] === '완주') for (const R of st.pl) if (R.lc === main.id && !ws.includes(R.id)) { ws.push(R.id); log(st, `🩸 ${R.n} 거머리로 같이 승리!`); }
-  st.ph = 'end'; st.w = main.id; st.ws = ws;
-  log(st, `🏆 ${main.n} 우승!!! (${why[main.id]})`);
-  return true;
+  if (live(st).length <= 1) { finishGame(st); return true; }
+  return false;
 }
 
 // ---- 턴
@@ -625,8 +799,8 @@ function beginTurn(st, depth = 0) {
   st.tw = 1; st.q = []; st.thn = 0; st.pr = null;
   if (depth > 12) return;
   const P = st.pl[st.t];
-  P.gbt = 0; P.pot = 0; P.hu = 0; P.rdt = 0;
-  if (P.out) return nextTurn(st, depth + 1);
+  P.gbt = 0; P.pot = 0; P.hu = 0; P.rdt = 0; P.snt = 0; P.t7 = {}; P.dct = 0; P.cnt = 0;
+  if (!active(P)) return nextTurn(st, depth + 1);
   if (P.sk > 0) { P.sk--; log(st, `😵 ${P.n} 이번 차례 건너뜀`); return nextTurn(st, depth + 1); }
   if (P.sn !== null && P.sn !== undefined) {
     const n = P.sn; P.sn = null;
@@ -634,8 +808,15 @@ function beginTurn(st, depth = 0) {
     for (const R of st.pl) { let k; while ((k = R.pc.findIndex(x => nodeOf(x) === n)) >= 0) { if (!killStack(st, R, k, P)) break; } }
     if (checkWin(st)) return;
   }
+  // 마신 소환: 광신도 코인
+  const cul = P.pc.filter((pc, j) => alive(pc) && pc[0] !== 'F' && P.pt[j] === 'cul').length;
+  if (cul) { P.cc += cul; log(st, `🛐 ${P.n} 의식 코인 +${cul} (${P.cc}/12)`); }
+  if (P.pt.includes('kc')) P.kct++;
+  if (P.dmz) { P.dmz.n++; if (P.dmz.n > 2) { P.wf = '영역 전개'; } }
+  if (checkWin(st)) return;
+  if (!active(P)) return nextTurn(st, depth + 1);
   if (P.bk.length) { for (const v of P.bk) st.q.push([v, 0, 0]); log(st, `🎁 ${P.n} 적립된 결과 ${P.bk.map(v => YUT_NAME[v]).join(',')} 받음`); P.bk = []; }
-  if (P.hb) { for (let i = 0; i < P.hb; i++) st.q.push([3, 0, 0]); log(st, `🤝 ${P.n} 상부상조 걸 ${P.hb}개 받음`); P.hb = 0; }
+  if (P.hb) { for (let i = 0; i < P.hb; i++) st.q.push([1, 0, 0]); log(st, `🤝 ${P.n} 상부상조 도 ${P.hb}개 받음`); P.hb = 0; }
 }
 function moveReapers(st) {
   for (const R of st.rp) {
@@ -651,15 +832,41 @@ function moveReapers(st) {
     }
   }
 }
+function endTurnEffects(st, P) {
+  if (!P) return;
+  if (P.ldn && active(P)) { P.ldn = 0; eliminate(st, P, '라스트 댄스 끝'); }
+  P.poison = 0; P.ldn = 0;
+  const D = st.duel;
+  if (D && D.b === P.id) {
+    D.n++;
+    const B = st.pl.find(q => q.id === D.b), A = st.pl.find(q => q.id === D.a);
+    if (D.n >= 3 && B && active(B)) { st.duel = null; eliminate(st, B, `${A ? A.n : '?'}와의 승부에서 패배`); }
+  }
+}
 function nextTurn(st, depth = 0) {
   st.pr = null;
+  endTurnEffects(st, st.pl[st.t]);
+  if (checkWin(st)) return;
+  if (st.echo && !st.rep && active(st.pl[st.t])) { st.rep = 1; log(st, `🔊 메아리! ${st.pl[st.t].n} 한 번 더`); return beginTurn(st, depth); }
+  st.rep = 0;
   st.t = (st.t + 1) % st.pl.length;
   if (st.t === 0) {
     st.r++;
+    // 라운드 효과
+    st.pl.forEach(q => q.pc.forEach((_, j) => { if (q.fz[j] && q.fz[j] < st.r) q.fz[j] = 0; }));
+    for (const q of live(st)) if (q.apd && st.r > q.apd) eliminate(st, q, '모험가 파티 해산');
+    if (st.bomb && st.r > st.bomb.until) { const B = st.pl.find(q => q.id === st.bomb.p); st.bomb = null; log(st, '🧨 폭탄 폭발!!!'); fx(st, { t: 'c', s: '🧨' }); if (B) eliminate(st, B, '폭탄 폭발'); }
+    if (checkWin(st)) return;
     if (st.rp.length) moveReapers(st);
     for (const q of st.pl) q.cat = (q.cat || []).filter(c => c[1] >= st.r);
     if (checkWin(st)) return;
-    if (st.op.g && [3, 6, 9].includes(st.r)) { log(st, `🎉 ${st.r}턴 증강 타임!`); for (const q of live(st)) givePick(st, q); }
+    if (st.r > 60) {
+      log(st, '⏰ 60라운드가 넘어서 남은 사람은 진행도 순으로 순위 결정');
+      const prog = q => q.pc.reduce((s, pc) => s + (pc[0] === 'X' ? 0 : 30 - remaining(pc)), 0);
+      live(st).sort((a, b) => prog(b) - prog(a)).forEach(q => placeWin(st, q, '시간 초과'));
+      finishGame(st); return;
+    }
+    if (st.op.g && [3, 6, 9].includes(st.r)) { const ph = st.r === 9 ? 'f' : 'm'; log(st, `🎉 ${st.r}턴 증강 타임! (${PH_NAME[ph]} 포함)`); pickRound(st, ph); }
     if (st.op.g && st.r >= 10 && st.r % 2 === 0) { log(st, `🔨 ${st.r}턴 모루 타임!`); for (const q of live(st)) giveAnvil(st, q, 1); }
   }
   beginTurn(st, depth);
@@ -672,16 +879,18 @@ function movablePieces(st, P, e) {
   const v = e[0];
   let homeDone = false;
   P.pc.forEach((pc, k) => {
-    if (!alive(pc) || pc[0] === 'F' || P.pt[k] === 'pawn') return;
+    if (!alive(pc) || pc[0] === 'F' || P.pt[k] === 'pawn' || P.fz[k]) return;
     if (pc[0] === 'H') { if (homeDone) return; if (v < 0 && !has(P, 'rv')) return; homeDone = true; add(P, k); return; }
     add(P, k);
   });
-  if (has(P, 'hy')) for (const Q of others(st, P)) Q.pc.forEach((pc, k) => { if (onBoard(pc) && Q.pt[k] !== 'pawn') add(Q, k); });
+  if (has(P, 'hy')) for (const Q of others(st, P)) if (active(Q)) Q.pc.forEach((pc, k) => { if (onBoard(pc) && Q.pt[k] !== 'pawn' && !Q.fz[k]) add(Q, k); });
   return out;
 }
 function tidy(st) {
-  if (st.ph !== 'play' || st.tw > 0 || st.pr) return;
+  if (st.ph !== 'play') return;
   const P = st.pl[st.t];
+  if (!active(P)) { st.q = []; st.tw = 0; st.pr = null; nextTurn(st); return; }
+  if (st.tw > 0 || st.pr) return;
   const before = st.q.length;
   st.q = st.q.filter(e => movablePieces(st, P, e).length);
   if (st.q.length < before) log(st, `🙃 ${P.n} 쓸 수 없는 결과 버림`);
@@ -696,50 +905,64 @@ function maskFor(v) {
   for (let k = 0; k < n; k++) m |= 1 << idx[k];
   return m;
 }
-function valFromMask(m, n) {
+const stickCount = P => Math.max(2, (has(P, 'gy') ? 6 : 4) + (P.yd || 0));
+function valFromMask(m, n, gy) {
   let c = 0; for (let i = 0; i < n; i++) if (m >> i & 1) c++;
-  if (n === 6) { if (c === 6) return -99; if (c === 0) return 5; if (c === 5) return 4; if (c === 1 && (m & 1)) return -1; return c; }
-  if (c === 0) return 5; if (c === 1 && (m & 1)) return -1; return c;
+  if (gy) { if (c === n) return -99; if (c === 0) return 5; if (c === n - 1) return 4; if (c === 1 && (m & 1)) return -1; return Math.min(c, 3); }
+  if (c === 0) return 5; if (c === 1 && (m & 1)) return -1; return Math.min(c, 4);
 }
 function sample(P) {
-  if (has(P, 'gy')) { let m = 0; for (let i = 0; i < 6; i++) if (Math.random() < 0.5) m |= 1 << i; return [valFromMask(m, 6), m, 6]; }
-  if (has(P, 'md')) { const v = Math.random() < 0.5 ? 5 : 1; return [v, maskFor(v), 4]; }
-  const w = P.w; const tot = w.reduce((a, b) => a + b, 0); let r = Math.random() * tot;
-  for (let j = 0; j < 6; j++) { r -= w[j]; if (r < 0) return [VALS[j], maskFor(VALS[j]), 4]; }
-  return [2, maskFor(2), 4];
+  if (has(P, 'md')) { const v = Math.random() < 0.3 ? 5 : 1; return [v, maskFor(v), 4, 0]; }
+  const n = stickCount(P), gy = has(P, 'gy') ? 1 : 0;
+  if (n === 4 && !gy) {
+    const w = P.w; const tot = w.reduce((a, b) => a + b, 0); let r = Math.random() * tot;
+    for (let j = 0; j < 6; j++) { r -= w[j]; if (r < 0) return [VALS[j], maskFor(VALS[j]), 4, 0]; }
+    return [2, maskFor(2), 4, 0];
+  }
+  let m = 0; for (let i = 0; i < n; i++) if (Math.random() < 0.5) m |= 1 << i;
+  return [valFromMask(m, n, gy), m, n, gy];
 }
 function startThrow(st, P) {
   if (P.hand) { P.hand = 0; st.pr = { i: P.id, k: 'opt', src: 'hd', o: [-1, 1, 2, 3, 4, 5].map(v => ({ l: YUT_NAME[v], v })) }; log(st, `🃏 ${P.n} 손은 눈보다 빠르다!`); return; }
-  if (has(P, 'gd') && !P.lone) { st.pr = { i: P.id, k: 'opt', src: 'gd', o: [{ l: '도', v: 1 }, { l: '개', v: 2 }] }; return; }
+  if (has(P, 'gd') && !P.lone) { st.pr = { i: P.id, k: 'opt', src: 'gd', o: [{ l: '도 + 도', v: 11 }, { l: '개 하나', v: 2 }] }; return; }
   const res = [];
-  if (P.lone) { P.lone = 0; res.push([3, maskFor(3), 4]); log(st, `🥀 ${P.n} 외톨이 발동`); }
-  else if (has(P, 'dd')) { for (let i = 0; i < 2; i++) { const r = sample(P); if (r[0] === 5) { r[0] = 1; r[1] = maskFor(1); } res.push(r); } }
+  let noAgain = false;
+  if (P.lone) { P.lone = 0; res.push([3, maskFor(3), 4, 0]); log(st, `🥀 ${P.n} 외톨이 발동`); }
+  else if (has(P, 'dd')) { noAgain = true; for (let i = 0; i < 2; i++) { const r = sample(P); if (r[0] === 5) { r[0] = 1; r[1] = maskFor(1); } if (i === 1 && r[0] > 2) { r[0] = 2; r[1] = maskFor(2); } res.push(r); } }
   else res.push(sample(P));
-  finishThrow(st, P, res);
+  finishThrow(st, P, res, '', noAgain);
 }
-function finishThrow(st, P, res, note = '') {
+function finishThrow(st, P, res, note = '', noAgain = false) {
   st.tw--; st.thn++;
   let again = false; const names = [];
-  for (let [v, m, n] of res) {
-    if (v === -99) { names.push('탈락'); continue; }
+  for (let [v, m, n, gy] of res) {
+    n = n || 4;
+    if (v === -99) { names.push('6개 전부 앞면!'); continue; }
     if (v === -1 && chance(P.x.bm)) { v = 5; note += ' 🔄'; }
     P.th |= 1 << VALS.indexOf(v);
     if (v === 2) P.gc++;
-    st.q.push([v, 0, m | 256 | (n === 6 ? 128 : 0)]);
+    st.q.push([v, 0, m | 256, n, gy ? 1 : 0]);
     names.push(YUT_NAME[v]);
+    P.t7[v] = (P.t7[v] || 0) + 1;
+    if (has(P, 'sv') && P.t7[v] >= 3) P.wf = '777';
+    if (P.poison && v === 5) { P.poison = 0; eliminate(st, P, '독이 든 성배에서 모'); }
+    if (P.pt.some((t, j) => t === 'qn' && alive(P.pc[j]))) { P.qt++; if (P.qt >= 12) P.wf = '중전마마 수호'; }
     if (v === 3) { P.glc++; if (has(P, 'jm') && P.glc % 2 === 0) { st.q.push([2, 0, 0]); note += ' 🥁개+1'; } }
-    if (v === 4 || v === 5) again = true;
+    if ((v === 4 || v === 5) && !noAgain) again = true;
   }
   const first = res[0];
   st.ds++;
-  st.d = { s: st.ds, v: first[0], f: Array.from({ length: first[2] }, (_, i) => !!(first[1] >> i & 1)), w: P.id, v2: res[1] ? res[1][0] : undefined };
+  st.d = { s: st.ds, v: first[0], f: Array.from({ length: first[2] || 4 }, (_, i) => !!(first[1] >> i & 1)), w: P.id };
+  if (res[1]) st.d.v2 = res[1][0];
   if (res.some(r => r[0] === -99)) {
-    P.out = 1; P.pc = P.pc.map(pc => pc[0] === 'F' ? pc : ['X', 0]);
-    log(st, `☠️ ${P.n} 과유불급! 윷 6개 전부 앞면 → 탈락`); fx(st, { t: 'c', s: '☠️' });
+    let lead = -1; P.pc.forEach((pc, j) => { if (onBoard(pc) && (lead < 0 || remaining(pc) < remaining(P.pc[lead]))) lead = j; });
+    if (lead >= 0) { const nn = nodeOf(P.pc[lead]); P.pc.forEach((pc, j) => { if (nodeOf(pc) === nn) { P.pc[j] = ['H', 0]; P.rd[j] = 0; P.so[j] = 0; P.lp[j] = 0; } }); }
+    log(st, `☠️ ${P.n} 과유불급! 윷 6개 전부 앞면 → 제일 앞선 말뭉치 집으로, 차례 끝`); fx(st, { t: 'c', s: '☠️' });
     st.q = []; st.tw = 0;
     if (!checkWin(st)) nextTurn(st);
     return;
   }
+  if (!active(P)) { st.q = []; st.tw = 0; if (!checkWin(st)) nextTurn(st); return; }
   if (!again && chance(P.x.rt)) { again = true; note += ' 🔁'; }
   if (chance(P.x.dp) && st.q.length) { st.q.push(st.q[st.q.length - 1].slice()); note += ' 👯복제'; }
   if (again) st.tw++;
@@ -758,8 +981,8 @@ function finishThrow(st, P, res, note = '') {
 }
 
 // ---- 사용형 증강
-function myTurnFree(st, P) { return st.ph === 'play' && st.pl[st.t] === P && !st.pk.length && !st.pr && !P.out; }
-function convertible(P) { return P.pc.map((_, k) => k).filter(k => alive(P.pc[k]) && P.pc[k][0] !== 'F' && !P.pt[k]); }
+function myTurnFree(st, P) { return st.ph === 'play' && st.pl[st.t] === P && !st.pk.length && !st.pr && active(P); }
+function convertible(P, homeOnly) { return P.pc.map((_, k) => k).filter(k => alive(P.pc[k]) && P.pc[k][0] !== 'F' && !P.pt[k] && (!homeOnly || P.pc[k][0] === 'H')); }
 function badukPair(st, P) {
   const mine = new Set(ownStackNodes(P));
   let best = null;
@@ -804,7 +1027,14 @@ function canUse(st, P, id) {
   switch (id) {
     case 'tr': return ownStackNodes(P, 2).length > 0;
     case 'cb': return ownStackNodes(P, 3).length > 0;
-    case 'sn': return st.tw > 0;
+    case 'sn': return !P.snt;
+    case 'pe': return convertible(P).length > 0;
+    case 'mr': return convertible(P, true).length > 0;
+    case 'bt': return !st.bomb && P.pc.some(pc => alive(pc) && pc[0] !== 'F');
+    case 'nk': return st.pl.some(q => q.out);
+    case 'dc': return !P.dct;
+    case 'ld': return true;
+    case 'dm': return !P.dmz && ownStackNodes(P).length > 0;
     case 'sl': return st.q.length > 0 && !!(st.q[st.q.length - 1][2] & 256);
     case 'bd': { const b = badukPair(st, P); return !!b && b.n > 0; }
     case 'gb': case 'vg': case 'zb': case 'po': case 'pw': return convertible(P).length > 0;
@@ -815,7 +1045,7 @@ function canUse(st, P, id) {
   }
   return true;
 }
-function spend(P, id) { if (id !== 'sn') P.u[id]--; }
+function spend(P, id) { if (id !== 'sn' && id !== 'dc') P.u[id]--; }
 function useAug(st, P, id) {
   if (!canUse(st, P, id)) return false;
   const pi = pidx(st, P);
@@ -830,7 +1060,21 @@ function useAug(st, P, id) {
     case 'dg': spend(P, id); st.q.push([2, 0, 0]); log(st, `🐕 ${P.n} 개들을 풀어라! 개 +1`); tidy(st); return true;
     case 'ln': spend(P, id); st.tw++; P.sk++; log(st, `💳 ${P.n} 대출! 던지기 +1 (다음 차례 건너뜀)`); return true;
     case 'db': spend(P, id); for (let i = 0; i < P.gc; i++) st.q.push([5, 0, 0]); log(st, `🐶 ${P.n} 도베르만! 모 ${P.gc}개`); fx(st, { t: 'c', s: '🐶' }); tidy(st); return true;
-    case 'sn': st.tw--; st.pr = { i: P.id, k: 'cell', src: 'sn', c: Array.from({ length: 28 }, (_, i) => i + 1) }; return true;
+    case 'sn': P.snt = 1; st.pr = { i: P.id, k: 'cell', src: 'sn', c: Array.from({ length: 28 }, (_, i) => i + 1) }; return true;
+    case 'pe': case 'mr': {
+      spend(P, id); const seen = {}; const o = [];
+      convertible(P, id === 'mr').forEach(k => { const pc = P.pc[k]; const key = pc[0] === 'H' ? 'H' : nodeOf(pc); if (seen[key]) return; seen[key] = 1; o.push({ l: pc[0] === 'H' ? '대기 중인 말' : `${nodeOf(pc)}번 칸 말`, v: k }); });
+      st.pr = { i: P.id, k: 'opt', src: 'cv', ty: id === 'pe' ? 'pel' : 'mar', o }; return true;
+    }
+    case 'bt': {
+      spend(P, id); const o = []; const seen = {};
+      P.pc.forEach((pc, k) => { if (!alive(pc) || pc[0] === 'F') return; const key = pc[0] === 'H' ? 'H' : nodeOf(pc); if (seen[key]) return; seen[key] = 1; o.push({ l: pc[0] === 'H' ? '대기 중인 말' : `${nodeOf(pc)}번 칸 말`, v: k }); });
+      st.pr = { i: P.id, k: 'opt', src: 'bt', o }; return true;
+    }
+    case 'nk': spend(P, id); st.pr = { i: P.id, k: 'opt', src: 'nk', o: st.pl.filter(q => q.out).map(q => ({ l: q.n, v: pidx(st, q) })) }; return true;
+    case 'dc': P.dct = 1; P.poison = 1; st.tw += 3; log(st, `🍷 ${P.n} 독이 든 성배! 던지기 +3 (이번 차례 모 나오면 탈락)`); fx(st, { t: 'c', s: '🍷' }); return true;
+    case 'ld': spend(P, id); P.ldn = 1; st.tw += 2; log(st, `💃 ${P.n} 라스트 댄스! 던지기 +2, 이동 2배 (차례 끝나면 탈락)`); fx(st, { t: 'c', s: '💃' }); return true;
+    case 'dm': spend(P, id); stackPrompt('dm'); return true;
     case 'bd': {
       spend(P, id); const b = badukPair(st, P); let n = 0;
       for (const q of others(st, P)) for (const m of b.mid) { let k; while ((k = q.pc.findIndex(pc => nodeOf(pc) === m)) >= 0) { const d = killStack(st, q, k, P); if (!d) break; n += d; } }
@@ -848,8 +1092,8 @@ function useAug(st, P, id) {
     case 'lo': spend(P, id); P.lone = 1; log(st, `🥀 ${P.n} 외톨이 준비`); return true;
     case 'sl': {
       spend(P, id);
-      const e = st.q[st.q.length - 1]; const n = e[2] & 128 ? 6 : 4; const m = e[2] & 63;
-      st.pr = { i: P.id, k: 'opt', src: 'sl', o: Array.from({ length: n }, (_, i) => { const v = valFromMask(m ^ (1 << i), n); return { l: `${i + 1}번 막대 뒤집기 → ${YUT_NAME[v]}`, v: i }; }) };
+      const e = st.q[st.q.length - 1]; const n = e[3] || 4; const m = e[2] & 255;
+      st.pr = { i: P.id, k: 'opt', src: 'sl', o: Array.from({ length: n }, (_, i) => { const v = valFromMask(m ^ (1 << i), n, e[4]); return { l: `${i + 1}번 막대 뒤집기 → ${YUT_NAME[v] || '?'}`, v: i }; }) };
       return true;
     }
     case 'tt': spend(P, id); stackPrompt('tt'); return true;
@@ -885,7 +1129,48 @@ function applyAug(st, P, id) {
       if (free.length) { const n = pickOne(free); st.pp.push([n, pi]); fx(st, { t: 'e', n, s: '💩' }); log(st, `💩 히히 똥! ${n}번 칸`); }
       break;
     }
-    case 'ob': givePick(st, P); log(st, `☝️ ${P.n} 이의있음! 다시 고름`); break;
+    case 'ob': givePick(st, P, 1, st.r >= 9 ? 'f' : st.r >= 3 ? 'm' : 's'); log(st, `☝️ ${P.n} 이의있음! 다시 고름`); break;
+    case 'nc': st.ncNext = 1; break;
+    case 'eqx': { const k = P.pc.findIndex(pc => pc[0] === 'H'); if (k >= 0) P.pc[k] = ['X', 0]; P.yd--; break; }
+    case 'jd': addPiece(P, ['H', 0], ''); P.yd++; break;
+    case 'mp': {
+      const free = Array.from({ length: 28 }, (_, i) => i + 1).filter(n => !st.tp.some(x => x[0] === n));
+      for (let i = 0; i < 10 && free.length; i++) { const n = free.splice(rnd(0, free.length - 1), 1)[0]; st.tp.push([n, i < 6 ? 't' : 'r', pi]); }
+      log(st, '🎪 말이오? 파티! 함정 6개 · 보상 4개 설치'); fx(st, { t: 'c', s: '🎪' });
+      break;
+    }
+    case 'ap': { const ty = ['gob', 'van', 'po', 'zom']; P.pc.forEach((pc, j) => { if (alive(pc) && pc[0] !== 'F') P.pt[j] = pickOne(ty); }); P.apd = st.r + 8; log(st, `🗺️ ${P.n} 모험가 파티 결성! ${P.apd}라운드 뒤 해산`); break; }
+    case 'sg': {
+      for (const q of st.pl) { if (!active(q)) continue; let keep = 0; q.pc.forEach((pc, j) => { if (!alive(pc)) return; if (keep < 2) keep++; else q.pc[j] = ['X', 0]; }); }
+      const ks = P.pc.map((_, j) => j).filter(j => alive(P.pc[j]) && P.pc[j][0] === 'H');
+      if (ks[0] !== undefined) P.pc[ks[0]] = ['A', 1]; if (ks[1] !== undefined) P.pc[ks[1]] = ['A', 2];
+      log(st, '⏩ 스겜! 모두 말 2개'); fx(st, { t: 'c', s: '⏩' });
+      break;
+    }
+    case 'kc': { const k = convertible(P)[0]; if (k !== undefined) { P.pt[k] = 'kc'; P.kct = 0; } break; }
+    case 'qq': { const k = convertible(P)[0]; if (k !== undefined) { P.pt[k] = 'qn'; P.pc[k] = ['C', 0]; P.ql = 1; P.qt = 0; } break; }
+    case 'mo': { let first = true; P.pc.forEach((pc, j) => { if (!alive(pc) || pc[0] === 'F') return; if (first) { P.pt[j] = 'mon'; P.pc[j] = ['H', 0]; first = false; } else P.pc[j] = ['X', 0]; }); P.mk = 0; P.mt = 12; break; }
+    case 'st1': { const n = P.pc.filter(alive).length; for (let i = n; i < 8; i++) addPiece(P, ['H', 0], ''); break; }
+    case 'un': {
+      const free = Array.from({ length: 28 }, (_, i) => i + 1).filter(n => !st.gk.some(g => g[0] === n));
+      for (let i = 0; i < 4 && free.length; i++) st.gk.push([free.splice(rnd(0, free.length - 1), 1)[0], pi]);
+      log(st, `🧄 ${P.n} 웅녀! 마늘 4개가 판에 뿌려짐`); break;
+    }
+    case 'ir': P.pc.forEach((pc, j) => { if (alive(pc) && pc[0] !== 'F') P.pc[j] = ['A', 1]; }); log(st, `🎎 ${P.n} 업고 놀자! 전부 도 칸에서 시작`); break;
+    case 'ms': { let n = 0; P.pc.forEach((pc, j) => { if (alive(pc) && pc[0] !== 'F' && !P.pt[j]) { P.pt[j] = 'cul'; n++; } }); log(st, `🛐 ${P.n} 마신 소환! 광신도 ${n}명`); fx(st, { t: 'c', s: '🛐' }); break; }
+    case 'mu': P.mu0 = P.kills; break;
+    case 'nf': P.kb = []; break;
+    case 'wt': { const o = others(st, P).filter(active).map(q => ({ l: q.n, v: pidx(st, q) })); if (o.length) st.pr = { i: P.id, k: 'opt', src: 'wt', o }; break; }
+    case 'sb': { const o = others(st, P).filter(active).map(q => ({ l: q.n, v: pidx(st, q) })); if (o.length && !st.duel) st.pr = { i: P.id, k: 'opt', src: 'sb', o }; break; }
+    case 'gp': st.pr = { i: P.id, k: 'opt', src: 'gp', acc: [], o: st.pl.map(q => ({ l: `1위: ${q.n}`, v: pidx(st, q) })) }; break;
+    case 'kl': { st.hp = st.hp || {}; for (const q of live(st)) if (st.hp[q.id] === undefined) st.hp[q.id] = 3; log(st, '🔪 모두에게 체력 3이 생김'); fx(st, { t: 'c', s: '🔪' }); break; }
+    case 'bz': { P.bz = 1; P.done = 3; P.pc = P.pc.map(pc => onBoard(pc) ? ['X', 0] : pc); st.pk = st.pk.filter(x => x.i !== P.id); st.rk.push([P.id]); log(st, `🥉 ${P.n} 동메달 확정! 3위로 빠짐`); fx(st, { t: 'c', s: '🥉' }); break; }
+    case 'ec': st.echo = 1; log(st, '🔊 메아리의 형상! 모두 차례를 두 번씩'); fx(st, { t: 'c', s: '🔊' }); break;
+    case 'rc': {
+      const pool = AUG_IDS.filter(x => !AUG[x].ph && AUG[x].k !== 'o' && !P.a.includes(x));
+      for (let i = 0; i < 4 && pool.length; i++) { const x = pool.splice(rnd(0, pool.length - 1), 1)[0]; applyAug(st, P, x); }
+      break;
+    }
     case 'lc': { const o = others(st, P).filter(q => !q.out).map(q => ({ l: q.n, v: pidx(st, q) })); if (o.length && P.pc.some(pc => alive(pc) && pc[0] !== 'F')) st.pr = { i: P.id, k: 'opt', src: 'lc', o }; break; }
     case 'dv': st.pr = { i: P.id, k: 'opt', src: 'dv', o: AUG_IDS.map(x => ({ l: `${AUG[x].e} ${AUG[x].n}`, v: x })) }; break;
     case 'cf': {
@@ -901,7 +1186,8 @@ function answer(st, P, v) {
   const pr = st.pr; st.pr = null;
   const pi = pidx(st, P);
   switch (pr.src) {
-    case 'hd': case 'gd': { const val = +v; finishThrow(st, P, [[val, maskFor(val), 4]], pr.src === 'hd' ? ' 🃏' : ' 🐖'); return; }
+    case 'hd': { const val = +v; finishThrow(st, P, [[val, maskFor(val), 4, 0]], ' 🃏'); return; }
+    case 'gd': { if (v === 2) { finishThrow(st, P, [[2, maskFor(2), 4, 0]], ' 🐖', true); return; } finishThrow(st, P, [[1, maskFor(1), 4, 0], [1, maskFor(1), 4, 0]], ' 🐖', true); return; }
     case 'lc': {
       const T = st.pl[v]; if (!T) break;
       let k = P.pc.findIndex(pc => pc[0] === 'H'); if (k < 0) k = P.pc.findIndex(pc => alive(pc) && pc[0] !== 'F');
@@ -914,9 +1200,9 @@ function answer(st, P, v) {
     case 'yt': { const T = st.pl[v]; if (T) { T.sk += 2; log(st, `🥏 ${P.n}의 윷이 ${T.n}한테 명중! 차례 2번 건너뜀`); fx(st, { t: 'c', s: '🥏' }); } break; }
     case 'sl': {
       const e = st.q[st.q.length - 1]; if (!e) break;
-      const n = e[2] & 128 ? 6 : 4; const m = (e[2] & 63) ^ (1 << v); const nv = valFromMask(m, n);
-      if (nv === -99) { e[0] = 5; } else e[0] = nv;
-      e[2] = m | (e[2] & 384);
+      const n = e[3] || 4; const m = (e[2] & 255) ^ (1 << v); const nv = valFromMask(m, n, e[4]);
+      e[0] = nv === -99 ? 5 : nv;
+      e[2] = m | 256;
       log(st, `🤏 ${P.n} 슬쩍! → ${YUT_NAME[e[0]]}`);
       break;
     }
@@ -963,6 +1249,31 @@ function answer(st, P, v) {
       settle(st, P, P, ks, false);
       break;
     }
+    case 'bt': st.bomb = { p: P.id, k: +v, until: st.r + 6 }; log(st, `🧨 ${P.n} 폭탄돌리기 시작! ${st.r + 6}라운드 끝에 폭발`); fx(st, { t: 'c', s: '🧨' }); break;
+    case 'nk': {
+      const T = st.pl[v]; if (!T || !T.out) break;
+      T.out = 0; st.lo = st.lo.filter(id => id !== T.id);
+      let n = 0; T.pc = T.pc.map(pc => { if (pc[0] === 'X' && n < 4) { n++; return ['H', 0]; } return pc; });
+      if (!T.pc.some(pc => alive(pc) && pc[0] !== 'F')) for (let i = 0; i < 2; i++) addPiece(T, ['H', 0], '');
+      P.nkp = T.id; log(st, `🧙 ${P.n}의 네크로맨서! ${T.n} 부활 (같이 이기기)`); fx(st, { t: 'c', s: '🧙' });
+      break;
+    }
+    case 'dm': { const ks = stackOf(P, +v); P.dmz = { ks, n: 0 }; ks.forEach(j => P.fz[j] = 9999); log(st, `🌐 ${P.n} 영역 전개! 내 차례 2번 버티면 승리`); fx(st, { t: 'e', n: +v, s: '🌐' }); break; }
+    case 'wt': {
+      const T = st.pl[v]; if (!T) break;
+      let lead = -1; T.pc.forEach((pc, j) => { if (onBoard(pc) && (lead < 0 || remaining(pc) < remaining(T.pc[lead]))) lead = j; });
+      if (lead >= 0) { const nn = nodeOf(T.pc[lead]); stackOf(T, nn).forEach(j => T.fz[j] = st.r + 1); log(st, `✋ 잠깐! ${T.n}의 ${nn}번 칸 말뭉치 2라운드 동안 묶임`); fx(st, { t: 'e', n: nn, s: '✋' }); }
+      else log(st, `✋ ${T.n}은 판 위에 말이 없어서 허탕`);
+      break;
+    }
+    case 'sb': { const T = st.pl[v]; if (T) { st.duel = { a: P.id, b: T.id, n: 0 }; log(st, `🤺 ${P.n} → ${T.n} 승부다! 3차례 안에 완주 못 하면 ${T.n} 탈락, 완주하면 ${P.n} 탈락`); fx(st, { t: 'c', s: '🤺' }); } break; }
+    case 'gp': {
+      const acc = (pr.acc || []).concat([st.pl[v].id]);
+      const rest = st.pl.filter(q => !acc.includes(q.id));
+      if (rest.length) { st.pr = { i: P.id, k: 'opt', src: 'gp', acc, o: rest.map(q => ({ l: `${acc.length + 1}위: ${q.n}`, v: pidx(st, q) })) }; return; }
+      P.pred = acc; log(st, `📓 ${P.n} 순위 예언 완료... (비밀)`);
+      break;
+    }
     case 'as': stackOf(P, +v).forEach(j => P.so[j] = 1); log(st, `🗡️ ${P.n} 말뭉치에 암살자의 영혼 깃듦`); break;
     case 'hs': stackOf(P, +v).forEach(j => P.sh[j] = 1); log(st, `🔰 ${P.n} 천상의 보호막`); break;
     case 'fi': { const ks = stackOf(P, +v); P.cf = { pos: P.pc[ks[0]].slice(0, 2), ks }; log(st, `🔥 ${P.n} ${v}번 칸에 화톳불 설치`); break; }
@@ -1006,7 +1317,7 @@ function act(st, pid, a) {
     answer(st, P, a.v); return true;
   }
   if (a.t === 'pick' || a.t === 'det') {
-    const idx = st.pk.findIndex(x => x.i === pid);
+    const idx = st.pk.findIndex(x => x.i === pid && x.ch === undefined);
     if (idx < 0) return false;
     const e = st.pk[idx];
     if (a.t === 'det') {
@@ -1021,6 +1332,7 @@ function act(st, pid, a) {
     const opt = e.o[a.v | 0];
     if (opt === undefined) return false;
     if (catForced(st, P, e) && opt !== 'ct') return false;
+    if (e.nc) { e.ch = opt; log(st, `👀 ${P.n} 선택 완료 (비밀)`); resolveNc(st); if (!checkWin(st)) tidy(st); return true; }
     st.pk.splice(idx, 1);
     if (e.k === 'v') applyAnvil(st, P, e, opt); else if (AUG[opt]) applyAug(st, P, opt);
     if (!checkWin(st)) tidy(st);
@@ -1030,7 +1342,7 @@ function act(st, pid, a) {
   if (a.t === 'help') {
     if (!myTurnFree(st, P) || P.hu) return false;
     const H = others(st, P).find(q => has(q, 'hp')); if (!H) return false;
-    P.hu = 1; st.q.push([2, 0, 0]); H.hb++; log(st, `🤝 ${P.n} 상부상조 개 받음 (${H.n}은 다음 차례에 걸)`);
+    P.hu = 1; st.q.push([2, 0, 0]); H.hb++; log(st, `🤝 ${P.n} 상부상조 개 받음 (${H.n}은 다음 차례에 도)`);
     tidy(st); return true;
   }
   if (a.t === 'use') { return useAug(st, P, a.v); }
@@ -1079,7 +1391,7 @@ function botAnswer(st) {
   const pr = st.pr; const P = st.pl.find(q => q.id === pr.i);
   if (pr.k === 'opt') {
     if (pr.src === 'hd') return { t: 'ans', v: 5 };
-    if (pr.src === 'sl') { let best = 0, bv = -9; const e = st.q[st.q.length - 1]; const n = e[2] & 128 ? 6 : 4; pr.o.forEach(o => { const v = valFromMask((e[2] & 63) ^ (1 << o.v), n); if (v > bv) { bv = v; best = o.v; } }); return { t: 'ans', v: best }; }
+    if (pr.src === 'sl') { let best = 0, bv = -99; const e = st.q[st.q.length - 1]; const n = e[3] || 4; pr.o.forEach(o => { const v = valFromMask((e[2] & 255) ^ (1 << o.v), n, e[4]); if (v > bv) { bv = v; best = o.v; } }); return { t: 'ans', v: best }; }
     return { t: 'ans', v: pickOne(pr.o).v };
   }
   if (pr.src === 'sn') {
@@ -1098,10 +1410,10 @@ function needsOrder(st, pid) {
 function botAction(st, pid) {
   if (st.ph === 'order') return needsOrder(st, pid) ? { t: 'order' } : null;
   if (st.pr) return st.pr.i === pid ? botAnswer(st) : null;
-  const e = st.pk.find(x => x.i === pid);
+  const e = st.pk.find(x => x.i === pid && x.ch === undefined);
   const P = st.pl.find(q => q.id === pid);
   if (e) {
-    if (catForced(st, P, e)) return { t: 'pick', v: e.o.indexOf('ct') };
+    if (e.k === 'a' && catForced(st, P, e)) return { t: 'pick', v: e.o.indexOf('ct') };
     return { t: 'pick', v: rnd(0, e.o.length - 1) };
   }
   if (st.pk.length || st.ph !== 'play' || st.pl[st.t].id !== pid) return null;
@@ -1137,14 +1449,14 @@ function botAction(st, pid) {
   return best;
 }
 
-if (typeof module !== 'undefined') module.exports = { needsOrder, chat, newState, startGame, act, botAction, preview, canUse, catForced, movablePieces, AUG, PSTAT, ROUTES, YUT_NAME, VALS, TYPE_NAME, nodeOf, onBoard, alive, has };
+if (typeof module !== 'undefined') module.exports = { active, PH_NAME, stickCount, needsOrder, chat, newState, startGame, act, botAction, preview, canUse, catForced, movablePieces, AUG, PSTAT, ROUTES, YUT_NAME, VALS, TYPE_NAME, nodeOf, onBoard, alive, has };
 
 </script>
 <script>
 const COLORS = ['#ff4f6d', '#3ea8ff', '#3fe07a', '#ffb43f'];
 const MAXP = 4;
 const PREFIX = 'chaosyut-kw7-';
-const PROTO = 5;
+const PROTO = 6;
 let errShown = 0;
 window.addEventListener('error', ev => { if (errShown++ < 3) toast('⚠️ 오류: ' + (ev.message || '알 수 없음')); });
 const PUB_SLOTS = 24;
@@ -1381,7 +1693,7 @@ function scheduleBots() {
   }
   if (state.pr) { if (botty(state.pr.i)) who = state.pr.i; else return; }
   else {
-    const pend = state.pk.find(e => botty(e.i));
+    const pend = state.pk.find(e => botty(e.i) && e.ch === undefined);
     if (pend) who = pend.i;
     else if (state.pk.length) return;
     else { const cur = state.pl[state.t]; if (cur && isBotLike(cur)) who = cur.id; }
@@ -1621,7 +1933,7 @@ function myPrompt() {
 }
 const qName = e => YUT_NAME[e[0]] + (e[1] ? '+' + e[1] : '');
 const nameOf = id => (state.pl.find(q => q.id === id) || {}).n || '?';
-const TYPE_EMO = { gob: '👹', van: '⚔️', zom: '🧟', po: '🏯', pawn: '♟️' };
+const TYPE_EMO = { gob: '👹', van: '⚔️', zom: '🧟', po: '🏯', pawn: '♟️', kc: '🛺', qn: '👸', mon: '👾', cul: '🛐', pel: '🦤', mar: '🏃' };
 
 function boardHTML(cur, mine, can, homeK) {
   let h = `<div class="board" id="board">${boardSVG()}`;
@@ -1629,6 +1941,8 @@ function boardHTML(cur, mine, can, homeK) {
   const marks = {};
   const addM = (n, s) => { (marks[n] = marks[n] || []).push(s); };
   (state.pp || []).forEach(p => addM(p[0], '💩'));
+  (state.tp || []).forEach(p => addM(p[0], p[1] === 't' ? '🕳️' : '🎁'));
+  (state.gk || []).forEach(g => addM(g[0], '🧄'));
   (state.rp || []).forEach(r => addM(r.n, '💀'));
   state.pl.forEach(q => { if (q.cf) addM(nodeOf(q.cf.pos), '🔥'); if (q.sn !== null && q.sn !== undefined) addM(q.sn, '🎯'); });
   for (const n in marks) { const [x, y] = NODE_XY[n]; h += `<div class="mark ${marks[n].includes('💀') ? 'reaper' : ''}" style="left:${pct(x)}%;top:${pct(y)}%">${marks[n].join('')}</div>`; }
@@ -1647,6 +1961,8 @@ function boardHTML(cur, mine, can, homeK) {
       if (stk.some(j => q.sh[j])) inner += '<span class="sh b"></span>';
       if (stk.some(j => q.so[j])) inner += '<span class="soul">🗡️</span>';
       if (q.rd[k]) inner += '<span class="soul" style="left:-8px;right:auto">🚌</span>';
+      if (state.bomb && state.bomb.p === q.id && stk.includes(state.bomb.k)) inner += '<span class="soul" style="top:auto;bottom:-10px">🧨</span>';
+      if (stk.some(j => q.fz && q.fz[j])) inner += '<span class="soul" style="left:-8px;right:auto;top:auto;bottom:-10px">✋</span>';
       if (first && stk.length > 1) inner += `<span class="cnt">×${stk.length}</span>`;
       h += `<div class="ptok ${isCan ? 'can' : ''} ${types.length ? 'typed' : ''}" id="pt-${pi}-${k}" style="left:${pct(x) + off}%;top:${pct(y) + off}%;background-color:${COLORS[q.c]};${first ? '' : 'opacity:0;pointer-events:none;'}" ${isCan ? `onclick="moveP(${pi},${k})"` : ''}>${inner}</div>`;
     });
@@ -1676,6 +1992,23 @@ function piecesHTML(q) {
 function statusList(q) {
   const st = [];
   if (q.out) st.push('☠️탈락');
+  if (q.done) st.push(q.bz ? '🥉3위 확정' : `🏆${q.done}위`);
+  if (state.hp && state.hp[q.id] !== undefined) st.push(`❤️${Math.max(0, state.hp[q.id])}`);
+  if (q.cc) st.push(`🛐코인 ${q.cc}/12`);
+  if (q.a.includes('un')) st.push(`🧄${q.gk}/4`);
+  if (q.pt && q.pt.includes('mon')) st.push(`👾${q.mk}/${q.mt}`);
+  if (q.pt && q.pt.includes('qn')) st.push(`👸목숨 ${q.ql} · 던지기 ${q.qt}/12`);
+  if (q.pt && q.pt.includes('kc')) st.push(`🛺${q.kct}/6차례`);
+  if (q.apd) st.push(`🗺️${q.apd}라운드에 해산`);
+  if (q.dmz) st.push(`🌐영역 ${q.dmz.n}/2`);
+  if (q.poison) st.push('🍷독 (모 나오면 탈락)');
+  if (q.ldn) st.push('💃라스트 댄스 중');
+  if (state.bomb && state.bomb.p === q.id) st.push(`🧨폭탄 (${state.bomb.until}라운드 끝)`);
+  if (state.duel && (state.duel.a === q.id || state.duel.b === q.id)) st.push(state.duel.b === q.id ? `🤺승부 ${state.duel.n}/3차례` : '🤺승부 거는 중');
+  if (q.swl && q.swl.length) st.push(`🦤삼킨 말 ${q.swl.reduce((s, x) => s + x[1], 0)}`);
+  if (q.a.includes('mu')) st.push(`⚔️처치 ${q.kills - q.mu0}/4`);
+  if (q.a.includes('nf')) st.push(`🥲${q.kb.length}/${state.pl.length - 1}`);
+  if (q.nkp) st.push(`🧙${esc(nameOf(q.nkp))}랑 동반승리`);
   if (q.sk) st.push(`😵건너뜀×${q.sk}`);
   if (q.o) st.push('🤖대신 플레이');
   if (q.hand) st.push('🃏원하는 결과 준비');
@@ -1696,9 +2029,9 @@ function augChips(q, interactive) {
     const cat = (q.cat || []).find(c => c[0] === x);
     if (cat) return `<span class="aug catted" onclick="showTip('${x}')">🐱 <s>${A.n}</s></span>`;
     if (A.k === 'o') return `<span class="aug used" onclick="showTip('${x}',1)">${A.e} ${A.n}<i>사용완료</i></span>`;
-    if (A.k === 'u' && x !== 'sn' && !(q.u[x] > 0)) return `<span class="aug used" onclick="showTip('${x}',1)">${A.e} ${A.n}<i>사용완료</i></span>`;
+    if (A.k === 'u' && x !== 'sn' && x !== 'dc' && !(q.u[x] > 0)) return `<span class="aug used" onclick="showTip('${x}',1)">${A.e} ${A.n}<i>사용완료</i></span>`;
     if (A.k === 'u') {
-      const left = x === 'sn' ? '∞' : (q.u[x] || 0);
+      const left = (x === 'sn' || x === 'dc') ? '∞' : (q.u[x] || 0);
       const ok = interactive && canUse(state, q, x);
       return `<button class="aug use ${ok ? 'ok' : ''}" ${ok ? `onclick="useA('${x}')"` : `onclick="showTip('${x}')"`}>${A.e} ${A.n} <b>${left}</b></button>`;
     }
@@ -1830,7 +2163,7 @@ function controlsHTML(cur, mine, can, homeK) {
   } else if (cur) h += `<div class="hint">${esc(cur.n)} ${state.tw > 0 ? '던지는 중...' : '말 옮기는 중...'}</div>`;
   return h;
 }
-const PROMPT_TXT = { tr: '트럭으로 보낼 말뭉치', cb: '합체 필살기 쓸 말뭉치', sn: '명사수로 조준할 칸', tt: '시간 여행 보낼 말뭉치', as: '영혼 넣을 말뭉치', hs: '보호막 씌울 말뭉치', fi: '화톳불 놓을 말뭉치', sc: '희생할 말이 있는 칸', pox: '포가 날아갈 칸' };
+const PROMPT_TXT = { dm: '영역 전개할 말뭉치', tr: '트럭으로 보낼 말뭉치', cb: '합체 필살기 쓸 말뭉치', sn: '명사수로 조준할 칸', tt: '시간 여행 보낼 말뭉치', as: '영혼 넣을 말뭉치', hs: '보호막 씌울 말뭉치', fi: '화톳불 놓을 말뭉치', sc: '희생할 말이 있는 칸', pox: '포가 날아갈 칸' };
 
 function oppsHTML() {
   const me = mePlayer();
@@ -1839,10 +2172,10 @@ function oppsHTML() {
     const pi = state.pl.indexOf(q);
     const turn = state.ph === 'play' && pi === state.t;
     const st = q.pc ? statusList(q) : [];
-    return `<div class="opp ${turn ? 'turnon' : ''} ${q.out ? 'dead' : ''}"><div class="hd"><span class="dot" style="width:16px;height:16px;border-width:2px;background:${COLORS[q.c]}"></span>${esc(q.n)}${q.b ? '<span class="tag">봇</span>' : ''}${turn ? '<span class="tag" style="background:var(--y);color:#1a1033">차례</span>' : ''}${q.pc ? piecesHTML(q) : ''}</div>
+    return `<div class="opp ${turn ? 'turnon' : ''} ${q.out || q.done ? 'dead' : ''}"><div class="hd"><span class="dot" style="width:16px;height:16px;border-width:2px;background:${COLORS[q.c]}"></span>${esc(q.n)}${q.b ? '<span class="tag">봇</span>' : ''}${turn ? '<span class="tag" style="background:var(--y);color:#1a1033">차례</span>' : ''}${q.pc ? piecesHTML(q) : ''}</div>
       ${q.w ? `<div class="pr">${[1, 2, 3, 4, 5].map(j => `<span>${YUT_NAME[VALS[j]]} <b>${(q.w[j] * 100).toFixed(0)}%</b></span>`).join('')}</div>` : ''}
       ${st.length ? `<div class="pr" style="color:var(--y)">${st.map(s => `<span>${s}</span>`).join('')}</div>` : ''}
-      ${q.a && q.a.length ? `<div class="ae">${q.a.map(x => { if (!AUG[x]) return ''; const used = AUG[x].k === 'o' || (AUG[x].k === 'u' && x !== 'sn' && !(q.u[x] > 0)); return `<span class="${used ? 'used' : ''}" title="${AUG[x].n}${used ? ' (사용완료)' : ''}" onclick="showTip('${x}',${used ? 1 : 0})">${(q.cat || []).some(c => c[0] === x) ? '🐱' : AUG[x].e}</span>`; }).join('')}</div>` : ''}</div>`;
+      ${q.a && q.a.length ? `<div class="ae">${q.a.map(x => { if (!AUG[x]) return ''; const used = AUG[x].k === 'o' || (AUG[x].k === 'u' && x !== 'sn' && x !== 'dc' && !(q.u[x] > 0)); return `<span class="${used ? 'used' : ''}" title="${AUG[x].n}${used ? ' (사용완료)' : ''}" onclick="showTip('${x}',${used ? 1 : 0})">${(q.cat || []).some(c => c[0] === x) ? '🐱' : AUG[x].e}</span>`; }).join('')}</div>` : ''}</div>`;
   }).join('')}</div>`;
 }
 
@@ -1882,6 +2215,7 @@ function gameHTML() {
   if (state.ph === 'end') {
     const ws = (state.ws && state.ws.length ? state.ws : [state.w]).map(id => esc(nameOf(id))).join(' & ');
     top += `<div class="win o-top">🏆 ${ws} 우승!</div>`;
+    if (state.fin) top += `<div class="ordlist o-top" style="margin-bottom:6px">${state.fin.map((g, i) => `<div><b style="margin:0;min-width:34px">${state.plan && i > 0 ? '패배' : (i + 1) + '위'}</b>${g.map(id => { const q = state.pl.find(x => x.id === id); return `<span class="dot" style="width:12px;height:12px;border-width:2px;background:${COLORS[q.c]}"></span>${esc(q.n)}${q.out ? ' ☠️' : ''}`; }).join(' & ')}</div>`).join('')}</div>`;
     top += mode !== 'client' ? `<button class="btn pink o-top" onclick="backToLobby()">한 판 더!</button>` : `<div class="note o-top" style="text-align:center">방장이 한 판 더 누르면 대기실로 감</div>`;
   }
   return `<div class="gwrap">
@@ -1953,8 +2287,8 @@ let modalKey = '';
 const pickedU = new Set();
 function myPick() {
   if (!state || state.ph !== 'play' || screen !== 'game') return null;
-  if (mode === 'local') return state.pk.find(e => { const p = state.pl.find(q => q.id === e.i); return p && !p.b && !pickedU.has(e.u); }) || null;
-  return state.pk.find(e => e.i === myId && !pickedU.has(e.u)) || null;
+  if (mode === 'local') return state.pk.find(e => { const p = state.pl.find(q => q.id === e.i); return p && !p.b && !pickedU.has(e.u) && e.ch === undefined; }) || null;
+  return state.pk.find(e => e.i === myId && !pickedU.has(e.u) && e.ch === undefined) || null;
 }
 function renderModal() {
   const box = $('#modal');
@@ -1990,10 +2324,10 @@ function renderModal() {
   } else {
     const forced = catForced(state, P, pk);
     const det = P.a.includes('dt') && !(P.cat || []).some(c => c[0] === 'dt') && !pk.dt && pk.o.length > 1;
-    h = `<div class="modal"><h2>증강 선택!</h2><div class="who">${esc(nameOf(pk.i))}${mode === 'local' ? '의 증강' : ''}${forced ? ' · 🐱 고양이를 골라야 해!' : ''}</div><div class="cards">`;
+    h = `<div class="modal"><h2>${pk.nc ? '👀 눈치싸움!' : '증강 선택!'}</h2><div class="who">${esc(nameOf(pk.i))}${mode === 'local' ? '의 증강' : ''}${forced ? ' · 🐱 고양이를 골라야 해!' : ''}${pk.nc ? ' · 다 같은 선택지! 제일 많이 겹친 건 무효' : ''}</div><div class="cards">`;
     pk.o.forEach((id, i) => {
       const A = AUG[id];
-      const kind = A.k === 'u' ? (id === 'sn' ? '사용형 · 무제한' : `사용형 · ${A.u}회`) : A.k === 'o' ? '즉시 발동' : '패시브';
+      const kind = (A.ph ? PH_NAME[A.ph] + ' · ' : '') + (A.k === 'u' ? (id === 'sn' || id === 'dc' ? '사용형 · 무제한' : `사용형 · ${A.u}회`) : A.k === 'o' ? '즉시 발동' : '패시브');
       const dis = forced && id !== 'ct';
       h += `<div class="acwrap"><button class="acard tn ${dis ? 'off' : ''}" ${dis ? 'disabled' : `onclick="choose('${pk.i}',${pk.u},${i})"`}><div class="tier">${kind}</div><div class="em">${A.e}</div><div class="an">${A.n}</div><div class="ad">${A.d}</div></button>
         ${det ? `<button class="detb" onclick="detect('${pk.i}',${pk.u},${i})">🔍 지우고 말 완주</button>` : ''}</div>`;
@@ -2001,7 +2335,7 @@ function renderModal() {
   }
   box.innerHTML = h + `</div></div>`;
 }
-const PROMPT_TITLE = { hd: '🃏 원하는 결과를 골라', gd: '🐖 도? 개?', lc: '🩸 말을 줄 사람', dv: '📦 배달시킬 증강', cf: '🎭 고양이로 바꿀 증강', cv: '✨ 변신시킬 말', yt: '🥏 윷 맞힐 사람', sl: '🤏 뒤집을 윷가락' };
+const PROMPT_TITLE = { bt: '🧨 폭탄 줄 말', nk: '🧙 부활시킬 사람', wt: '✋ 묶을 사람', sb: '🤺 승부할 사람', gp: '📓 최종 순위 예언 (비밀)', hd: '🃏 원하는 결과를 골라', gd: '🐖 도? 개?', lc: '🩸 말을 줄 사람', dv: '📦 배달시킬 증강', cf: '🎭 고양이로 바꿀 증강', cv: '✨ 변신시킬 말', yt: '🥏 윷 맞힐 사람', sl: '🤏 뒤집을 윷가락' };
 function pickOpt(v) { const pr = state.pr; if (!pr) return; $('#modal').innerHTML = ''; modalKey = 'done' + Math.random(); doAct(pr.i, { t: 'ans', v }); }
 function choose(pid, u, i) { pickedU.add(u); $('#modal').innerHTML = ''; modalKey = 'done' + u; doAct(pid, { t: 'pick', v: i }); }
 function detect(pid, u, i) { modalKey = ''; doAct(pid, { t: 'det', v: i }); }
@@ -2017,16 +2351,16 @@ const RULES = [
   ['🏋️', '업기', '내 말끼리 같은 칸에 멈추면 업혀서 같이 움직임'],
   ['↘️', '지름길', '모서리(큰 동그라미)에 딱 멈추면 대각선 지름길로 감. 가운데 방에 멈추면 출발점 쪽 최단 루트로'],
   ['🏁', '나기', '출발점을 지나가면 그 말은 남. 출발점에 딱 멈추면 아직 판 위에 있는 거'],
-  ['🏆', '승리', '내 말 전부 먼저 나면 이김 (증강으로 특수 승리도 있음)'],
+  ['🏆', '순위', '말을 전부 내보내면 순위 확정. 한 명 남을 때까지 계속함 (증강으로 특수 승리·탈락도 있음)'],
 ];
 function guideHTML() {
   let h = `<div class="guide" onclick="if(event.target===this)toggleGuide()"><div class="in"><div class="row" style="justify-content:space-between"><div class="title" style="font-size:30px;margin:0;transform:none;text-align:left">📖 도감</div><button class="btn ghost" style="flex:0 0 70px;margin:0;padding:10px" onclick="toggleGuide()">닫기</button></div>`;
   h += `<div class="gh" style="color:var(--c)">룰</div>`;
   RULES.forEach(t => h += `<div class="gi"><span class="em">${t[0]}</span><span><b>${t[1]}</b><span class="d">${t[2]}</span></span></div>`);
-  h += `<div class="note" style="font-size:13px;color:#d9ccff">증강 모드 ON이면 시작할 때 + 3턴 · 6턴 · 9턴에 증강 3개 중 1개 선택, 10턴부터는 2턴마다 모루 하나씩</div>`;
-  [['p', '패시브 증강'], ['u', '사용형 증강 (내 차례에 버튼 눌러서 씀)'], ['o', '즉시 발동 증강']].forEach(([k, nm]) => {
+  h += `<div class="note" style="font-size:13px;color:#d9ccff">증강 모드 ON이면 시작할 때(시작 전용 포함) + 3·6턴(중간 전용 포함) + 9턴(마무리 전용 포함)에 3개 중 1개 선택, 10턴부터는 2턴마다 모루. 1등이 나와도 끝까지 해서 최종 순위를 가림 (60라운드 넘으면 진행도 순)</div>`;
+  [['p', '공용 · 패시브'], ['u', '공용 · 사용형 (내 차례에 버튼)'], ['o', '공용 · 즉시 발동'], ['s', '시작 전용 (첫 선택)'], ['m', '중간 전용 (3·6턴)'], ['f', '마무리 전용 (9턴)']].forEach(([k, nm]) => {
     h += `<div class="gh" style="color:var(--y)">${nm}</div>`;
-    Object.values(AUG).filter(A => A.k === k).forEach(A => h += `<div class="gi"><span class="em">${A.e}</span><span><b>${A.n}${A.k === 'u' ? ` <span class="tag">${A.u >= 99 ? '무제한' : A.u + '회'}</span>` : ''}</b><span class="d">${A.d}</span></span></div>`);
+    Object.values(AUG).filter(A => 'pou'.includes(k) ? (!A.ph && A.k === k) : A.ph === k).forEach(A => h += `<div class="gi"><span class="em">${A.e}</span><span><b>${A.n}${A.k === 'u' ? ` <span class="tag">${A.u >= 99 ? '무제한' : A.u + '회'}</span>` : ''}</b><span class="d">${A.d}</span></span></div>`);
   });
   h += `<div class="gh" style="color:var(--c)">🔨 능력치 모루</div><div class="note" style="font-size:13px;color:#d9ccff;line-height:1.7">모루는 실버 60% · 골드 30% · 프리즘 10%로 뜸.<br>
   <b>실버 모루</b>: 도개걸윷모 중 3개 → 고른 거 확률 -4%, 나머지 넷이 +1%씩<br>
