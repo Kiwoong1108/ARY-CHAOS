@@ -284,12 +284,12 @@ const AUG = {
   un: { n: '웅녀', e: '🧄', k: 'o', ph: 's', d: '랜덤 칸에 마늘 4개가 생김. 내 말로 4개를 다 모으면 승리' },
   ir: { n: '이리 오너라 업고 놀자', e: '🎎', k: 'o', ph: 's', d: '내 말 전부를 업은 채로 도 칸에서 시작' },
   jd: { n: '짐덩이와 복덩이', e: '🎒', k: 'o', ph: 's', d: '내 말 1개와 윷 1개를 더하고 시작 (말 5개, 윷 5개로 던짐)' },
-  cs: { n: '천상천하 유아독존', e: '☝', k: 'p', ph: 's', d: '윷판에 말뭉치가 내 것 하나만 있으면 승리' },
+  cs: { n: '천상천하 유아독존', e: '☝', k: 'p', ph: 's', d: '윷판에 말뭉치가 내 것 하나만 있는 상태로 내 다음 차례 시작까지 버티면 승리' },
   // ===== 중간 전용 =====
   sv: { n: '777', e: '🎰', k: 'p', ph: 'm', d: '한 차례 안에 같은 윷 결과가 3번 이상 나오면 승리' },
   nf: { n: '나만 친구 없어', e: '🥲', k: 'p', ph: 'm', d: '이걸 고른 뒤 다른 모든 플레이어가 내 말을 한 번씩 잡으면 승리' },
-  ms: { n: '마신 소환', e: '🛐', k: 'o', ph: 'm', d: '내 일반 말을 전부 광신도로 바꿈. 내 차례가 시작될 때 살아있는 광신도마다 의식 코인 1개. 코인 12개면 승리' },
-  mu: { n: '무신정변', e: '⚔️', k: 'p', ph: 'm', d: '이걸 고른 뒤 상대 말을 4개 이상 죽이면 승리' },
+  ms: { n: '마신 소환', e: '🛐', k: 'o', ph: 'm', d: '내 일반 말을 전부 광신도로 바꿈. 내 차례가 시작될 때 판 위에 있는 광신도마다 의식 코인 1개. 코인 12개면 승리' },
+  mu: { n: '무신정변', e: '⚔️', k: 'p', ph: 'm', d: '이걸 고른 뒤 상대 말을 6번 이상 잡으면 승리 (업힌 말뭉치는 한 번으로 셈)' },
   pe: { n: '변환: 펠리컨', e: '🦤', k: 'u', u: 1, ph: 'm', d: '1회용. 일반 말을 펠리컨으로 바꿈. 펠리컨은 잡은 말을 죽이지 않고 삼킴. 삼킨 채로 완주하면 그 플레이어 탈락' },
   yo: { n: '역모', e: '🗡', k: 'p', ph: 'm', d: '나보다 완주한 말이 많은 플레이어의 말을 잡으면 던지기 1번 더' },
   wt: { n: '잠깐!', e: '✋', k: 'o', ph: 'm', d: '다른 플레이어 하나를 골라, 그 사람의 가장 앞선 말뭉치를 2라운드 동안 못 움직이게 함' },
@@ -574,7 +574,7 @@ function killStack(st, V, k, killer, opts = {}) {
   const dead = dying.length - revived;
   if (swallowed) log(st, `🦤 ${killer.n}의 펠리컨이 ${V.n}의 말 ${swallowed}개를 꿀꺽!`);
   if (dead > 0 && killer && killer !== V) {
-    killer.kills += dead;
+    killer.kills += dead; killer.kst = (killer.kst || 0) + 1;
     if (has(V, 'nf') && !V.kb.includes(killer.id)) { V.kb.push(killer.id); log(st, `🥲 ${V.n}: ${killer.n}도 날 잡아줬어 (${V.kb.length})`); }
     if (opts.ks && opts.ks.some(j => killer.pt[j] === 'mon')) { killer.mk += dead; log(st, `👾 ${killer.n}의 괴물 사냥 ${killer.mk}/${killer.mt}`); }
     if (st.bomb && st.bomb.p === killer.id && opts.ks && opts.ks.includes(st.bomb.k)) { st.bomb.p = V.id; st.bomb.k = dying[0]; log(st, `🧨 폭탄이 ${V.n}한테 넘어감!`); }
@@ -788,11 +788,17 @@ function specialWin(st, P) {
   if (P.cow && has(P, 'cw')) return '소 뒷걸음질';
   if (has(P, 'cl') && st.pl.some(q => q.a.includes('ct'))) return '애묘인';
   if (has(P, 'un') && P.gk >= 4) return '웅녀';
-  if (has(P, 'cs')) { const stacks = new Set(); st.pl.forEach((q, qi) => q.pc.forEach(pc => { if (onBoard(pc)) stacks.add(qi + ':' + nodeOf(pc)); })); if (stacks.size === 1 && [...stacks][0].startsWith(pidx(st, P) + ':')) return '천상천하 유아독존'; }
+  if (has(P, 'cs')) {
+    const stacks = new Set(); st.pl.forEach((q, qi) => q.pc.forEach(pc => { if (onBoard(pc)) stacks.add(qi + ':' + nodeOf(pc)); }));
+    const ok = stacks.size === 1 && [...stacks][0].startsWith(pidx(st, P) + ':');
+    if (!ok) { if (P.csArm) log(st, `☝ ${P.n} 유아독존 깨짐`); P.csArm = 0; }
+    else if (!P.csArm) { P.csArm = 1; log(st, `☝ ${P.n} 유아독존 상태! 다음 차례까지 버티면 승리`); }
+    else if (P.csArm === 2) return '천상천하 유아독존';
+  }
   if (has(P, 'st1')) { const c = {}; P.pc.forEach(pc => { if (onBoard(pc)) c[nodeOf(pc)] = (c[nodeOf(pc)] || 0) + 1; }); if (Object.values(c).some(n => n >= 8)) return '8성 달성'; }
   if (P.mk && P.mk >= P.mt) return '괴물 사냥 완료';
   if (has(P, 'ms') || P.cc) { if (P.cc >= 12) return '마신 강림'; }
-  if (has(P, 'mu') && P.kills - P.mu0 >= 4) return '무신정변';
+  if (has(P, 'mu') && (P.kst || 0) - P.mu0 >= 6) return '무신정변';
   if (has(P, 'nf')) { const os = st.pl.filter(q => q !== P); if (os.length && os.every(q => P.kb.includes(q.id))) return '나만 친구 없어'; }
   return '';
 }
@@ -825,9 +831,10 @@ function beginTurn(st, depth = 0) {
     if (checkWin(st)) return;
   }
   // 마신 소환: 광신도 코인
-  const cul = P.pc.filter((pc, j) => alive(pc) && pc[0] !== 'F' && P.pt[j] === 'cul').length;
+  const cul = P.pc.filter((pc, j) => onBoard(pc) && P.pt[j] === 'cul').length;
   if (cul) { P.cc += cul; log(st, `🛐 ${P.n} 의식 코인 +${cul} (${P.cc}/12)`); }
   if (P.pt.includes('kc')) P.kct++;
+  if (P.csArm === 1) P.csArm = 2;
   if (P.dmz) { P.dmz.n++; if (P.dmz.n > 2) { P.wf = '영역 전개'; } }
   if (checkWin(st)) return;
   if (!active(P)) return nextTurn(st, depth + 1);
@@ -1174,7 +1181,7 @@ function applyAug(st, P, id) {
     }
     case 'ir': P.pc.forEach((pc, j) => { if (alive(pc) && pc[0] !== 'F') P.pc[j] = ['A', 1]; }); log(st, `🎎 ${P.n} 업고 놀자! 전부 도 칸에서 시작`); break;
     case 'ms': { let n = 0; P.pc.forEach((pc, j) => { if (alive(pc) && pc[0] !== 'F' && !P.pt[j]) { P.pt[j] = 'cul'; n++; } }); log(st, `🛐 ${P.n} 마신 소환! 광신도 ${n}명`); fx(st, { t: 'c', s: '🛐' }); break; }
-    case 'mu': P.mu0 = P.kills; break;
+    case 'mu': P.mu0 = P.kst || 0; break;
     case 'nf': P.kb = []; break;
     case 'wt': { const o = others(st, P).filter(active).map(q => ({ l: q.n, v: pidx(st, q) })); if (o.length) st.pr = { i: P.id, k: 'opt', src: 'wt', o }; break; }
     case 'sb': { const o = others(st, P).filter(active).map(q => ({ l: q.n, v: pidx(st, q) })); if (o.length && !st.duel) st.pr = { i: P.id, k: 'opt', src: 'sb', o }; break; }
@@ -2022,7 +2029,8 @@ function statusList(q) {
   if (state.bomb && state.bomb.p === q.id) st.push(`🧨폭탄 (${state.bomb.until}라운드 끝)`);
   if (state.duel && (state.duel.a === q.id || state.duel.b === q.id)) st.push(state.duel.b === q.id ? `🤺승부 ${state.duel.n}/3차례` : '🤺승부 거는 중');
   if (q.swl && q.swl.length) st.push(`🦤삼킨 말 ${q.swl.reduce((s, x) => s + x[1], 0)}`);
-  if (q.a.includes('mu')) st.push(`⚔️처치 ${q.kills - q.mu0}/4`);
+  if (q.a.includes('mu')) st.push(`⚔️잡기 ${(q.kst || 0) - q.mu0}/6`);
+  if (q.csArm) st.push('☝유아독존 대기 중!');
   if (q.a.includes('nf')) st.push(`🥲${q.kb.length}/${state.pl.length - 1}`);
   if (q.nkp) st.push(`🧙${esc(nameOf(q.nkp))}랑 동반승리`);
   if (q.sk) st.push(`😵건너뜀×${q.sk}`);
