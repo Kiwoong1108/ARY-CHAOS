@@ -648,8 +648,7 @@ function settle(st, P, Q, ks, backMove) {
   const mine = stackOf(Q, node).filter(j => !Q.rd[j] || ks.includes(j));
   if (mine.length > ks.length) log(st, `🏋️ ${Q.n} 업었다! (${mine.length}개)`);
   for (const j of mine) Q.pc[j] = pc.slice(0, 2);
-  if (caught && Q === P && has(P, 'mu')) log(st, `⚔️ ${P.n} 무신정변 중이라 한 번 더 없음`);
-  else if (caught && Q === P) {
+  if (caught && Q === P && !has(P, 'mu')) {
     let extra = 1;
     if (chance(P.x.cx)) { extra++; log(st, '⛓️ 연쇄 사냥 발동!'); }
     st.tw += extra;
@@ -2354,8 +2353,7 @@ function renderModal() {
       const A = AUG[id];
       const kind = (A.ph ? PH_NAME[A.ph] + ' · ' : '') + (A.k === 'u' ? (id === 'sn' || id === 'dc' ? '사용형 · 무제한' : `사용형 · ${A.u}회`) : A.k === 'o' ? '즉시 발동' : '패시브');
       const dis = forced && id !== 'ct';
-      const boost = id === 'cn' && state.pl.some(q => q !== P && !q.out && !q.done && q.a.some(x => WINCON.includes(x)));
-      h += `<div class="acwrap"><button class="acard tn ${dis ? 'off' : ''}" ${dis ? 'disabled' : `onclick="choose('${pk.i}',${pk.u},${i})"`}><div class="tier">${kind}${boost ? ' · 🔥확률 UP' : ''}</div><div class="em">${A.e}</div><div class="an">${A.n}</div><div class="ad">${A.d}</div></button>
+      h += `<div class="acwrap"><button class="acard tn ${dis ? 'off' : ''}" ${dis ? 'disabled' : `onclick="choose('${pk.i}',${pk.u},${i})"`}><div class="tier">${kind}</div><div class="em">${A.e}</div><div class="an">${A.n}</div><div class="ad">${A.d}</div></button>
         ${det ? `<button class="detb" onclick="detect('${pk.i}',${pk.u},${i})">🔍 지우고 말 완주</button>` : ''}</div>`;
     });
   }
