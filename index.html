@@ -289,7 +289,7 @@ const AUG = {
   sv: { n: '777', e: '🎰', k: 'p', ph: 'm', d: '한 차례 안에 같은 윷 결과가 3번 이상 나오면 승리' },
   nf: { n: '나만 친구 없어', e: '🥲', k: 'p', ph: 'm', d: '이걸 고른 뒤 다른 모든 플레이어가 내 말을 한 번씩 잡으면 승리' },
   ms: { n: '마신 소환', e: '🛐', k: 'o', ph: 'm', d: '내 일반 말을 전부 광신도로 바꿈. 내 차례가 시작될 때 판 위에 있는 광신도마다 의식 코인 1개. 코인 12개면 승리' },
-  mu: { n: '무신정변', e: '⚔️', k: 'p', ph: 'm', d: '이걸 고른 뒤 상대 말을 6번 이상 잡으면 승리 (업힌 말뭉치는 한 번으로 셈)' },
+  mu: { n: '무신정변', e: '⚔️', k: 'p', ph: 'm', d: '이걸 고른 뒤 상대 말을 6번 이상 잡으면 승리 (업힌 말뭉치는 한 번으로 셈). 대신 잡아도 한 번 더 없음' },
   pe: { n: '변환: 펠리컨', e: '🦤', k: 'u', u: 1, ph: 'm', d: '1회용. 일반 말을 펠리컨으로 바꿈. 펠리컨은 잡은 말을 죽이지 않고 삼킴. 삼킨 채로 완주하면 그 플레이어 탈락' },
   yo: { n: '역모', e: '🗡', k: 'p', ph: 'm', d: '나보다 완주한 말이 많은 플레이어의 말을 잡으면 던지기 1번 더' },
   wt: { n: '잠깐!', e: '✋', k: 'o', ph: 'm', d: '다른 플레이어 하나를 골라, 그 사람의 가장 앞선 말뭉치를 2라운드 동안 못 움직이게 함' },
@@ -648,7 +648,8 @@ function settle(st, P, Q, ks, backMove) {
   const mine = stackOf(Q, node).filter(j => !Q.rd[j] || ks.includes(j));
   if (mine.length > ks.length) log(st, `🏋️ ${Q.n} 업었다! (${mine.length}개)`);
   for (const j of mine) Q.pc[j] = pc.slice(0, 2);
-  if (caught && Q === P) {
+  if (caught && Q === P && has(P, 'mu')) log(st, `⚔️ ${P.n} 무신정변 중이라 한 번 더 없음`);
+  else if (caught && Q === P) {
     let extra = 1;
     if (chance(P.x.cx)) { extra++; log(st, '⛓️ 연쇄 사냥 발동!'); }
     st.tw += extra;
