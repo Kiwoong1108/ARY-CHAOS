@@ -421,19 +421,35 @@ function orderThrow(st, P) {
 }
 
 // ---- 증강 선택지
-function makeOpts(P, ph) {
+// 승리 조건이 붙은 증강
+const WINCON = ['sm', 'ak', 'cw', 'cl', 'un', 'cs', 'st1', 'mo', 'qq', 'kc', 'mr', 'ms', 'mu', 'nf', 'sv', 'dm', 'zb', 'gp'];
+const TUNE = { win: 0.6, cnBase: 1, cnK: 3 };
+function augWeight(st, P, id) {
+  if (WINCON.includes(id)) return TUNE.win;
+  if (id === 'cn') {
+    const n = st ? st.pl.filter(q => q !== P && active(q) && q.a.some(x => WINCON.includes(x) && !catted(q, x))).length : 0;
+    return TUNE.cnBase + TUNE.cnK * n;
+  }
+  return 1;
+}
+function makeOpts(P, ph, st) {
   let pool = AUG_IDS.filter(id => (!AUG[id].ph || AUG[id].ph === ph) && (id === 'ct' || AUG[id].k === 'o' || !P.a.includes(id)));
   const o = [];
   if (P.dl && AUG[P.dl]) { o.push(P.dl); pool = pool.filter(x => x !== P.dl); P.dl = null; }
-  while (o.length < 3 && pool.length) { const x = pickOne(pool); o.push(x); pool = pool.filter(y => y !== x); }
+  while (o.length < 3 && pool.length) {
+    const ws = pool.map(id => augWeight(st, P, id)); const tot = ws.reduce((a, b) => a + b, 0);
+    let r = Math.random() * tot, x = pool[pool.length - 1];
+    for (let i = 0; i < pool.length; i++) { r -= ws[i]; if (r < 0) { x = pool[i]; break; } }
+    o.push(x); pool = pool.filter(y => y !== x);
+  }
   return o;
 }
-function givePick(st, P, n = 1, ph) { for (let i = 0; i < n; i++) { st.pu++; st.pk.push({ i: P.id, k: 'a', o: makeOpts(P, ph), u: st.pu }); } }
+function givePick(st, P, n = 1, ph) { for (let i = 0; i < n; i++) { st.pu++; st.pk.push({ i: P.id, k: 'a', o: makeOpts(P, ph, st), u: st.pu }); } }
 function pickRound(st, ph) {
   const ps = live(st);
   if (st.ncNext) {
     st.ncNext = 0;
-    const shared = makeOpts({ a: [], dl: null }, ph);
+    const shared = makeOpts({ a: [], dl: null }, ph, st);
     log(st, '👀 눈치싸움! 모두 같은 선택지');
     for (const q of ps) { st.pu++; st.pk.push({ i: q.id, k: 'a', o: shared.slice(), u: st.pu, nc: 1 }); }
     return;
@@ -1449,7 +1465,7 @@ function botAction(st, pid) {
   return best;
 }
 
-if (typeof module !== 'undefined') module.exports = { active, PH_NAME, stickCount, needsOrder, chat, newState, startGame, act, botAction, preview, canUse, catForced, movablePieces, AUG, PSTAT, ROUTES, YUT_NAME, VALS, TYPE_NAME, nodeOf, onBoard, alive, has };
+if (typeof module !== 'undefined') module.exports = { TUNE, WINCON, active, PH_NAME, stickCount, needsOrder, chat, newState, startGame, act, botAction, preview, canUse, catForced, movablePieces, AUG, PSTAT, ROUTES, YUT_NAME, VALS, TYPE_NAME, nodeOf, onBoard, alive, has };
 
 </script>
 <script>
@@ -2329,7 +2345,8 @@ function renderModal() {
       const A = AUG[id];
       const kind = (A.ph ? PH_NAME[A.ph] + ' · ' : '') + (A.k === 'u' ? (id === 'sn' || id === 'dc' ? '사용형 · 무제한' : `사용형 · ${A.u}회`) : A.k === 'o' ? '즉시 발동' : '패시브');
       const dis = forced && id !== 'ct';
-      h += `<div class="acwrap"><button class="acard tn ${dis ? 'off' : ''}" ${dis ? 'disabled' : `onclick="choose('${pk.i}',${pk.u},${i})"`}><div class="tier">${kind}</div><div class="em">${A.e}</div><div class="an">${A.n}</div><div class="ad">${A.d}</div></button>
+      const boost = id === 'cn' && state.pl.some(q => q !== P && !q.out && !q.done && q.a.some(x => WINCON.includes(x)));
+      h += `<div class="acwrap"><button class="acard tn ${dis ? 'off' : ''}" ${dis ? 'disabled' : `onclick="choose('${pk.i}',${pk.u},${i})"`}><div class="tier">${kind}${boost ? ' · 🔥확률 UP' : ''}</div><div class="em">${A.e}</div><div class="an">${A.n}</div><div class="ad">${A.d}</div></button>
         ${det ? `<button class="detb" onclick="detect('${pk.i}',${pk.u},${i})">🔍 지우고 말 완주</button>` : ''}</div>`;
     });
   }
